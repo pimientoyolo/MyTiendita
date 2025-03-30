@@ -1,0 +1,53 @@
+erDiagram
+
+    producto }o--|| unidad : ""
+    producto ||--o{ movimiento : ""
+    movimiento }o--|| tipo_movimiento : "" 
+    detalle_venta }|--|| venta : ""
+    detalle_venta }o--|| producto : ""
+  
+    producto {
+        long id* PK
+        long id_unidad* FK
+        float precio_compra*
+        float precio_venta*
+        string nombre*
+        string descripcion
+        float cantidad*
+    }
+
+    unidad {
+        long id* PK
+        string nombre*
+        string descripcion
+    }
+
+    movimiento {
+        long id* PK
+        long id_producto* FK
+        long id_tipo* FK
+        float cantidad*
+        float valor*
+        date fecha*
+    }
+
+    tipo_movimiento {
+        long id* PK
+        string nombre*
+        string descripcion
+    }
+
+    detalle_venta{
+        long id* PK
+        long id_venta* FK
+        long id_producto* FK
+        float cantidad*
+        float valor*
+    }
+
+    venta {
+        long id* PK
+        float cantidad*
+        float valor*
+        date fecha*
+    }
