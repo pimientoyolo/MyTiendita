@@ -15,7 +15,7 @@ CREATE TABLE tipo_movimiento (
 -- Crear tabla producto
 CREATE TABLE producto (
     id SERIAL PRIMARY KEY,
-    id_unidad INT NOT NULL,
+    id_unidad BIGINT NOT NULL,
     precio_compra NUMERIC(10,2) NOT NULL,
     precio_venta NUMERIC(10,2) NOT NULL,
     nombre VARCHAR(255) NOT NULL,
@@ -26,8 +26,8 @@ CREATE TABLE producto (
 -- Crear tabla movimiento
 CREATE TABLE movimiento (
     id SERIAL PRIMARY KEY,
-    id_producto INT NOT NULL,
-    id_tipo INT NOT NULL,
+    id_producto BIGINT NOT NULL,
+    id_tipo BIGINT NOT NULL,
     cantidad NUMERIC(10,3) NOT NULL,
     valor NUMERIC(10,2) NOT NULL,
     fecha DATE NOT NULL
@@ -44,8 +44,8 @@ CREATE TABLE venta (
 -- Crear tabla detalle_venta
 CREATE TABLE detalle_venta (
     id SERIAL PRIMARY KEY,
-    id_venta INT NOT NULL,
-    id_producto INT NOT NULL,
+    id_venta BIGINT NOT NULL,
+    id_producto BIGINT NOT NULL,
     cantidad NUMERIC(10,3) NOT NULL,
     valor NUMERIC(10,2) NOT NULL
 );
