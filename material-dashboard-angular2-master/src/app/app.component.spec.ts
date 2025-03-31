@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
+import { beforeEach, describe, it } from 'node:test';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -30,3 +31,7 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1').textContent).toContain('app works!');
   }));
 });
+
+
+// Removed custom expect function to avoid conflicts with Jasmine's expect.
+

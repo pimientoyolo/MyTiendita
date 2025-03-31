@@ -1,0 +1,11 @@
+flowchart TD
+    A[Cliente - Navegador]
+    B[Nginx - Puerto 80]
+    C[Archivos Estáticos - /var/www/html]
+    D[Reverse Proxy]
+    E[Servidor Backend - Aplicación]
+    
+    A -->|HTTP Request| B
+    B -->|Si existe el recurso estático| C
+    B -->|Si requiere procesamiento| D
+    D -->|Envía la petición| E
