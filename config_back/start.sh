@@ -25,5 +25,8 @@ cd backend
 # compilamos el proyecto
 mvn clean install
 
+# configuramos el firewall
+ufw allow from 10.8.0.0/24 to any port 8080
+
 # corremos el proyecto
 java -jar target/backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
