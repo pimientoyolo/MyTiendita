@@ -11,7 +11,7 @@ public class TestController {
 
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
-        return new ResponseEntity<>("Hello World", org.springframework.http.HttpStatus.OK);
+        return new ResponseEntity<>("Hello World test auto deploy", org.springframework.http.HttpStatus.OK);
     }
 
 
