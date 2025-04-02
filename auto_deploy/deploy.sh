@@ -21,8 +21,11 @@ build_backend() {
 }
 
 build_frontend() {
-  echo "Compilando el frontend..."
+  echo "Actualizando dependencias del frontend..."
   cd $FRONTEND_DIR
+  npm install
+  
+  echo "Compilando el frontend..."
   $BUILD_COMMAND_FRONT
   sudo mkdir -p $DEPLOY_FRONTEND_DIR
   rsync -av --delete "$FRONTEND_DIR/dist/frontend/" "$DEPLOY_FRONTEND_DIR/"
