@@ -1,34 +1,31 @@
 #!/bin/bash
 
 # Directorio del proyecto backend
-PROJECT_DIR="/root/MyTiendita/backend"  # Ruta de tu proyecto
+PROJECT_DIR="/root/MyTiendita"  # Ruta de tu proyecto
+BACKEND_DIR="/root/MyTiendita/backend"  # Ruta de tu proyecto
+FRONTEND_DIR="/root/MyTiendita/frontend"
+DEPLOY_FRONTEND_DIR="/var/www/frontend"
 
-# Comando para detener el backend si está en ejecución
-STOP_COMMAND="systemctl stop backend.service"  # Detener el servicio backend
-
-# Comando para iniciar el backend
-START_COMMAND="systemctl start backend.service"  # Iniciar el servicio backend
+RESTART_COMMAND_BACK="sudo systemctl restart backend"  # Comando para iniciar el backend
+RESTART_COMMAND_FRONT="sudo systemctl reload nginx"  # Comando para iniciar el frontend
 
 # Comando para compilar el backend con Maven
-BUILD_COMMAND="mvn clean install -DskipTests"  # Comando Maven para compilar el proyecto
-
-# Función para detener el proyecto si está corriendo
-stop_project() {
-  echo "Deteniendo el proyecto..."
-  $STOP_COMMAND
-}
-
-# Función para arrancar el proyecto
-start_project() {
-  echo "Iniciando el proyecto..."
-  $START_COMMAND
-}
+BUILD_COMMAND_BACK="mvn clean install -DskipTests"  # Comando Maven para compilar el proyecto
+BUILD_COMMAND_FRONT="ng build --configuration production"  # Comando para compilar el frontend
 
 # Función para compilar el proyecto
-build_project() {
-  echo "Compilando el proyecto..."
-  cd $PROJECT_DIR
-  $BUILD_COMMAND
+build_backend() {
+  echo "Compilando el backend..."
+  cd $BACKEND_DIR
+  $BUILD_COMMAND_BACK
+}
+
+build_frontend() {
+  echo "Compilando el frontend..."
+  cd $FRONTEND_DIR
+  $BUILD_COMMAND_FRONT
+  sudo mkdir -p $DEPLOY_FRONTEND_DIR
+  rsync -av --delete "$FRONTEND_DIR/dist/frontend/" "$DEPLOY_FRONTEND_DIR/"
 }
 
 # Función para comprobar si hay diferencias con la rama principal
@@ -52,14 +49,15 @@ while true; do
   
   # Comprobar si hay cambios en el repositorio
   if check_git_changes; then
-    # Detener el backend
-    stop_project
-    
-    # Compilar el proyecto
-    build_project
-    
-    # Iniciar el backend
-    start_project
+    #realizar el backend
+    build_backend
+    $RESTART_COMMAND_BACK  # Reiniciar el backend
+    echo "Backend reiniciado."
+
+    # Reiniciar el frontend
+    build_frontend
+    $RESTART_COMMAND_FRONT  # Reiniciar el frontend
+    echo "Frontend reiniciado."
   fi
 
   # Esperar 1 minuto antes de volver a comprobar
