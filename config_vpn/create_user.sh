@@ -13,7 +13,7 @@ cat <<EOF > /etc/openvpn/clients/miusuario/miusuario.ovpn
 client
 dev tun
 proto udp
-remote 167.99.148.5 1194
+remote 192.81.213.157 1194
 resolv-retry infinite
 nobind
 route-nopull
@@ -36,5 +36,5 @@ sudo apt update && sudo apt install zip -y
 #crear el zip de los certificados y la configuracion
 zip -rj /etc/openvpn/clients/miusuario/miusuario.zip /etc/openvpn/clients/miusuario/*
 
-## la ip 167.99.148.5 es la ip publica del servidor
+## la ip 192.81.213.157 es la ip publica del servidor
 ## tener en encuentas el nombre de "miusuario" para el cliente
