@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo nano /etc/systemd/system/backend.service
 
-# pegamos el siguiente contenido lo que estan en el .service
+# pegamos el siguiente contenido lo que estan en el backend.service
 
 # reiniciamos los servicios
 sudo systemctl daemon-reload

@@ -1,4 +1,5 @@
 #! /bin/bash
+sudo apt install rsync
 
 # creamos el archivo y pegamos lo del deploy.sh
 nano /root/deploy.sh
