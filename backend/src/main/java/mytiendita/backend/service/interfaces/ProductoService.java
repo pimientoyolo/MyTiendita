@@ -1,0 +1,8 @@
+package mytiendita.backend.service.interfaces;
+
+import mytiendita.backend.model.Producto;
+
+public interface ProductoService {
+
+    Producto getProductoByCodigo(String codigo);
+}
