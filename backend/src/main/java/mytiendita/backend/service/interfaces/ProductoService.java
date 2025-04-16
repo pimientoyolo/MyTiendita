@@ -1,7 +1,8 @@
 package mytiendita.backend.service.interfaces;
 
-import org.springframework.stereotype.Service;
+import mytiendita.backend.model.Producto;
 
-@Service
 public interface ProductoService {
+
+    Producto getProductoByCodigo(String codigo);
 }
