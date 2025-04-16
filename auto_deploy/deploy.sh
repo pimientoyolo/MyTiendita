@@ -34,7 +34,7 @@ build_frontend() {
 # Función para comprobar si hay diferencias con la rama principal
 check_git_changes() {
   cd $PROJECT_DIR
-  CHANGES=$(git diff --name-only origin/main)
+  CHANGES=$(git diff --name-only HEAD..origin/main)
 
   if [ -z "$CHANGES" ]; then
     echo "No hay cambios en el repositorio."

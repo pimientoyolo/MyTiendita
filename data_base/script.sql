@@ -15,6 +15,7 @@ CREATE TABLE tipo_movimiento (
 -- Crear tabla producto
 CREATE TABLE producto (
     id SERIAL PRIMARY KEY,
+    codigo_barras VARCHAR(50) UNIQUE NOT NULL,
     id_unidad BIGINT NOT NULL,
     precio_compra NUMERIC(10,2) NOT NULL,
     precio_venta NUMERIC(10,2) NOT NULL,
