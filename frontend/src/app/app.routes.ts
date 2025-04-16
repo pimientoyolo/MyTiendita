@@ -12,8 +12,20 @@ export const routes: Routes = [
             },
             {
                 path: 'inicio',
-                loadComponent: () => import('./components/dashboard/dashboard.component').then(m => m.DashboardComponent),
+                loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
             },
+            {
+                path: 'ventas',
+                loadComponent: () => import('./pages/ventas/ventas.component').then(m => m.VentasComponent),
+            },
+            {
+                path: 'entrada-producto',
+                loadComponent: () => import('./pages/entrada-producto/entrada-producto.component').then(m => m.EntradaProductoComponent),
+            },
+            {
+                path: 'crear-producto',
+                loadComponent: () => import('./pages/crear-producto/crear-producto.component').then(m => m.CrearProductoComponent),
+            }
         ]
     },
     {
