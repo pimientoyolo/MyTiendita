@@ -26,6 +26,8 @@ cert miusuario.crt
 key miusuario.key
 tls-auth ta.key 1
 cipher AES-256-CBC
+tun-mtu 1400
+mssfix 1360
 verb 3
 EOF
 
