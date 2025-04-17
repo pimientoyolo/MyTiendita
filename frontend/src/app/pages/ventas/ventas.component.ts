@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { AlertService } from '../../services/alert/alert.service';
 import { ProductoService } from '../../services/producto/producto.service';
 import { Producto, ProductoTable } from '../../models/producto';
 import { CommonModule } from '@angular/common';
 import { FormsModule }   from '@angular/forms';
 import { VentaService } from '../../services/venta/venta.service';
+import { VentaStateService } from '../../storage/venta-state.service';
 
 @Component({
   selector: 'app-ventas',
@@ -16,15 +17,26 @@ import { VentaService } from '../../services/venta/venta.service';
   templateUrl: './ventas.component.html',
   styleUrl: './ventas.component.css'
 })
-export class VentasComponent implements AfterViewInit {
+export class VentasComponent implements AfterViewInit, OnInit{
 
   @ViewChild('codigoBarrasInput') codigoBarrasInput!: ElementRef<HTMLInputElement>;
+
+  listaProductos: ProductoTable[] = [];
+  codigoBarras: string = '';
+  total: number = 0;
 
   constructor(
     private alertService: AlertService,
     private productoService: ProductoService,
-    private ventaService: VentaService
+    private ventaService: VentaService,
+    private ventaStateService: VentaStateService
   ) { }
+
+  ngOnInit() {
+    // cargar lista inicial desde el state service
+    this.listaProductos = [...this.ventaStateService.productos];
+    this.calcularTotal();
+  }
 
   ngAfterViewInit() {
     // Al cargar el componente, enfocamos el input
@@ -60,10 +72,6 @@ export class VentasComponent implements AfterViewInit {
       event.preventDefault();
     }
   }
-
-  listaProductos: ProductoTable[] = [];
-  codigoBarras: string = '';
-  total: number = 0;
 
   getProductoByCodigoBarras() {
     this.codigoBarras = this.codigoBarras.trim();
@@ -104,6 +112,7 @@ export class VentasComponent implements AfterViewInit {
     }
     this.limpiarInput();
     this.calcularTotal();
+    this.persistirStado();
     
   }
 
@@ -119,17 +128,20 @@ export class VentasComponent implements AfterViewInit {
       this.eliminarProducto(producto);
     }
     this.calcularTotal();
+    this.persistirStado();
   }
 
   incrementarCantidad(producto: ProductoTable) {
     producto.cantidad ++;
     producto.subtotal = producto.cantidad * producto.producto.precioVenta;
     this.calcularTotal();
+    this.persistirStado();
   }
 
   eliminarProducto(producto: ProductoTable) {
     this.listaProductos = this.listaProductos.filter(p => p !== producto);
     this.calcularTotal();
+    this.persistirStado();
   }
 
   calcularTotal() {
@@ -157,6 +169,12 @@ export class VentasComponent implements AfterViewInit {
     this.listaProductos = [];
     this.total = 0;
     this.codigoBarras = '';
+    this.persistirStado();
+  }
+
+  private persistirStado() {
+    // Guardar el estado actual de la lista de productos en el servicio de estado
+    this.ventaStateService.productos = this.listaProductos;
   }
 
 
