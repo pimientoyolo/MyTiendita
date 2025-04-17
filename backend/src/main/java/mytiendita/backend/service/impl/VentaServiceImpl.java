@@ -2,14 +2,14 @@ package mytiendita.backend.service.impl;
 
 import mytiendita.backend.dto.ProductoTableDTO;
 import mytiendita.backend.exception.CustomException;
-import mytiendita.backend.model.DetalleVenta;
-import mytiendita.backend.model.Producto;
-import mytiendita.backend.model.Venta;
+import mytiendita.backend.model.*;
 import mytiendita.backend.repository.DetalleVentaRepository;
+import mytiendita.backend.repository.MovimientoRepository;
 import mytiendita.backend.repository.ProductoRepository;
 import mytiendita.backend.repository.VentaRepository;
 import mytiendita.backend.service.interfaces.ProductoService;
 import mytiendita.backend.service.interfaces.VentaService;
+import mytiendita.backend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +24,7 @@ public class VentaServiceImpl implements VentaService {
     private DetalleVentaRepository detalleVentaRepository;
     private ProductoService productoService;
     private ProductoRepository productoRepository;
+    private MovimientoRepository movimientoRepository;
 
     @Override
     @Transactional
@@ -63,12 +64,26 @@ public class VentaServiceImpl implements VentaService {
             detalleVenta.setProducto(productobd);
             detalleVenta.setVenta(venta);
 
+            //creamos el movimiento de inventario
+            TipoMovimiento tipoMovimiento = new TipoMovimiento();
+            tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_VENTA);
+
+            Movimiento inventario = new Movimiento();
+            inventario.setCantidad(cantidadVendida);
+            inventario.setTipoMovimiento(tipoMovimiento);
+            inventario.setProducto(productobd);
+            inventario.setFecha(new Date());
+            inventario.setValor(valor);
+
             //actualizamos la cantidad del producto
             productobd.setCantidad(productobd.getCantidad() - cantidadVendida);
             //no se puede tener menor a cero, simplicidad por manejo de tienda
             if (productobd.getCantidad() < 0) {
                 productobd.setCantidad(0.0);
             }
+
+            //guardamos el movimiento de inventario
+            movimientoRepository.save(inventario);
 
             //guardamos el detalle de venta
             detalleVentaRepository.save(detalleVenta);
@@ -104,6 +119,11 @@ public class VentaServiceImpl implements VentaService {
     @Autowired
     public void setProductoRepository(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
+    }
+
+    @Autowired
+    public void setMovimientoRepository(MovimientoRepository movimientoRepository) {
+        this.movimientoRepository = movimientoRepository;
     }
 
 }
