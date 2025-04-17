@@ -3,6 +3,7 @@ package mytiendita.backend.service.impl;
 import mytiendita.backend.exception.CustomException;
 import mytiendita.backend.model.Producto;
 import mytiendita.backend.repository.ProductoRepository;
+import mytiendita.backend.repository.UnidadRepository;
 import mytiendita.backend.service.interfaces.ProductoService;
 import mytiendita.backend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductoServiceImpl implements ProductoService {
 
     private ProductoRepository productoRepository;
+    private UnidadRepository unidadRepository;
 
     @Override
     public Producto getProductoByCodigo(String codigo) {
@@ -29,6 +31,9 @@ public class ProductoServiceImpl implements ProductoService {
         // Validar el producto
         validarProducto(producto);
 
+        // Validar la unidad
+        validarUnidad(producto);
+
         // Validar que el producto no exista
         if (productoRepository.existsByCodigoBarras(producto.getCodigoBarras())) {
             throw new CustomException("El producto ya existe");
@@ -36,6 +41,40 @@ public class ProductoServiceImpl implements ProductoService {
 
         // Guardar el nuevo producto
         return productoRepository.save(producto);
+    }
+
+    @Override
+    @Transactional
+    public Producto actualizarProducto(Producto producto) {
+
+        // Validar que el producto exista
+        Producto productobd = getProductoByCodigo(producto.getCodigoBarras());
+
+        producto.setId(productobd.getId());
+        producto.setCantidad(productobd.getCantidad());
+        producto.setCodigoBarras(productobd.getCodigoBarras());
+
+        // formatar el producto
+        formatProducto(producto);
+
+        // Validar el producto
+        validarProducto(producto);
+
+        // Validar la unidad
+        validarUnidad(producto);
+
+        // Guardar el producto actualizado
+        return productoRepository.save(producto);
+    }
+
+    private void validarUnidad(Producto producto) {
+        if (producto.getUnidad() == null || producto.getUnidad().getId() == null) {
+            throw new CustomException("Se debe seleccionar la unidad");
+        }
+
+        if (!unidadRepository.existsById(producto.getUnidad().getId())) {
+            throw new CustomException("La unidad no existe");
+        }
     }
 
     private void formatProducto(Producto producto) {
@@ -84,6 +123,11 @@ public class ProductoServiceImpl implements ProductoService {
     @Autowired
     public void setProductoRepository(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
+    }
+
+    @Autowired
+    public void setUnidadRepository(UnidadRepository unidadRepository) {
+        this.unidadRepository = unidadRepository;
     }
 
 }

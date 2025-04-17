@@ -7,4 +7,6 @@ public interface ProductoService {
     Producto getProductoByCodigo(String codigo);
 
     Producto crearProducto(Producto producto);
+
+    Producto actualizarProducto(Producto producto);
 }
