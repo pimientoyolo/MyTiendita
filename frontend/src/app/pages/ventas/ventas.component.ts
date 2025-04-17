@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { AlertService } from '../../services/alert/alert.service';
 import { ProductoService } from '../../services/producto/producto.service';
 import { Producto, ProductoTable } from '../../models/producto';
@@ -29,9 +29,19 @@ export class VentasComponent implements AfterViewInit {
     setTimeout(() => this.codigoBarrasInput.nativeElement.focus(), 0);
   }
 
-  private refocus() {
+  refocus() {
     // Usamos setTimeout para esperar a que Angular actualice el DOM
     setTimeout(() => this.codigoBarrasInput.nativeElement.focus(), 0);
+  }
+
+  @HostListener('document:mousedown', ['$event'])
+  onGlobalMouseDown(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    // si el click NO empezó dentro del input, devolvemos el foco
+    if (!this.codigoBarrasInput.nativeElement.contains(target)) {
+      // timeout 0 para que no interfiera con otros manejadores
+      setTimeout(() => this.codigoBarrasInput.nativeElement.focus(), 0);
+    }
   }
 
   listaProductos: ProductoTable[] = [];
@@ -82,7 +92,6 @@ export class VentasComponent implements AfterViewInit {
 
   limpiarInput() {
     this.codigoBarras = '';
-    this.refocus();
   }
 
   disminuirCantidad(producto: ProductoTable) {
