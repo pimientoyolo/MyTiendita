@@ -38,9 +38,8 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     @Transactional
     public void entradaProducto(List<ProductoTableDTO> productos) {
-        // Tipo de movimiento
-        TipoMovimiento tipoMovimiento = new TipoMovimiento();
-        tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_COMPRA);
+
+        Double valorTotal = 0.0;
 
         for (ProductoTableDTO producto : productos) {
             if(producto.getCantidad() == null || producto.getCantidad() <= 0) {
@@ -52,22 +51,18 @@ public class ProductoServiceImpl implements ProductoService {
             Producto productobd = getProductoByCodigo(producto.getProducto().getCodigoBarras());
             productobd.setCantidad(productobd.getCantidad() + producto.getCantidad());
 
+            // Acumular valor de entrada
+            valorTotal += producto.getCantidad() * productobd.getPrecioCompra();
+
             if (productobd.getUnidad().getId().equals(Constantes.ID_UNIDAD) && producto.getCantidad() % 1 != 0) {
                 throw new CustomException("La cantidad no puede ser decimal, ya que es por unidad: "+ productobd.getNombre());
             }
 
-            // Crear un nuevo movimiento
-            Movimiento movimiento = new Movimiento();
-            movimiento.setTipoMovimiento(tipoMovimiento);
-            movimiento.setValor(producto.getCantidad() * productobd.getPrecioCompra());
-            movimiento.setFecha(new Date());
-
-            // Guardar el movimiento
-            movimientoRepository.save(movimiento);
-
             // Guardar el producto actualizado
             productoRepository.save(productobd);
         }
+        // Crear movimiento de compra
+        crearMovimientoCompra(valorTotal);
     }
 
     @Override
@@ -89,7 +84,7 @@ public class ProductoServiceImpl implements ProductoService {
 
         //generar movimiento
         if (producto.getCantidad() > 0) {
-            crearMovimientoCompra(producto);
+            crearMovimientoCompra(producto.getCantidad() * producto.getPrecioCompra());
         }
 
         // Guardar el nuevo producto
@@ -120,13 +115,10 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.save(producto);
     }
 
-    private void crearMovimientoCompra(Producto producto) {
-        // Crear el tipo de movimiento
+    private void crearMovimientoCompra(Double valor) {
+        // Tipo de movimiento
         TipoMovimiento tipoMovimiento = new TipoMovimiento();
         tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_COMPRA);
-
-        Double cantidad = producto.getCantidad();
-        Double valor = cantidad*producto.getPrecioCompra();
 
         // Crear un nuevo movimiento
         Movimiento movimiento = new Movimiento();
