@@ -4,6 +4,7 @@ import { ProductoService } from '../../services/producto/producto.service';
 import { Producto, ProductoTable } from '../../models/producto';
 import { CommonModule } from '@angular/common';
 import { FormsModule }   from '@angular/forms';
+import { VentaService } from '../../services/venta/venta.service';
 
 @Component({
   selector: 'app-ventas',
@@ -21,7 +22,8 @@ export class VentasComponent implements AfterViewInit {
 
   constructor(
     private alertService: AlertService,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private ventaService: VentaService
   ) { }
 
   ngAfterViewInit() {

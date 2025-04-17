@@ -37,7 +37,6 @@ CREATE TABLE movimiento (
 -- Crear tabla venta
 CREATE TABLE venta (
     id SERIAL PRIMARY KEY,
-    cantidad NUMERIC(10,3) NOT NULL,
     valor NUMERIC(10,2) NOT NULL,
     fecha DATE NOT NULL
 );
