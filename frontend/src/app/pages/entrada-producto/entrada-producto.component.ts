@@ -33,7 +33,31 @@ export class EntradaProductoComponent implements AfterViewInit, OnInit{
   ngOnInit() {
     // cargar lista inicial desde el state service
     this.listaProductos = [...this.entradaStateService.productos];
+
+    const ids = this.listaProductos.map(p => p.producto.id);
+
+    if (ids.length) {
+      this.productoService.listarProductosPorIds(ids).subscribe( productos => {
+
+        const mapProd = new Map<number, Producto>(
+          productos.map(p => [p.id, p])
+        );
+
+        this.listaProductos = this.listaProductos.map(item => {
+          const actualizado = mapProd.get(item.producto.id)!;
+          return {
+            producto: actualizado,
+            cantidad: item.cantidad,
+            subtotal: actualizado.precioCompra * item.cantidad
+          };
+        })
+
+
+      })
+    }
+
     this.calcularTotal();
+    this.persistirStado();
   }
 
   ngAfterViewInit() {

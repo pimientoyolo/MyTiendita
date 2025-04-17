@@ -30,4 +30,10 @@ export class ProductoService {
   entradaProductos(productos: ProductoTable[]): Observable<boolean> {
     return this.http.put<boolean>(`${this.apiUrl}/entrada`, productos);
   }
+
+  listarProductosPorIds(ids: number[]): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`${this.apiUrl}/listar/ids`, {
+      params: { ids: ids.join(',') }
+    });
+  }
 }

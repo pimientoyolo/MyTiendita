@@ -14,4 +14,6 @@ public interface ProductoService {
     Producto actualizarProducto(Producto producto);
 
     void entradaProducto(List<ProductoTableDTO> productos);
+
+    List<Producto> listarProductosPorIds(List<Long> ids);
 }

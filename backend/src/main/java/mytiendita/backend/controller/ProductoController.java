@@ -50,6 +50,14 @@ public class ProductoController {
         return ResponseEntity.ok(true);
     }
 
+    @GetMapping("/listar/ids")
+    public ResponseEntity<List<Producto>> listarProductosPorIds(
+            @RequestParam List<Long> ids
+    ) {
+        // Lógica para listar productos por IDs
+        return ResponseEntity.ok(productoService.listarProductosPorIds(ids));
+    }
+
     //setters
     @Autowired
     public void setProductoService(ProductoService productoService) {
