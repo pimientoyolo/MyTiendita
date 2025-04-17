@@ -44,6 +44,21 @@ export class VentasComponent implements AfterViewInit {
     }
   }
 
+  /** Captura Shift+Enter y Esc */
+  @HostListener('window:keydown', ['$event'])
+  handleKeydown(event: KeyboardEvent) {
+    if (event.shiftKey && event.key === 'Enter') {
+      // Shift+Enter → proceder venta
+      this.procesoVenta();
+      event.preventDefault();
+    }
+    if (event.key === 'Escape') {
+      // Shift+Delete → cancelar venta
+      this.cancelarVenta();
+      event.preventDefault();
+    }
+  }
+
   listaProductos: ProductoTable[] = [];
   codigoBarras: string = '';
   total: number = 0;
@@ -120,9 +135,19 @@ export class VentasComponent implements AfterViewInit {
   }
 
   procesoVenta() {
+    if (this.listaProductos.length === 0) {
+      this.alertService.show("No hay productos en la lista", "error");
+      return;
+    }
+    // Aquí iría la lógica para procesar la venta
+    this.alertService.show("Venta procesada con éxito", "success");
+    this.cancelarVenta();
   }
 
   cancelarVenta() {
+    this.listaProductos = [];
+    this.total = 0;
+    this.codigoBarras = '';
   }
 
 
