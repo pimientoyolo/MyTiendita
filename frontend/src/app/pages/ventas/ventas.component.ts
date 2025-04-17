@@ -15,7 +15,7 @@ import { VentaStateService } from '../../storage/venta-state.service';
     FormsModule,
   ],
   templateUrl: './ventas.component.html',
-  styleUrl: './ventas.component.css'
+  styleUrls: ['./ventas.component.css']
 })
 export class VentasComponent implements AfterViewInit, OnInit{
 

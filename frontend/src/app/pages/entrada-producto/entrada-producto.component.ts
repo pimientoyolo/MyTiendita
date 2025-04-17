@@ -4,7 +4,6 @@ import { ProductoService } from '../../services/producto/producto.service';
 import { Producto, ProductoTable } from '../../models/producto';
 import { CommonModule } from '@angular/common';
 import { FormsModule }   from '@angular/forms';
-import { VentaService } from '../../services/venta/venta.service';
 import { EntradaStateService } from '../../storage/entrada-state.service';
 
 @Component({
@@ -15,7 +14,7 @@ import { EntradaStateService } from '../../storage/entrada-state.service';
     FormsModule,
   ],
   templateUrl: './entrada-producto.component.html',
-  styleUrl: './entrada-producto.component.css'
+  styleUrls: ['./entrada-producto.component.css']
 })
 export class EntradaProductoComponent implements AfterViewInit, OnInit{
 
@@ -28,13 +27,12 @@ export class EntradaProductoComponent implements AfterViewInit, OnInit{
   constructor(
     private alertService: AlertService,
     private productoService: ProductoService,
-    private ventaService: VentaService,
-    private ebtradaStateService: EntradaStateService
+    private entradaStateService: EntradaStateService
   ) { }
 
   ngOnInit() {
     // cargar lista inicial desde el state service
-    this.listaProductos = [...this.ebtradaStateService.productos];
+    this.listaProductos = [...this.entradaStateService.productos];
     this.calcularTotal();
   }
 
@@ -140,18 +138,14 @@ export class EntradaProductoComponent implements AfterViewInit, OnInit{
   }
 
   procesoEntrada() {
-    console.log(this.listaProductos);
-
-    return;
-
     if (this.listaProductos.length === 0) {
       this.alertService.show("No hay productos en la lista", "error");
       return;
     }
-    // Aquí iría la lógica para procesar la venta
-    this.ventaService.procesoVenta(this.listaProductos).subscribe({
+    // Aquí iría la lógica para entrada de productos
+    this.productoService.entradaProductos(this.listaProductos).subscribe({
       next: () => {
-        this.alertService.show("Venta procesada con éxito", "success");
+        this.alertService.show("Entrada procesada con exito", "success");
         this.cancelarEntrada();
       },
       error: (error) => {
@@ -169,11 +163,10 @@ export class EntradaProductoComponent implements AfterViewInit, OnInit{
 
   private persistirStado() {
     // Guardar el estado actual de la lista de productos en el servicio de estado
-    this.ebtradaStateService.productos = this.listaProductos;
+    this.entradaStateService.productos = this.listaProductos;
   }
 
   formatCantidad(event: Event, prod: ProductoTable) {
-    console.log("onCantidadInput", event, prod);
 
     const input = event.target as HTMLInputElement;
     let val = input.value;
@@ -194,6 +187,7 @@ export class EntradaProductoComponent implements AfterViewInit, OnInit{
   
     // 4) Recalcular subtotal y total
     prod.subtotal = prod.cantidad * prod.producto.precioCompra;
+
     this.calcularTotal();
     this.persistirStado();
   
