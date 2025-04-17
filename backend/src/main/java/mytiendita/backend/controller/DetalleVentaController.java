@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/detalle-venta")
+@RequestMapping("/api/detalle-venta")
 @Tag(name = "DetalleVenta", description = "Controlador para las relaciones entre venta y productos")
 public class DetalleVentaController {
 }

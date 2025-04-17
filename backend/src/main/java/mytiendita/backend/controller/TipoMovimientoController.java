@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tipo-movimiento")
+@RequestMapping("/api/tipo-movimiento")
 @Tag(name = "TipoMovimiento", description = "Controlador para los tipos de movimiento")
 public class TipoMovimientoController {
 }
