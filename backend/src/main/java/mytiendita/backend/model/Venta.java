@@ -19,9 +19,6 @@ public class Venta {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "cantidad")
-    private Double cantidad;
-
     @Column(name = "valor")
     private Double valor;
 
