@@ -87,11 +87,21 @@ export class SidebarButtonComponent {
         <line x1="12" y1="8" x2="12" y2="16" stroke-linecap="round" stroke-linejoin="round"/>
         <line x1="8" y1="12" x2="16" y2="12" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-    `
-
-
-
-
+    `,
+    updateProduct: `
+    <svg xmlns="http://www.w3.org/2000/svg"
+         fill="none"
+         viewBox="0 0 24 24"
+         stroke="currentColor"
+         stroke-width="2"
+         aria-hidden="true"
+         class="w-5 h-5 text-inherit">
+      <polyline points="23 4 23 10 17 10" />
+      <polyline points="1 20 1 14 7 14" />
+      <path d="M3.51 9a9 9 0 0114.13-3.36L23 10" />
+      <path d="M20.49 15a9 9 0 01-14.13 3.36L1 14" />
+    </svg>
+  `
   };
 
   // Obtiene el código SVG a partir de la clave ingresada
