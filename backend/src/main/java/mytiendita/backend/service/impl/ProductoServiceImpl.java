@@ -1,7 +1,10 @@
 package mytiendita.backend.service.impl;
 
 import mytiendita.backend.exception.CustomException;
+import mytiendita.backend.model.Movimiento;
 import mytiendita.backend.model.Producto;
+import mytiendita.backend.model.TipoMovimiento;
+import mytiendita.backend.repository.MovimientoRepository;
 import mytiendita.backend.repository.ProductoRepository;
 import mytiendita.backend.repository.UnidadRepository;
 import mytiendita.backend.service.interfaces.ProductoService;
@@ -10,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 @Service
 public class ProductoServiceImpl implements ProductoService {
 
     private ProductoRepository productoRepository;
     private UnidadRepository unidadRepository;
+    private MovimientoRepository movimientoRepository;
 
     @Override
     public Producto getProductoByCodigo(String codigo) {
@@ -37,6 +43,11 @@ public class ProductoServiceImpl implements ProductoService {
         // Validar que el producto no exista
         if (productoRepository.existsByCodigoBarras(producto.getCodigoBarras())) {
             throw new CustomException("El producto ya existe");
+        }
+
+        //generar movimiento
+        if (producto.getCantidad() > 0) {
+            crearMovimientoCompra(producto);
         }
 
         // Guardar el nuevo producto
@@ -65,6 +76,26 @@ public class ProductoServiceImpl implements ProductoService {
 
         // Guardar el producto actualizado
         return productoRepository.save(producto);
+    }
+
+    private void crearMovimientoCompra(Producto producto) {
+        // Crear el tipo de movimiento
+        TipoMovimiento tipoMovimiento = new TipoMovimiento();
+        tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_COMPRA);
+
+        Double cantidad = producto.getCantidad();
+        Double valor = cantidad*producto.getPrecioCompra();
+
+        // Crear un nuevo movimiento
+        Movimiento movimiento = new Movimiento();
+        movimiento.setTipoMovimiento(tipoMovimiento);
+        movimiento.setProducto(producto);
+        movimiento.setCantidad(cantidad);
+        movimiento.setValor(valor);
+        movimiento.setFecha(new Date());
+
+        // Guardar el movimiento
+        movimientoRepository.save(movimiento);
     }
 
     private void validarUnidad(Producto producto) {
