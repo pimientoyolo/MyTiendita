@@ -142,8 +142,15 @@ export class VentasComponent implements AfterViewInit {
       return;
     }
     // Aquí iría la lógica para procesar la venta
-    this.alertService.show("Venta procesada con éxito", "success");
-    this.cancelarVenta();
+    this.ventaService.procesoVenta(this.listaProductos).subscribe({
+      next: () => {
+        this.alertService.show("Venta procesada con éxito", "success");
+        this.cancelarVenta();
+      },
+      error: (error) => {
+        this.alertService.show(error.error.message, "error");
+      }
+    });
   }
 
   cancelarVenta() {
