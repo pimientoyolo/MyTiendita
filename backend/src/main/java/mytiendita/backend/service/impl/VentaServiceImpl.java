@@ -50,21 +50,21 @@ public class VentaServiceImpl implements VentaService {
             //verificamos si el producto existe
             Producto productobd = productoService.getProductoByCodigo(producto.getProducto().getCodigoBarras());
 
-            Double cantidad = productobd.getCantidad();
-            Double valor = cantidad * producto.getProducto().getPrecioVenta();
+            Double cantidadVendida = producto.getCantidad();
+            Double valor = cantidadVendida * producto.getProducto().getPrecioVenta();
 
             //calculamos el valor total
             valorTotal += valor;
 
             //creamos el detalle de venta
             DetalleVenta detalleVenta = new DetalleVenta();
-            detalleVenta.setCantidad(cantidad);
+            detalleVenta.setCantidad(cantidadVendida);
             detalleVenta.setValor(valor);
             detalleVenta.setProducto(productobd);
             detalleVenta.setVenta(venta);
 
             //actualizamos la cantidad del producto
-            productobd.setCantidad(productobd.getCantidad() - cantidad);
+            productobd.setCantidad(productobd.getCantidad() - cantidadVendida);
             //no se puede tener menor a cero, simplicidad por manejo de tienda
             if (productobd.getCantidad() < 0) {
                 productobd.setCantidad(0.0);
