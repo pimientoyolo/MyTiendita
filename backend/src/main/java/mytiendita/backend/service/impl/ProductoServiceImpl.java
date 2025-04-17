@@ -1,5 +1,6 @@
 package mytiendita.backend.service.impl;
 
+import mytiendita.backend.dto.ProductoTableDTO;
 import mytiendita.backend.exception.CustomException;
 import mytiendita.backend.model.Movimiento;
 import mytiendita.backend.model.Producto;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {
@@ -26,6 +28,43 @@ public class ProductoServiceImpl implements ProductoService {
     public Producto getProductoByCodigo(String codigo) {
         return productoRepository.findByCodigoBarras(codigo)
                 .orElseThrow(() -> new CustomException("Producto no encontrado"));
+    }
+
+    @Override
+    @Transactional
+    public void entradaProducto(List<ProductoTableDTO> productos) {
+        // Tipo de movimiento
+        TipoMovimiento tipoMovimiento = new TipoMovimiento();
+        tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_COMPRA);
+
+        for (ProductoTableDTO producto : productos) {
+            if(producto.getCantidad() == null || producto.getCantidad() <= 0) {
+                continue;
+            }
+
+
+            // Validar que el producto exista y obtenerlo
+            Producto productobd = getProductoByCodigo(producto.getProducto().getCodigoBarras());
+            productobd.setCantidad(productobd.getCantidad() + producto.getCantidad());
+
+            if (productobd.getUnidad().getId().equals(Constantes.ID_UNIDAD) && producto.getCantidad() % 1 != 0) {
+                throw new CustomException("La cantidad no puede ser decimal, ya que es por unidad: "+ productobd.getNombre());
+            }
+
+            // Crear un nuevo movimiento
+            Movimiento movimiento = new Movimiento();
+            movimiento.setTipoMovimiento(tipoMovimiento);
+            movimiento.setProducto(productobd);
+            movimiento.setCantidad(producto.getCantidad());
+            movimiento.setValor(producto.getCantidad() * productobd.getPrecioCompra());
+            movimiento.setFecha(new Date());
+
+            // Guardar el movimiento
+            movimientoRepository.save(movimiento);
+
+            // Guardar el producto actualizado
+            productoRepository.save(productobd);
+        }
     }
 
     @Override
@@ -159,6 +198,11 @@ public class ProductoServiceImpl implements ProductoService {
     @Autowired
     public void setUnidadRepository(UnidadRepository unidadRepository) {
         this.unidadRepository = unidadRepository;
+    }
+
+    @Autowired
+    public void setMovimientoRepository(MovimientoRepository movimientoRepository) {
+        this.movimientoRepository = movimientoRepository;
     }
 
 }

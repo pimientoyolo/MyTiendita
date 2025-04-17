@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Producto } from '../../models/producto';
+import { Producto, ProductoTable } from '../../models/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +25,9 @@ export class ProductoService {
 
   actualizar(producto: Partial<Producto>): Observable<Producto> {
     return this.http.put<Producto>(`${this.apiUrl}/actualizar`, producto);
+  }
+
+  entradaProductos(productos: ProductoTable[]): Observable<boolean> {
+    return this.http.put<boolean>(`${this.apiUrl}/entrada`, productos);
   }
 }

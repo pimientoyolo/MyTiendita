@@ -1,11 +1,14 @@
 package mytiendita.backend.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import mytiendita.backend.dto.ProductoTableDTO;
 import mytiendita.backend.model.Producto;
 import mytiendita.backend.service.interfaces.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/producto")
@@ -36,6 +39,15 @@ public class ProductoController {
     ) {
         // Lógica para actualizar un producto existente
         return ResponseEntity.ok(productoService.actualizarProducto(producto));
+    }
+
+    @PutMapping("/entrada")
+    public ResponseEntity<Boolean> entradaProducto(
+            @RequestBody List<ProductoTableDTO> productos
+            ) {
+        productoService.entradaProducto(productos);
+
+        return ResponseEntity.ok(true);
     }
 
     //setters
