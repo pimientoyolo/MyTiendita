@@ -22,4 +22,8 @@ export class ProductoService {
   create(producto: Partial<Producto>): Observable<Producto> {
     return this.http.post<Producto>(`${this.apiUrl}/crear`, producto);
   }
+
+  actualizar(producto: Partial<Producto>): Observable<Producto> {
+    return this.http.put<Producto>(`${this.apiUrl}/actualizar`, producto);
+  }
 }

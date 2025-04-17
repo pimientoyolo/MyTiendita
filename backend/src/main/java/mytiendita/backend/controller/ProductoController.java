@@ -30,6 +30,14 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.crearProducto(producto));
     }
 
+    @PutMapping("/actualizar")
+    public ResponseEntity<Producto> actualizarProducto(
+            @RequestBody Producto producto
+    ) {
+        // Lógica para actualizar un producto existente
+        return ResponseEntity.ok(productoService.actualizarProducto(producto));
+    }
+
     //setters
     @Autowired
     public void setProductoService(ProductoService productoService) {
