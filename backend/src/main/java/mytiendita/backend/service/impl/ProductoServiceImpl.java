@@ -25,6 +25,11 @@ public class ProductoServiceImpl implements ProductoService {
     private MovimientoRepository movimientoRepository;
 
     @Override
+    public List<Producto> listarProductosPorIds(List<Long> ids) {
+        return productoRepository.findByIdIn(ids);
+    }
+
+    @Override
     public Producto getProductoByCodigo(String codigo) {
         return productoRepository.findByCodigoBarras(codigo)
                 .orElseThrow(() -> new CustomException("Producto no encontrado"));
