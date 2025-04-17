@@ -69,9 +69,7 @@ public class VentaServiceImpl implements VentaService {
             tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_VENTA);
 
             Movimiento inventario = new Movimiento();
-            inventario.setCantidad(cantidadVendida);
             inventario.setTipoMovimiento(tipoMovimiento);
-            inventario.setProducto(productobd);
             inventario.setFecha(new Date());
             inventario.setValor(valor);
 

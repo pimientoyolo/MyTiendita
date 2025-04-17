@@ -59,8 +59,6 @@ public class ProductoServiceImpl implements ProductoService {
             // Crear un nuevo movimiento
             Movimiento movimiento = new Movimiento();
             movimiento.setTipoMovimiento(tipoMovimiento);
-            movimiento.setProducto(productobd);
-            movimiento.setCantidad(producto.getCantidad());
             movimiento.setValor(producto.getCantidad() * productobd.getPrecioCompra());
             movimiento.setFecha(new Date());
 
@@ -133,8 +131,6 @@ public class ProductoServiceImpl implements ProductoService {
         // Crear un nuevo movimiento
         Movimiento movimiento = new Movimiento();
         movimiento.setTipoMovimiento(tipoMovimiento);
-        movimiento.setProducto(producto);
-        movimiento.setCantidad(cantidad);
         movimiento.setValor(valor);
         movimiento.setFecha(new Date());
 
