@@ -18,4 +18,8 @@ export class ProductoService {
   getByCodigoBarras(codigoBarras: string): Observable<Producto> {
     return this.http.get<Producto>(`${this.apiUrl}/codigo/${codigoBarras}`);
   }
+
+  create(producto: Partial<Producto>): Observable<Producto> {
+    return this.http.post<Producto>(`${this.apiUrl}/crear`, producto);
+  }
 }
