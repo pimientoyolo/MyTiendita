@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/unidad")
+@RequestMapping("/api/unidad")
 @Tag(name = "Unidad", description = "Controlador para las unidades de medida")
 public class UnidadController {
 }
