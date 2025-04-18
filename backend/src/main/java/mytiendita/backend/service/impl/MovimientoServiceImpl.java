@@ -25,8 +25,6 @@ public class MovimientoServiceImpl implements MovimientoService {
         LocalDate hoy     = LocalDate.now();
         LocalDate ayer = hoy.minusDays(1);
 
-        System.out.println("Hoy: " + hoy);
-
         // 3) Genera los instantes de inicio y fin de cada día
         LocalDateTime inicioHoy  = hoy.atStartOfDay();
         LocalDateTime finHoy    = hoy.atTime(LocalTime.MAX);
@@ -43,8 +41,6 @@ public class MovimientoServiceImpl implements MovimientoService {
         // 5) Llama al repositorio con esos rangos
         List<Movimiento> movimientos       = movimientoRepository.findByFechaBetween(inicio, fin);
         List<Movimiento> movimientosPasado = movimientoRepository.findByFechaBetween(inicioP, finP);
-
-        System.out.println("incio: " + inicio);
 
         // 6) Devuelve el balance
         return generarBalance(movimientos, movimientosPasado);
