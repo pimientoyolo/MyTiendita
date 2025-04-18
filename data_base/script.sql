@@ -27,9 +27,7 @@ CREATE TABLE producto (
 -- Crear tabla movimiento
 CREATE TABLE movimiento (
     id SERIAL PRIMARY KEY,
-    id_producto BIGINT NOT NULL,
     id_tipo BIGINT NOT NULL,
-    cantidad NUMERIC(10,3) NOT NULL,
     valor NUMERIC(10,2) NOT NULL,
     fecha DATE NOT NULL
 );
@@ -52,7 +50,6 @@ CREATE TABLE detalle_venta (
 
 -- Agregar claves foráneas
 ALTER TABLE producto ADD CONSTRAINT fk_producto_unidad FOREIGN KEY (id_unidad) REFERENCES unidad(id);
-ALTER TABLE movimiento ADD CONSTRAINT fk_movimiento_producto FOREIGN KEY (id_producto) REFERENCES producto(id);
 ALTER TABLE movimiento ADD CONSTRAINT fk_movimiento_tipo FOREIGN KEY (id_tipo) REFERENCES tipo_movimiento(id);
 ALTER TABLE detalle_venta ADD CONSTRAINT fk_detalle_venta_venta FOREIGN KEY (id_venta) REFERENCES venta(id);
 ALTER TABLE detalle_venta ADD CONSTRAINT fk_detalle_venta_producto FOREIGN KEY (id_producto) REFERENCES producto(id);

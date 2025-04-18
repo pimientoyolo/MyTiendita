@@ -1,0 +1,28 @@
+
+<div class="relative flex flex-col bg-white rounded-xl text-gray-700 shadow-md overflow-visible">
+    <div
+      class="absolute -mt-4 mx-4 grid h-16 w-16 place-items-center rounded-xl shadow-lg"
+      [ngClass]="[
+        'bg-gradient-to-tr',
+        gradientFrom,
+        gradientTo,
+        shadowColor,
+        'text-white'
+      ]"
+    >
+      <div [innerHTML]="iconSvg"></div>
+    </div>
+    <div class="p-4 text-right">
+      <p class="text-xl text-blue-gray-600">{{ title }}</p>
+      <h4 [ngClass]="'text-2xl font-semibold ' + valueColor">
+        {{ value }}
+      </h4>
+    </div>
+    <div class="border-t border-blue-gray-50 p-4">
+      <p class="text-base text-blue-gray-600">
+        <strong [ngClass]="trendColor">{{ trendPercent }}</strong>
+        &nbsp;{{ trendText }}
+      </p>
+    </div>
+  </div>
+  

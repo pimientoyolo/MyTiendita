@@ -20,15 +20,8 @@ public class Movimiento {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_producto", referencedColumnName = "id")
-    private Producto producto;
-
-    @ManyToOne
     @JoinColumn(name = "id_tipo", referencedColumnName = "id")
     private TipoMovimiento tipoMovimiento;
-
-    @Column(name = "cantidad")
-    private Double cantidad;
 
     @Column(name = "valor")
     private Double valor;

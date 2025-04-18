@@ -64,17 +64,6 @@ public class VentaServiceImpl implements VentaService {
             detalleVenta.setProducto(productobd);
             detalleVenta.setVenta(venta);
 
-            //creamos el movimiento de inventario
-            TipoMovimiento tipoMovimiento = new TipoMovimiento();
-            tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_VENTA);
-
-            Movimiento inventario = new Movimiento();
-            inventario.setCantidad(cantidadVendida);
-            inventario.setTipoMovimiento(tipoMovimiento);
-            inventario.setProducto(productobd);
-            inventario.setFecha(new Date());
-            inventario.setValor(valor);
-
             //actualizamos la cantidad del producto
             productobd.setCantidad(productobd.getCantidad() - cantidadVendida);
             //no se puede tener menor a cero, simplicidad por manejo de tienda
@@ -82,8 +71,6 @@ public class VentaServiceImpl implements VentaService {
                 productobd.setCantidad(0.0);
             }
 
-            //guardamos el movimiento de inventario
-            movimientoRepository.save(inventario);
 
             //guardamos el detalle de venta
             detalleVentaRepository.save(detalleVenta);
@@ -92,6 +79,16 @@ public class VentaServiceImpl implements VentaService {
             productoRepository.save(productobd);
 
         }
+
+        TipoMovimiento tipoMovimiento = new TipoMovimiento();
+        tipoMovimiento.setId(Constantes.ID_TIPO_MOVIMIENTO_VENTA);
+
+        Movimiento inventario = new Movimiento();
+        inventario.setTipoMovimiento(tipoMovimiento);
+        inventario.setFecha(new Date());
+        inventario.setValor(valorTotal);
+
+        movimientoRepository.save(inventario);
 
         //actualizamos el valor de la venta
         venta.setValor(valorTotal);

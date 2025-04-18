@@ -1,8 +1,166 @@
 package mytiendita.backend.service.impl;
 
+import mytiendita.backend.dto.BalanceDTO;
+import mytiendita.backend.model.Movimiento;
+import mytiendita.backend.repository.MovimientoRepository;
 import mytiendita.backend.service.interfaces.MovimientoService;
+import mytiendita.backend.util.Constantes;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.*;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class MovimientoServiceImpl implements MovimientoService {
+
+    private MovimientoRepository movimientoRepository;
+
+    @Override
+    public BalanceDTO getBalanceDia() {
+        // 1) Obtén la zona del sistema (puedes fijar otra si lo necesitas)
+        ZoneId zona = ZoneId.systemDefault();
+
+        // 2) Calcula hoy y ayer en LocalDate
+        LocalDate hoy     = LocalDate.now(zona);
+        LocalDate ayer = hoy.minusDays(1);
+
+        // 3) Genera los instantes de inicio y fin de cada día
+        LocalDateTime inicioHoy  = hoy.atStartOfDay();
+        LocalDateTime finHoy    = hoy.atTime(LocalTime.MAX);
+
+        LocalDateTime inicioAyer  = ayer.atStartOfDay();
+        LocalDateTime finAyer     = ayer.atTime(LocalTime.MAX);
+
+        // 4) Si tu repo aún usa java.util.Date, convierte así:
+        Date inicio  = Date.from(inicioHoy .atZone(zona).toInstant());
+        Date fin      = Date.from(finHoy   .atZone(zona).toInstant());
+        Date inicioP  = Date.from(inicioAyer  .atZone(zona).toInstant());
+        Date finP     = Date.from(finAyer    .atZone(zona).toInstant());
+
+        // 5) Llama al repositorio con esos rangos
+        List<Movimiento> movimientos       = movimientoRepository.findByFechaBetween(inicio, fin);
+        List<Movimiento> movimientosPasado = movimientoRepository.findByFechaBetween(inicioP, finP);
+
+        // 6) Devuelve el balance
+        return generarBalance(movimientos, movimientosPasado);
+    }
+
+    @Override
+    public BalanceDTO getBalanceSemana() {
+        ZoneId zona = ZoneId.systemDefault();
+
+        LocalDate hoy = LocalDate.now(zona);
+
+        // calculo de la semana actual
+        LocalDateTime inicioSemanaAct = hoy.minusDays(6).atStartOfDay();
+        LocalDateTime finSemanaAct    = hoy.atTime(LocalTime.MAX);
+
+        // calculo de la semana pasada
+        LocalDateTime inicioSemanaPas = hoy.minusDays(13).atStartOfDay();
+        LocalDateTime finSemanaPas    = hoy.minusDays(7).atTime(LocalTime.MAX);
+
+        //pasar a Date
+        Date inicioSemanaActual = Date.from(inicioSemanaAct.atZone(zona).toInstant());
+        Date finSemanaActual    = Date.from(finSemanaAct.atZone(zona).toInstant());
+        Date inicioSemanaPasada = Date.from(inicioSemanaPas.atZone(zona).toInstant());
+        Date finSemanaPasada    = Date.from(finSemanaPas.atZone(zona).toInstant());
+
+        List<Movimiento> movimientos       = movimientoRepository.findByFechaBetween(inicioSemanaActual, finSemanaActual);
+        List<Movimiento> movimientosPasado = movimientoRepository.findByFechaBetween(inicioSemanaPasada, finSemanaPasada);
+
+        // 6) Devuelve el balance
+        return generarBalance(movimientos, movimientosPasado);
+    }
+
+    @Override
+    public BalanceDTO getBalanceMes() {
+        ZoneId zona = ZoneId.systemDefault();
+
+        LocalDate hoy = LocalDate.now(zona);
+
+        // mes actual y mes pasado
+        YearMonth mesActual = YearMonth.from(hoy);
+        YearMonth mesPasado  = mesActual.minusMonths(1);
+
+        // calculo de inicio y fin del mes actual
+        LocalDateTime inicioMesAct = mesActual.atDay(1).atStartOfDay();
+        LocalDateTime finMesAct    = mesActual.atEndOfMonth().atTime(LocalTime.MAX);
+
+        // calculo de inicio y fin del mes pasado
+        LocalDateTime inicioMesPas = mesPasado.atDay(1).atStartOfDay();
+        LocalDateTime finMesPas    = mesPasado.atEndOfMonth().atTime(LocalTime.MAX);
+
+        //pasar a Date
+        Date inicioMesActual = Date.from(inicioMesAct.atZone(zona).toInstant());
+        Date finMesActual    = Date.from(finMesAct.atZone(zona).toInstant());
+        Date inicioMesPasado = Date.from(inicioMesPas.atZone(zona).toInstant());
+        Date finMesPasado    = Date.from(finMesPas.atZone(zona).toInstant());
+
+
+        // 5) Llama al repositorio con esos rangos
+        List<Movimiento> movimientos       = movimientoRepository.findByFechaBetween(inicioMesActual, finMesActual);
+        List<Movimiento> movimientosPasado = movimientoRepository.findByFechaBetween(inicioMesPasado, finMesPasado);
+
+        // 6) Devuelve el balance
+        return generarBalance(movimientos, movimientosPasado);
+    }
+
+    private BalanceDTO generarBalance(List<Movimiento> movimientos, List<Movimiento> movimientosPasado){
+        BalanceDTO balanceDTO = new BalanceDTO();
+
+        for (Movimiento movimiento : movimientos) {
+            if (movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_VENTA) ||
+                    movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_ENTRADA)) {
+
+                // Sumar las ganancias actuales
+                balanceDTO.setGanancia(balanceDTO.getGanancia() + movimiento.getValor());
+            }else if(movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_COMPRA) ||
+                    movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_SALIDA)){
+
+                // Sumar los gastos actuales
+                balanceDTO.setGasto(balanceDTO.getGasto() + movimiento.getValor());
+            }
+        }
+
+        for (Movimiento movimiento : movimientosPasado) {
+            if (movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_VENTA) ||
+                    movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_ENTRADA)) {
+
+                // Sumar las ganancias pasadas
+                balanceDTO.setGananciaAnterior(balanceDTO.getGananciaAnterior() + movimiento.getValor());
+            }else if(movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_COMPRA) ||
+                    movimiento.getTipoMovimiento().getId().equals(Constantes.ID_TIPO_MOVIMIENTO_SALIDA)){
+
+                // Sumar los gastos pasados
+                balanceDTO.setGastoAnterior(balanceDTO.getGastoAnterior() + movimiento.getValor());
+            }
+        }
+
+        // Calcular el balance actual
+        balanceDTO.setBalance(balanceDTO.getGanancia() - balanceDTO.getGasto());
+
+        // Calcular el balance anterior
+        balanceDTO.setBalanceAnterior(balanceDTO.getGananciaAnterior() - balanceDTO.getGastoAnterior());
+
+        // Calcular el porcentaje de mejora
+        if (balanceDTO.getBalanceAnterior() != 0) {
+            balanceDTO.setPorcentajeMejora((balanceDTO.getBalance() - balanceDTO.getBalanceAnterior()) / balanceDTO.getBalanceAnterior() * 100);
+        } else {
+            balanceDTO.setPorcentajeMejora(0.0);
+        }
+
+        // redondedar porcentaje a 2 decimales
+        Double redondeo = Math.round(balanceDTO.getPorcentajeMejora() * 100.0) / 100.0;
+        balanceDTO.setPorcentajeMejora(redondeo);
+
+        return balanceDTO;
+    }
+
+
+    @Autowired
+    public void setMovimientoRepository(MovimientoRepository movimientoRepository) {
+        this.movimientoRepository = movimientoRepository;
+    }
 }
