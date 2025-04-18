@@ -25,6 +25,8 @@ public class MovimientoServiceImpl implements MovimientoService {
         // 2) Calcula hoy y ayer en LocalDate
         LocalDate hoy     = LocalDate.now(zona);
         LocalDate ayer = hoy.minusDays(1);
+        
+        System.out.println("Hoy: " + hoy);
 
         // 3) Genera los instantes de inicio y fin de cada día
         LocalDateTime inicioHoy  = hoy.atStartOfDay();
