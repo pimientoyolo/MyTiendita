@@ -8,6 +8,7 @@ import mytiendita.backend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.*;
 import java.util.Date;
 import java.util.List;
@@ -19,13 +20,11 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public BalanceDTO getBalanceDia() {
-        // 1) Obtén la zona del sistema (puedes fijar otra si lo necesitas)
-        ZoneId zona = ZoneId.systemDefault();
 
         // 2) Calcula hoy y ayer en LocalDate
-        LocalDate hoy     = LocalDate.now(zona);
+        LocalDate hoy     = LocalDate.now();
         LocalDate ayer = hoy.minusDays(1);
-        
+
         System.out.println("Hoy: " + hoy);
 
         // 3) Genera los instantes de inicio y fin de cada día
@@ -36,14 +35,16 @@ public class MovimientoServiceImpl implements MovimientoService {
         LocalDateTime finAyer     = ayer.atTime(LocalTime.MAX);
 
         // 4) Si tu repo aún usa java.util.Date, convierte así:
-        Date inicio  = Date.from(inicioHoy .atZone(zona).toInstant());
-        Date fin      = Date.from(finHoy   .atZone(zona).toInstant());
-        Date inicioP  = Date.from(inicioAyer  .atZone(zona).toInstant());
-        Date finP     = Date.from(finAyer    .atZone(zona).toInstant());
+        Date inicio   = Timestamp.valueOf(inicioHoy);
+        Date fin      = Timestamp.valueOf(finHoy);
+        Date inicioP  = Timestamp.valueOf(inicioAyer);
+        Date finP     = Timestamp.valueOf(finAyer);
 
         // 5) Llama al repositorio con esos rangos
         List<Movimiento> movimientos       = movimientoRepository.findByFechaBetween(inicio, fin);
         List<Movimiento> movimientosPasado = movimientoRepository.findByFechaBetween(inicioP, finP);
+
+        System.out.println("incio: " + inicio);
 
         // 6) Devuelve el balance
         return generarBalance(movimientos, movimientosPasado);
@@ -51,9 +52,8 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public BalanceDTO getBalanceSemana() {
-        ZoneId zona = ZoneId.systemDefault();
 
-        LocalDate hoy = LocalDate.now(zona);
+        LocalDate hoy = LocalDate.now();
 
         // calculo de la semana actual
         LocalDateTime inicioSemanaAct = hoy.minusDays(6).atStartOfDay();
@@ -64,10 +64,10 @@ public class MovimientoServiceImpl implements MovimientoService {
         LocalDateTime finSemanaPas    = hoy.minusDays(7).atTime(LocalTime.MAX);
 
         //pasar a Date
-        Date inicioSemanaActual = Date.from(inicioSemanaAct.atZone(zona).toInstant());
-        Date finSemanaActual    = Date.from(finSemanaAct.atZone(zona).toInstant());
-        Date inicioSemanaPasada = Date.from(inicioSemanaPas.atZone(zona).toInstant());
-        Date finSemanaPasada    = Date.from(finSemanaPas.atZone(zona).toInstant());
+        Date inicioSemanaActual = Timestamp.valueOf(inicioSemanaAct);
+        Date finSemanaActual    = Timestamp.valueOf(finSemanaAct);
+        Date inicioSemanaPasada = Timestamp.valueOf(inicioSemanaPas);
+        Date finSemanaPasada    = Timestamp.valueOf(finSemanaPas);
 
         List<Movimiento> movimientos       = movimientoRepository.findByFechaBetween(inicioSemanaActual, finSemanaActual);
         List<Movimiento> movimientosPasado = movimientoRepository.findByFechaBetween(inicioSemanaPasada, finSemanaPasada);
@@ -78,9 +78,8 @@ public class MovimientoServiceImpl implements MovimientoService {
 
     @Override
     public BalanceDTO getBalanceMes() {
-        ZoneId zona = ZoneId.systemDefault();
 
-        LocalDate hoy = LocalDate.now(zona);
+        LocalDate hoy = LocalDate.now();
 
         // mes actual y mes pasado
         YearMonth mesActual = YearMonth.from(hoy);
@@ -95,10 +94,10 @@ public class MovimientoServiceImpl implements MovimientoService {
         LocalDateTime finMesPas    = mesPasado.atEndOfMonth().atTime(LocalTime.MAX);
 
         //pasar a Date
-        Date inicioMesActual = Date.from(inicioMesAct.atZone(zona).toInstant());
-        Date finMesActual    = Date.from(finMesAct.atZone(zona).toInstant());
-        Date inicioMesPasado = Date.from(inicioMesPas.atZone(zona).toInstant());
-        Date finMesPasado    = Date.from(finMesPas.atZone(zona).toInstant());
+        Date inicioMesActual = Timestamp.valueOf(inicioMesAct);
+        Date finMesActual    = Timestamp.valueOf(finMesAct);
+        Date inicioMesPasado = Timestamp.valueOf(inicioMesPas);
+        Date finMesPasado    = Timestamp.valueOf(finMesPas);
 
 
         // 5) Llama al repositorio con esos rangos

@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/root/MyTiendita/backend
-ExecStart=/usr/bin/java -jar /root/MyTiendita/backend/target/backend-0.0.1-SNAPSHOT.jar
+ExecStart=/usr/bin/java -Duser.timezone=America/Bogota -jar /root/MyTiendita/backend/target/backend-0.0.1-SNAPSHOT.jar
 Restart=always
 Environment="SPRING_PROFILES_ACTIVE=prod"
 
