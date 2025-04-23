@@ -5,9 +5,7 @@ import mytiendita.backend.dto.BalanceDTO;
 import mytiendita.backend.service.interfaces.MovimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/movimiento")
@@ -38,6 +36,15 @@ public class MovimientoController {
         BalanceDTO balance = movimientoService.getBalanceMes();
 
         return ResponseEntity.ok(balance);
+    }
+
+    @PostMapping("/ingreso-movimiento")
+    public ResponseEntity<Void> ingresoMovimiento(
+            @RequestParam Double monto,
+            @RequestParam Long idTipoMovimiento
+    ) {
+        movimientoService.ingresoMovimiento(monto, idTipoMovimiento);
+        return ResponseEntity.ok().build();
     }
 
     @Autowired

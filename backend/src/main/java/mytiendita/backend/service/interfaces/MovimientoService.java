@@ -9,4 +9,6 @@ public interface MovimientoService {
     BalanceDTO getBalanceSemana();
 
     BalanceDTO getBalanceMes();
+
+    void ingresoMovimiento(Double monto, Long idTipoMovimiento);
 }

@@ -1,6 +1,13 @@
 <div class="p-6 max-w-4xl mx-auto">
+
+  <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-800">Actualizar Producto</h1>
+  </div>
+
     <!-- 0. Buscador de producto por código de barras -->
     <div class="mb-6 flex items-center space-x-2">
+      
+
       <input
         #codigoBarrasInput
         type="text"
@@ -27,9 +34,6 @@
   
     <!-- 1. Tarjeta: solo aparece si productFound === true -->
     <div *ngIf="productoEncontrado" class="bg-white rounded-xl shadow-lg overflow-hidden">
-      <div class="px-6 py-2 border-b">
-        <h2 class="text-2xl font-semibold text-gray-800">Editar Producto</h2>
-      </div>
   
       <!-- 2. Formulario -->
       <form
