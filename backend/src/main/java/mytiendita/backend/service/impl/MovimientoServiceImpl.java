@@ -1,12 +1,16 @@
 package mytiendita.backend.service.impl;
 
 import mytiendita.backend.dto.BalanceDTO;
+import mytiendita.backend.exception.CustomException;
 import mytiendita.backend.model.Movimiento;
+import mytiendita.backend.model.TipoMovimiento;
 import mytiendita.backend.repository.MovimientoRepository;
+import mytiendita.backend.repository.TipoMovimientoRepository;
 import mytiendita.backend.service.interfaces.MovimientoService;
 import mytiendita.backend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.*;
@@ -17,6 +21,7 @@ import java.util.List;
 public class MovimientoServiceImpl implements MovimientoService {
 
     private MovimientoRepository movimientoRepository;
+    private TipoMovimientoRepository tipoMovimientoRepository;
 
     @Override
     public BalanceDTO getBalanceDia() {
@@ -155,9 +160,27 @@ public class MovimientoServiceImpl implements MovimientoService {
         return balanceDTO;
     }
 
+    @Override
+    @Transactional
+    public void ingresoMovimiento(Double monto, Long idTipoMovimiento) {
+        TipoMovimiento tipoMovimiento = tipoMovimientoRepository.findById(idTipoMovimiento)
+                .orElseThrow(() -> new CustomException("Tipo de movimiento no encontrado"));
+
+        Movimiento movimiento = new Movimiento();
+        movimiento.setValor(monto);
+        movimiento.setTipoMovimiento(tipoMovimiento);
+        movimiento.setFecha(new Date());
+        movimientoRepository.save(movimiento);
+    }
+
 
     @Autowired
     public void setMovimientoRepository(MovimientoRepository movimientoRepository) {
         this.movimientoRepository = movimientoRepository;
+    }
+
+    @Autowired
+    public void setTipoMovimientoRepository(TipoMovimientoRepository tipoMovimientoRepository) {
+        this.tipoMovimientoRepository = tipoMovimientoRepository;
     }
 }
