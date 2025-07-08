@@ -20,4 +20,8 @@ export class VentaService {
 
     return this.http.post<Boolean>(`${this.apiUrl}/proceso`, productos);
   }
+
+  getVentas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/listar`);
+  }
 }

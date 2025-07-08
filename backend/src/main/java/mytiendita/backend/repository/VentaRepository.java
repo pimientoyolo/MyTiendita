@@ -15,6 +15,7 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
     SELECT v FROM Venta v
     JOIN FETCH v.detalleVentas dv
     ORDER BY v.fecha DESC
+    LIMIT 1000
     """
   )
   List<Venta> findTableVentas();

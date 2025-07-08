@@ -5,6 +5,7 @@ import { MovimientoService } from '../../services/movimiento/movimiento.service'
 import { BalanceDTO } from '../../models/balanceDTO';
 import { forkJoin } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { VentaService } from '../../services/venta/venta.service';
 
 
 @Component({
@@ -22,15 +23,25 @@ export class DashboardComponent implements OnInit {
   balanceDia!: BalanceDTO;
   balanceSemana!: BalanceDTO;
   balanceMes!: BalanceDTO;
+
+  listaVentas: any[] = [];
+  paginaActual = 1;
+  itemsPorPagina = 5;
   
   constructor(
     private alertService: AlertService,
     private movimientoService: MovimientoService,
+    private ventaService: VentaService
   ){
     
   }
 
   ngOnInit() {
+    this.fetchBalance();
+    this.fetchVentas();
+  }
+
+  fetchBalance() {
     forkJoin({
       dia:    this.movimientoService.balanceDia(),
       semana: this.movimientoService.balanceSemana(),
@@ -43,6 +54,17 @@ export class DashboardComponent implements OnInit {
       },
       error: err => {
         this.alertService.show(err.error?.message || 'Error al obtener balances', 'error');
+      }
+    });
+  }
+  
+  fetchVentas() {
+    this.ventaService.getVentas().subscribe({
+      next: (ventas) => {
+        this.listaVentas = ventas;
+      },
+      error: (err) => {
+        this.alertService.show(err.error?.message || 'Error al obtener ventas', 'error');
       }
     });
   }
@@ -80,5 +102,19 @@ export class DashboardComponent implements OnInit {
     const valor = value ?? 0;
     return valor < 0 ? 'text-red-500' : 'text-green-500';
   }
+
+  verVenta(venta: any) {
+    console.log('Ver venta:', venta);
+  }
+
+  get totalPaginas(): number {
+  return Math.ceil(this.listaVentas.length / this.itemsPorPagina);
+}
+
+get ventasPaginadas() {
+  const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+  const fin = inicio + this.itemsPorPagina;
+  return this.listaVentas.slice(inicio, fin);
+}
 
 }
