@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-mytiendita
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: mytiendita
+      POSTGRES_USER: mytiendita_admin
+      POSTGRES_PASSWORD: password_mytiendita
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:

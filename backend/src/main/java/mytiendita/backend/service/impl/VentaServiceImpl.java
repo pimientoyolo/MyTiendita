@@ -98,6 +98,11 @@ public class VentaServiceImpl implements VentaService {
 
     }
 
+    @Override
+    public List<Venta> listarVentas() {
+        return ventaRepository.findTableVentas();
+    }
+
     @Autowired
     public void setVentaRepository(VentaRepository ventaRepository) {
         this.ventaRepository = ventaRepository;

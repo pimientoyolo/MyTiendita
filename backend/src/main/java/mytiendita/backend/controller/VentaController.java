@@ -2,13 +2,13 @@ package mytiendita.backend.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import mytiendita.backend.dto.ProductoTableDTO;
+import mytiendita.backend.dto.VentaTableDTO;
+import mytiendita.backend.mapper.VentaMapper;
+import mytiendita.backend.model.Venta;
 import mytiendita.backend.service.interfaces.VentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +26,13 @@ public class VentaController {
         ventaService.procesoVenta(productos);
 
         return ResponseEntity.ok(true);
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<VentaTableDTO>> listarVentas() {
+        List<Venta> ventas = ventaService.listarVentas();
+        List<VentaTableDTO> ventasDTO = VentaMapper.INSTANCE.toVentaTableDTOList(ventas);
+        return ResponseEntity.ok(ventasDTO);
     }
 
     @Autowired

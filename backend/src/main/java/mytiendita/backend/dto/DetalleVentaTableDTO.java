@@ -7,11 +7,13 @@ import mytiendita.backend.model.Producto;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductoTableDTO {
+public class DetalleVentaTableDTO {
 
-    private Producto producto;
+  private Long id;
 
-    private Double cantidad;
+  private Producto producto;
 
-    private Double subtotal;
+  private Double cantidad;
+
+  private Double valor;
 }

@@ -1,15 +1,15 @@
 package mytiendita.backend.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "venta")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Venta {
@@ -24,5 +24,8 @@ public class Venta {
 
     @Column(name = "fecha")
     private Date fecha;
+
+    @OneToMany(mappedBy = "venta", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DetalleVenta> detalleVentas;
 
 }
