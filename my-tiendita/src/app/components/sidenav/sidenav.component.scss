@@ -1,0 +1,164 @@
+.sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav {
+  height: 100vh;
+  width: 320px;
+}
+
+.sidenav-menus {
+  background-color: var(--azure-95);
+  border: 2px solid var(--azure-80);
+  border-radius: 10px;
+  margin: 10px;
+
+  box-shadow:
+    0 2px 8px 0 var(--azure-80),
+    0 1.5px 4px 0 var(--azure-40),
+    0 0 0 4px var(--azure-95);
+}
+
+
+.side-title {
+  font-size: 250%;
+  font-weight: bold;
+  color: transparent;
+  margin: 10px 10px 20px;
+
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  font-family: 'Monkye', 'Bebas Neue', 'Montserrat', 'Segoe UI', Arial, sans-serif;
+
+  background-image: linear-gradient(
+    to right,
+    var(--azure-10),
+    var(--azure-40)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.sidenav-button{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+
+  font-size: large;
+  color: var(--azure-20);
+
+  border-radius: 0px;
+}
+
+
+.sidenav-button-home{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+
+  font-size: large;
+  color: var(--azure-100);
+
+  border-radius: 0px;
+
+  background-image: linear-gradient(
+    to right,
+    var(--azure-10),
+    var(--azure-40)
+  );
+
+  box-shadow:
+    0 0 8px 2px var(--azure-40),
+    0 0 16px 4px var(--azure-80),
+    0 0 24px 8px var(--azure-100);
+
+  &:hover {
+    background-image: linear-gradient(
+      to right,
+      var(--azure-80),
+      var(--azure-60)
+    );
+
+    color: black;
+  }
+}
+
+mat-list-item{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.side-text{
+  font-size: 150%;
+  font-weight: bold;
+  color: var(--azure-20);
+
+  margin: 10px;
+  margin-top: 30px;
+  margin-bottom: 5px;
+
+  padding: 0px 16px;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+
+  font-family: 'Monkye', 'Bebas Neue', 'Montserrat', 'Segoe UI', Arial, sans-serif;
+}
+
+mat-icon{
+  scale: 1.3;
+}
+
+
+.sidenav {
+  overflow-y: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--azure-80) var(--azure-95);
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background: var(--azure-95);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      to bottom,
+      var(--azure-60),
+      var(--azure-80)
+    );
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      to bottom,
+      var(--azure-90),
+      var(--azure-100)
+    );
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+}
+
+.sidenav:hover {
+  overflow-y: overlay;
+}

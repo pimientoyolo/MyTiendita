@@ -1,0 +1,89 @@
+<mat-sidenav-container
+    class="sidenav-container">
+    <mat-sidenav #sidenav disableClose opened mode="side" class="sidenav">
+
+        <div class="sidenav-menus">
+
+            <h2 matLine class="side-title">MyTiendita</h2>
+            
+            <!-- INICIO -->
+            <div class="divider">
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button-home">
+                            <mat-icon>home</mat-icon>
+                            Inicio
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+            <!-- Ventas -->
+            <div class="divider">
+
+                <h3 matLine class="side-text">Ventas</h3>
+
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button">
+                            <mat-icon>shopping_cart_checkout</mat-icon>
+                            Realizar venta
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+            <!-- Finanzas -->
+            <div class="divider">
+
+                <h3 matLine class="side-text">Finanzas</h3>
+
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button">
+                            <mat-icon>price_change</mat-icon>
+                            Movimientos
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+            <!-- Inventario -->
+            <div class="divider">
+
+                <h3 matLine class="side-text">Inventario</h3>
+
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button">
+                            <mat-icon>add_box</mat-icon>
+                            Crear producto
+                        </button>
+                    </mat-list-item>
+
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button">
+                            <mat-icon>edit_square</mat-icon>
+                            Editar producto
+                        </button>
+                    </mat-list-item>
+
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button">
+                            <mat-icon>compare_arrows</mat-icon>
+                            Movimientos
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+        </div>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content class="sidenav-content">
+        <p><button mat-button >Open</button></p>
+        <p>Closed due to: niguna</p>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+</mat-sidenav-container>
