@@ -108,13 +108,13 @@ export class DashboardComponent implements OnInit {
   }
 
   get totalPaginas(): number {
-  return Math.ceil(this.listaVentas.length / this.itemsPorPagina);
-}
+    return Math.ceil(this.listaVentas.length / this.itemsPorPagina);
+  }
 
-get ventasPaginadas() {
-  const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
-  const fin = inicio + this.itemsPorPagina;
-  return this.listaVentas.slice(inicio, fin);
-}
+  get ventasPaginadas() {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    return this.listaVentas.slice(inicio, fin);
+  }
 
 }

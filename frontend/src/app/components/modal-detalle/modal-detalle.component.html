@@ -1,0 +1,50 @@
+<!-- Backdrop -->
+<div *ngIf="mostrarModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <!-- Contenido del modal -->
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl max-h-[90vh] overflow-auto p-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-gray-800">Detalle de productos</h2>
+      <button (click)="cerrarModal()" class="text-gray-600 hover:text-gray-800">
+        ✕
+      </button>
+    </div>
+
+    <!-- Tabla dentro del modal -->
+    <div class="overflow-auto border border-gray-200 rounded">
+      <table class="min-w-full bg-white border border-gray-200">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Producto</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Precio</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Cantidad</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Sub total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of productosModalPaginados" class="hover:bg-gray-50">
+            <td class="px-4 py-2 border-t text-sm text-gray-800">{{ item.producto.nombre }}</td>
+            <td class="px-4 py-2 border-t text-sm text-gray-800">
+              {{ item.valor/item.cantidad | currency:'COP ':'symbol':'1.0-0' }}
+            </td>
+            <td class="px-4 py-2 border-t text-sm text-gray-800">{{ item.cantidad }}</td>
+            <td class="px-4 py-2 border-t text-sm text-gray-800">
+              {{ item.valor | currency:'COP ':'symbol':'1.0-0' }}
+          </tr>
+          <tr *ngIf="productosModalPaginados.length === 0">
+            <td colspan="3" class="px-4 py-4 text-center text-gray-500">No hay productos en esta venta.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="flex justify-end items-center gap-2 mt-4">
+      <button (click)="paginaModal--" [disabled]="paginaModal === 1"
+        class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">Anterior</button>
+      <span class="text-sm text-gray-600">Página {{ paginaModal }} de {{ totalPaginasModal }}</span>
+      <button (click)="paginaModal++" [disabled]="paginaModal === totalPaginasModal"
+        class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50">Siguiente</button>
+    </div>
+  </div>
+</div>
