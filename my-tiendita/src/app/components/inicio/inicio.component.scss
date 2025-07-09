@@ -1,0 +1,50 @@
+.container-balance-cards {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.balance-card {
+    width: 320px;
+    padding: 20px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 16px;
+}
+
+.balance-icon {
+    font-size: 40px;
+    height: auto;
+    width: auto;
+}
+
+.balance-title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.currency-label {
+    font-size: 20px;
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-top: 16px;
+}
+
+.span-ingresos{
+    color: green;
+}
+
+.span-egresos{
+    color: red;
+}

@@ -1,14 +1,116 @@
-<div class="container-cards">
-    <mat-card class="balance-card" style="display: flex; flex-direction: column; align-items: flex-start; padding: 16px; max-width: 300px;">
-        <div style="display: flex; align-items: center; width: 100%;">
-            <mat-icon color="primary" style="font-size: 36px; margin-right: 16px;">account_balance_wallet</mat-icon>
+<div class="container-balance-cards">
+    <mat-card class="balance-card">
+        <div class="card-header">
+            <mat-icon color="primary" class="balance-icon">calendar_today</mat-icon>
             <div>
-                <div style="font-weight: 500; font-size: 18px;">Balance día</div>
-                <div style="font-size: 16px; color: #757575;">COP</div>
+                <div class="balance-title">Balance diario</div>
+                <div class="currency-label" [ngStyle]="{'color': balanceDia?.balance < 0 ? 'red' : 'green'}">
+                    COP {{balanceDia?.balance}}
+                </div>
             </div>
         </div>
-        <div style="margin-top: 16px; width: 100%;">
-            <span style="font-size: 14px; color: #388e3c;">+12% respecto a ayer</span>
+        <div class="card-footer">
+            <div>
+                <span class="percentaje">
+                    {{balanceDia?.porcentajeMejora}}%
+                </span>
+                <span>
+                    respecto al dia de ayer
+                </span>
+            </div>
+            <div>
+                <span>
+                    Ingresos: COP
+                </span>
+                <span class="span-ingresos">
+                    {{balanceDia?.ganancia}}
+                </span>
+            </div>
+            <div>
+                <span>
+                    Egresos: COP
+                </span>
+                <span class="span-egresos">
+                    {{balanceDia?.gasto}}
+                </span>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-card class="balance-card">
+        <div class="card-header">
+            <mat-icon color="primary" class="balance-icon">date_range</mat-icon>
+            <div>
+                <div class="balance-title">Balance semanal</div>
+                <div class="currency-label" [ngStyle]="{'color': balanceSemana?.balance < 0 ? 'red' : 'green'}">
+                    COP {{balanceSemana?.balance}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div>
+                <span class="percentaje">
+                    {{balanceSemana?.porcentajeMejora}}%
+                </span>
+                <span>
+                    respecto a los 7 dias anteriores
+                </span>
+            </div>
+            <div>
+                <span>
+                    Ingresos: COP
+                </span>
+                <span class="span-ingresos">
+                    {{balanceSemana?.ganancia}}
+                </span>
+            </div>
+            <div>
+                <span>
+                    Egresos: COP
+                </span>
+                <span class="span-egresos">
+                    {{balanceSemana?.gasto}}
+                </span>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-card class="balance-card">
+        <div class="card-header">
+            <mat-icon color="primary" class="balance-icon">calendar_month</mat-icon>
+            <div>
+                <div class="balance-title">Balance mensual</div>
+                <div class="currency-label" [ngStyle]="{'color': balanceMes?.balance < 0 ? 'red' : 'green'}">
+                    COP {{balanceMes?.balance}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div>
+                <span class="percentaje">
+                    {{balanceMes?.porcentajeMejora}}%
+                </span>
+                <span>
+                    respecto al mes anterior
+                </span>
+            </div>
+            <div>
+                <span>
+                    Ingresos: COP
+                </span>
+                <span class="span-ingresos">
+                    {{balanceMes?.ganancia}}
+                </span>
+            </div>
+            <div>
+                <span>
+                    Egresos: COP
+                </span>
+                <span class="span-egresos">
+                    {{balanceMes?.gasto}}
+                </span>
+            </div>
         </div>
     </mat-card>
 </div>
+
