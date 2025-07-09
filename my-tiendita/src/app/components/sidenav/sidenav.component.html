@@ -74,6 +74,20 @@
                             Movimientos
                         </button>
                     </mat-list-item>
+
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button" (click)="enrutar('/listar-productos')">
+                            <mat-icon>compare_arrows</mat-icon>
+                            Movimientos
+                        </button>
+                    </mat-list-item>
+
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button" (click)="enrutar('/listar-productos')">
+                            <mat-icon>compare_arrows</mat-icon>
+                            Movimientos
+                        </button>
+                    </mat-list-item>
                 </mat-list>
             </div>
 
@@ -82,8 +96,8 @@
     </mat-sidenav>
 
     <mat-sidenav-content class="sidenav-content">
-        <p><button mat-button >Open</button></p>
-        <p>Closed due to: niguna</p>
-        <ng-content></ng-content>
+        <div class="container-content">
+            <ng-content></ng-content>
+        </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

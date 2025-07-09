@@ -8,14 +8,15 @@
 
 .sidenav {
   height: 100vh;
-  width: 340px;
+  width: 350px;
 }
 
 .sidenav-menus {
   background-color: var(--azure-95);
   border: 2px solid var(--azure-80);
   border-radius: 10px;
-  margin: 10px;
+  margin: 25px;
+  margin-right: 0px;
 
   width: 300px;
 
@@ -23,6 +24,9 @@
     0 2px 8px 0 var(--azure-80),
     0 1.5px 4px 0 var(--azure-40),
     0 0 0 4px var(--azure-95);
+
+    // no tocar este calculo, porque si no aparece un scroll molesto
+    height: calc(100vh - 54px);
 }
 
 
@@ -109,6 +113,11 @@ mat-list-item{
   margin-bottom: 5px;
 }
 
+//ajuste de scrollbar
+.sidenav-menus{
+  overflow-y: auto;
+}
+
 .side-text{
   font-size: 150%;
   font-weight: bold;
@@ -132,10 +141,9 @@ mat-icon{
   scale: 1.3;
 }
 
-
-.sidenav {
-  overflow-y: hidden;
-
+.sidenav-content{
+  overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--azure-80) var(--azure-95);
 
@@ -166,8 +174,54 @@ mat-icon{
     height: 0;
     width: 0;
   }
+
+  height: 100vh;
+
+}
+.container-content{
+  margin: 25px;
+  padding: 25px;
+  
+  border: 2px solid var(--blue-90);
+  border-radius: 10px;
+  box-shadow: 
+    0 1px 8px 0 var(--blue-80),
+    0 1px 4px 0 var(--blue-40),
+    0 0 0 2px var(--blue-95);
+
+  height: calc(100vh - 104px);
+
 }
 
-.sidenav:hover {
-  overflow-y: overlay;
+//ajuste de scrollbar
+.sidenav-menus{
+  overflow-y: hiddern;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      to bottom,
+      var(--azure-0),
+      var(--azure-0)
+    );
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      to bottom,
+      var(--azure-90),
+      var(--azure-100)
+    );
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
 }
