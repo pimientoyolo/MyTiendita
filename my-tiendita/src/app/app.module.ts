@@ -20,6 +20,7 @@ import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,9 @@ import { MatSortModule } from '@angular/material/sort';
     MatInputModule,
     MatSortModule
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

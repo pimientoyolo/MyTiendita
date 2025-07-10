@@ -5,6 +5,7 @@ import { VentaDto } from '../../dto/venta.dto';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-inicio',
@@ -27,7 +28,8 @@ export class InicioComponent implements OnInit, AfterViewInit {
 
   constructor(
     private inicioService: InicioService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public datePipe: DatePipe
   ) { }
 
   ngAfterViewInit(): void {
@@ -36,6 +38,26 @@ export class InicioComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    
+    this.origenDatos.filterPredicate = (data: VentaDto, filter: string) => {
+      const ft = filter.trim().toLowerCase();
+
+      const fechaStr = this.datePipe
+        .transform(data.fecha, "dd/MM/yyyy h:mm a")
+        ?.toLowerCase() || "";
+
+      const valorStr = data.valor.toString().toLowerCase();
+
+      const prodsStr = data.detalleVentas
+        .map(d => d.producto.nombre)
+        .join(" ")
+        .toLowerCase();
+
+      const dataStr = `${fechaStr} ${valorStr} ${prodsStr}`;
+
+      return dataStr.includes(ft);
+    };
+
     this.fetchBalances();
     this.fetchVentas();
   }
@@ -64,6 +86,8 @@ export class InicioComponent implements OnInit, AfterViewInit {
   aplicarFiltro(event: Event) {
     const valorFiltro = (event.target as HTMLInputElement).value;
     this.origenDatos.filter = valorFiltro.trim().toLowerCase();
+
+    console.log(this.origenDatos);
 
     if (this.origenDatos.paginator) {
       this.origenDatos.paginator.firstPage();
