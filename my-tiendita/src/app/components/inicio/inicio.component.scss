@@ -89,13 +89,13 @@ th:nth-child(1), td:nth-child(1) { // Fecha
 
 th:nth-child(2), td:nth-child(2) { // Total
     width: 20%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 th:nth-child(3), td:nth-child(3) { // Productos
-  width: 50%;
+    width: 50%;
+    white-space: nowrap;  
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 th:nth-child(4), td:nth-child(4) { // Acciones
