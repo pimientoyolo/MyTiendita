@@ -139,14 +139,18 @@
         <ng-container matColumnDef="productos">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Productos </th>
             <td mat-cell *matCellDef="let row" class="productos-cell">
-                <ng-container *ngFor="let detalle of row.detalleVentas; let i = index">
-                    <ng-container *ngIf="i < 2">
-                        <pre>x{{detalle.cantidad}} {{detalle.producto?.nombre}}</pre>
+                <div class="productos-content">
+                    <ng-container *ngFor="let detalle of row.detalleVentas; let i = index">
+                        <ng-container *ngIf="i < 2">
+                            <span class="producto-item">{{detalle.cantidad}}x {{detalle.producto?.nombre}}</span>
+                            <br *ngIf="i < 1 && row.detalleVentas.length > 1">
+                        </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-container *ngIf="row.detalleVentas.length > 2">
-                    <span>y {{ row.detalleVentas.length - 2 }} más</span>
-                </ng-container>
+                    <ng-container *ngIf="row.detalleVentas.length > 2">
+                        <br>
+                        <span class="mas-productos">y {{row.detalleVentas.length - 2}} más</span>
+                    </ng-container>
+                </div>
             </td>
         </ng-container>
 

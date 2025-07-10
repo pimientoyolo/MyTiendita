@@ -50,19 +50,60 @@
 }
 
 //tabla 
+.container-tabla {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 24px;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+}
 
 table {
-    width: 100%;
+  width: 100%;
+  min-width: 600px; // Ancho mínimo para mantener legibilidad
+  table-layout: fixed; // Controla el ancho de las columnas
 }
 
 .mat-mdc-form-field {
   font-size: 14px;
   width: 100%;
+  max-width: 400px;
+  margin-bottom: 16px;
 }
 
-th, td{
-    width: 25%;
+th, td {
+  padding: 12px 8px;
+  text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
+
+// Definir anchos específicos para cada columna
+th:nth-child(1), td:nth-child(1) { // Fecha
+  width: 20%;
+}
+
+th:nth-child(2), td:nth-child(2) { // Total
+    width: 20%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+th:nth-child(3), td:nth-child(3) { // Productos
+  width: 50%;
+}
+
+th:nth-child(4), td:nth-child(4) { // Acciones
+  width: 10%;
+}
+
+
+
 
 
 
