@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environment';
+import { VentaDto } from '../dto/venta.dto';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +13,19 @@ export class InicioService {
 
   constructor(private http: HttpClient) { }
 
-  getBalanceDia(){
-    return this.http.get(`${this.apiUrl}/movimiento/balance/dia`);
+  getBalanceDia(): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/movimiento/balance/dia`);
   }
 
-  getBalanceSemana(){
-    return this.http.get(`${this.apiUrl}/movimiento/balance/semana`);
+  getBalanceSemana(): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/movimiento/balance/semana`);
   }
 
-  getBalanceMes(){
-    return this.http.get(`${this.apiUrl}/movimiento/balance/mes`);
+  getBalanceMes(): Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/movimiento/balance/mes`);
+  }
+
+  getVentasInicio(): Observable<VentaDto[]>{
+    return this.http.get<VentaDto[]>(`${this.apiUrl}/venta/listar`);
   }
 }
