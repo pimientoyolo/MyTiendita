@@ -142,8 +142,8 @@ mat-icon{
 }
 
 .sidenav-content{
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--azure-80) var(--azure-95);
 
@@ -181,6 +181,8 @@ mat-icon{
 .container-content{
   margin: 25px;
   padding: 25px;
+  overflow-x: auto;
+  overflow-y: auto;
   
   border: 2px solid var(--blue-90);
   border-radius: 10px;
@@ -190,6 +192,34 @@ mat-icon{
     0 0 0 2px var(--blue-95);
 
   height: calc(100vh - 104px);
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    background: var(--azure-95);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      to bottom,
+      var(--azure-60),
+      var(--azure-80)
+    );
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      to bottom,
+      var(--azure-90),
+      var(--azure-100)
+    );
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
 
 }
 
