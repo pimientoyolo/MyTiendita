@@ -28,3 +28,9 @@ export interface VentaDto {
     fecha: string;
     detalleVentas: DetalleVentaDto[];
 }
+
+export interface ProductoVentaDTO{
+    producto: ProductoDto;
+    cantidad: number;
+    valor: number;
+}

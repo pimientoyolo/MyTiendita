@@ -1,0 +1,449 @@
+// Estilos para el título de la tarjeta
+.mat-mdc-card-title {
+  font-size: 2.25rem !important; // Título más grande
+  font-weight: 700 !important; // Peso bold
+  color: var(--azure-30, #00458F) !important; // Color de tu paleta
+  margin-bottom: 32px !important; // Espacio inferior generoso
+  padding-bottom: 16px !important; // Padding adicional
+  text-align: center !important; // Centrado
+  letter-spacing: 0.5px !important; // Espaciado entre letras
+  position: relative;
+  
+  // Línea decorativa debajo del título
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--azure-50, #0074E9), var(--blue-50, #0078E6));
+    border-radius: 2px;
+  }
+}
+
+// Estilos para la tarjeta principal
+.mat-mdc-card {
+  border-radius: 16px !important;
+  box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1) !important;
+  padding: 32px !important;
+  background: var(--azure-99, #FDFBFF) !important;
+  border: 1px solid var(--azure-90, #D7E3FF) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important; // Ocupa el 100% del contenedor padre
+}
+
+// Espaciado para el contenido después del título
+.mat-mdc-card-content {
+  margin-top: 0 !important;
+  padding-top: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important; // Ocupa todo el espacio disponible
+  overflow: hidden !important; // Evita que el contenido se desborde
+}
+
+// Contenedor principal del contenido que crece
+.contenido-principal {
+  display: flex;
+  flex-direction: column;
+  flex: 1; // Ocupa todo el espacio disponible
+  overflow: hidden; // Evita el desbordamiento
+}
+
+// Contenedor de la tabla que puede hacer scroll
+.contenedor-tabla {
+  flex: 1; // Ocupa el espacio disponible
+  overflow-y: auto; // Permite scroll vertical
+  overflow-x: hidden; // Sin scroll horizontal
+  margin-bottom: 16px; // Espacio antes de la sección final
+  
+  // Estilos para el scroll personalizado
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--azure-95, #ECF2FF);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--azure-70, #8BB8FF);
+    border-radius: 4px;
+    
+    &:hover {
+      background: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Responsive para pantallas pequeñas
+@media (max-width: 768px) {
+  .mat-mdc-card-title {
+    font-size: 1.875rem !important;
+    text-align: left !important;
+    margin-bottom: 24px !important;
+  }
+  
+  .mat-mdc-card {
+    padding: 24px !important;
+  }
+}
+
+
+
+// Estilos para la tabla con espaciado y scroll
+.mat-elevation-z2 {
+  margin-top: 24px; // Espacio arriba para separar del código de barras
+  margin-bottom: 0; // Sin margen inferior para aprovechar el espacio
+  max-height: none; // Sin altura máxima aquí, se controla por el contenedor
+  overflow: visible; // El scroll lo maneja el contenedor padre
+  border-radius: 8px; // Bordes redondeados
+}
+
+th:nth-child(1), td:nth-child(1) { 
+  width: 50%;
+}
+
+// Estilos específicos SOLO para la sección de código de barras
+.codigo-barras-section {
+  .flex {
+    display: flex;
+    width: 100%; // Asegurar que ocupe todo el ancho
+    
+    &.items-center {
+      align-items: center;
+    }
+    
+    &.gap-4 {
+      gap: 16px;
+    }
+  }
+
+  .flex-1 {
+    flex: 1;
+    width: 100%; // El input ocupa todo el espacio disponible
+  }
+
+  .mb-6 {
+    margin-bottom: 24px; // Espacio inferior para separar del siguiente elemento
+  }
+
+  // Estilos para el campo de código de barras - misma altura que el botón
+  .mat-mdc-form-field {
+    width: 100%;
+    height: 56px; // Altura aumentada para dar espacio al label flotante
+    min-width: 300px !important; // Ancho mínimo más grande
+    margin-top: 8px; // Margen superior para el label flotante
+    
+    &.mat-form-field-appearance-outline {
+      .mat-mdc-text-field-wrapper {
+        height: 48px !important; // Altura del input interno
+        min-height: 48px !important;
+        width: 100% !important; // Ocupar todo el ancho disponible
+        margin-top: 8px; // Espacio para el label flotante
+      }
+      
+      // Asegurar espacio para el label flotante
+      .mat-mdc-form-field-label-wrapper {
+        top: -8px !important; // Posición ajustada del label
+        height: auto !important;
+      }
+    }
+    
+    // Input más grande y con más padding
+    .mat-mdc-form-field-input-control input {
+      font-size: 1.1rem !important; // Texto más grande
+      padding: 12px 16px !important; // Padding aumentado para alargar
+      font-weight: 500 !important;
+    }
+    
+    // Label más grande con espacio suficiente
+    .mat-mdc-form-field-label {
+      font-size: 1rem !important; // Label más grande
+      font-weight: 500 !important;
+      color: var(--azure-40, #005CBB) !important;
+      top: 50% !important; // Posición centrada cuando no está flotando
+      transform: translateY(-50%) !important;
+      
+      // Cuando está flotando (label arriba)
+      &.mdc-floating-label--float-above {
+        transform: translateY(-106%) scale(0.75) !important; // Más espacio arriba
+        font-size: 1rem !important; // Mantener tamaño legible
+      }
+    }
+  }
+
+  // Estilos para el botón - misma altura visual que el input
+  .mat-mdc-raised-button {
+    height: 48px !important; // Altura igual al wrapper del input
+    min-height: 48px !important;
+    padding: 0 24px !important; // Solo padding horizontal
+    display: flex !important;
+    align-items: center !important; // Centrar contenido verticalmente
+    justify-content: center !important;
+    margin-top: 8px; // Mismo margen que el input para alineación visual
+    
+    // Mejoras visuales del botón
+    border-radius: 12px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 4px 16px rgba(0, 116, 233, 0.25) !important;
+    transition: all 0.3s ease !important;
+    
+    &.mat-primary {
+      background: linear-gradient(135deg, var(--azure-50, #0074E9), var(--blue-50, #0078E6)) !important;
+      color: var(--azure-100, #FFFFFF) !important;
+      border: none !important;
+      
+      &:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(0, 116, 233, 0.35) !important;
+        background: linear-gradient(135deg, var(--azure-40, #005CBB), var(--blue-40, #005ECC)) !important;
+      }
+      
+      &:active {
+        transform: translateY(0) !important;
+        box-shadow: 0 4px 16px rgba(0, 116, 233, 0.25) !important;
+      }
+    }
+    
+    .mat-mdc-button-ripple {
+      border-radius: 12px;
+    }
+    
+    // Icono del botón si se agrega
+    mat-icon {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// Estilos para la sección final (totales y botón) - siempre al fondo
+.seccion-final {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  gap: 28px; // Espacio reducido entre los inputs y el botón
+  margin-top: auto; // Se empuja hacia abajo automáticamente
+  padding-top: 16px; // Espacio superior
+  border-top: 1px solid var(--azure-90, #D7E3FF); // Línea separadora sutil
+  background: var(--azure-99, #FDFBFF); // Mismo fondo que la tarjeta
+  flex-shrink: 0; // No se encoge nunca
+  
+  .grupo-inputs {
+    display: flex;
+    flex-direction: row; // Los inputs van uno al lado del otro
+    gap: 20px; // Espacio aumentado entre inputs
+    flex: 2; // Ocupa más espacio en relación al botón
+    align-items: flex-end; // Alinea los inputs al final (mismo nivel que el botón)
+    min-width: 480px; // Ancho mínimo para el grupo de inputs
+    
+    // Estilos para los inputs de la sección final - misma altura que el botón
+    .mat-mdc-form-field {
+      height: 56px; // Altura fija igual al botón
+      width: 100% !important; // Asegurar que ocupe todo el ancho disponible
+      min-width: 160px !important; // Ancho mínimo más grande
+      flex: 1 1 auto !important; // Crecer y encogerse según el espacio
+      
+      &.mat-form-field-appearance-outline {
+        .mat-mdc-text-field-wrapper {
+          height: 56px !important; // Misma altura que el botón
+          min-height: 56px !important;
+          width: 100% !important; // Ocupar todo el ancho del contenedor
+        }
+      }
+      
+      // Estilos para inputs informativos (total y vuelto)
+      &.input-informativo {
+        pointer-events: none; // No se puede interactuar
+        
+        .mat-mdc-text-field-wrapper {
+          background-color: var(--azure-95, #ECF2FF) !important; // Fondo gris claro
+          border-color: var(--azure-80, #B3C5FF) !important; // Borde más sutil
+        }
+        
+        .mat-mdc-form-field-input-control input {
+          color: var(--azure-20, #00325B) !important; // Texto más oscuro pero no negro
+          font-weight: 600 !important; // Peso semi-bold para destacar el valor
+          cursor: default !important; // Cursor por defecto
+          background-color: transparent !important;
+          font-size: 1.2rem !important; // Texto más grande
+          padding: 16px 16px !important; // Padding aumentado para alargar
+        }
+        
+        // Label de los campos informativos
+        .mat-mdc-form-field-label {
+          color: var(--azure-30, #00458F) !important; // Color del label más distintivo
+          font-weight: 500 !important;
+          font-size: 1rem !important; // Label más grande
+        }
+        
+        // Outline menos prominente
+        .mdc-notched-outline {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__notch,
+          .mdc-notched-outline__trailing {
+            border-color: var(--azure-80, #B3C5FF) !important;
+            border-width: 1px !important; // Borde más delgado
+          }
+        }
+        
+        // Al hacer hover no cambia
+        &:hover {
+          .mdc-notched-outline {
+            .mdc-notched-outline__leading,
+            .mdc-notched-outline__notch,
+            .mdc-notched-outline__trailing {
+              border-color: var(--azure-80, #B3C5FF) !important;
+            }
+          }
+        }
+      }
+      
+      // Estilos para input editable (recibido)
+      &.input-editable {
+        .mat-mdc-text-field-wrapper {
+          background-color: var(--azure-100, #FFFFFF) !important; // Fondo blanco
+          border-color: var(--azure-50, #0074E9) !important; // Borde azul activo
+        }
+        
+        .mat-mdc-form-field-input-control input {
+          color: var(--azure-10, #001B3F) !important; // Texto negro
+          font-weight: 500 !important;
+          cursor: text !important;
+          font-size: 1.2rem !important; // Texto más grande
+          padding: 16px 16px !important; // Padding aumentado para alargar
+        }
+        
+        // Label del campo editable
+        .mat-mdc-form-field-label {
+          color: var(--azure-40, #005CBB) !important;
+          font-weight: 500 !important;
+          font-size: 1rem !important; // Label más grande
+        }
+        
+        // Borde más prominente al hacer focus
+        &.mat-focused {
+          .mdc-notched-outline {
+            .mdc-notched-outline__leading,
+            .mdc-notched-outline__notch,
+            .mdc-notched-outline__trailing {
+              border-color: var(--azure-50, #0074E9) !important;
+              border-width: 2px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .boton-finalizar {
+    flex-shrink: 0; // No se encoge
+    align-self: flex-end; // Se alinea al final (abajo)
+    height: 56px !important; // Altura fija igual a los inputs
+    min-height: 56px !important;
+    padding: 0 32px !important; // Padding horizontal generoso
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    // Estilos distintivos para el botón de realizar venta
+    border-radius: 16px !important; // Más redondeado que el de agregar
+    font-size: 1rem !important; // Texto más grande
+    font-weight: 700 !important; // Más bold
+    letter-spacing: 0.75px !important; // Más espaciado
+    text-transform: uppercase !important;
+    box-shadow: 0 6px 20px rgba(0, 180, 42, 0.3) !important; // Sombra verde
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; // Transición más suave
+    position: relative;
+    overflow: hidden;
+    
+    // Color de éxito/completar acción - verde
+    &.mat-accent {
+      background: linear-gradient(135deg, var(--green-50, #00B42A), var(--green-40, #00A524)) !important;
+      color: var(--azure-100, #FFFFFF) !important;
+      border: 2px solid var(--green-60, #00CC2F) !important;
+      
+      // Efecto de brillo sutil
+      &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transform: rotate(45deg);
+        transition: all 0.6s ease;
+        opacity: 0;
+      }
+      
+      &:hover {
+        transform: translateY(-3px) scale(1.02) !important;
+        box-shadow: 0 12px 32px rgba(0, 180, 42, 0.4) !important;
+        background: linear-gradient(135deg, var(--green-40, #00A524), var(--green-30, #008A1F)) !important;
+        border-color: var(--green-50, #00B42A) !important;
+        
+        &::before {
+          opacity: 1;
+          left: 100%;
+        }
+      }
+      
+      &:active {
+        transform: translateY(-1px) scale(1.01) !important;
+        box-shadow: 0 8px 24px rgba(0, 180, 42, 0.35) !important;
+      }
+      
+      // Efecto de pulso sutil
+      &:focus {
+        box-shadow: 0 6px 20px rgba(0, 180, 42, 0.3), 0 0 0 4px rgba(0, 180, 42, 0.1) !important;
+      }
+    }
+    
+    .mat-mdc-button-ripple {
+      border-radius: 16px;
+    }
+    
+    // Icono si se agrega
+    mat-icon {
+      margin-right: 8px;
+      font-size: 1.2rem !important;
+      transition: transform 0.3s ease;
+    }
+    
+    &:hover mat-icon {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Estilos para el vuelto - solo cuando es negativo
+.vuelto-negativo {
+  color: var(--red-50, #DC2626) !important; // Rojo solo para vuelto negativo (debe dinero)
+  font-weight: 600 !important;
+}
+
+// Responsive para la sección final
+@media (max-width: 768px) {
+  .seccion-final {
+    flex-direction: column;
+    gap: 20px;
+    
+    .grupo-inputs {
+      flex-direction: column; // En móviles sí van uno debajo del otro
+    }
+    
+    .boton-finalizar {
+      align-self: stretch; // Ocupa todo el ancho en móviles
+    }
+  }
+}

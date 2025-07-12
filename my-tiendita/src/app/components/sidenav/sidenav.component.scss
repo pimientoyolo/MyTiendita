@@ -180,18 +180,16 @@ mat-icon{
 }
 .container-content{
   margin: 25px;
-  padding: 25px;
+  padding: 0;
   overflow-x: auto;
   overflow-y: auto;
   
-  border: 2px solid var(--blue-90);
-  border-radius: 10px;
-  box-shadow: 
-    0 1px 8px 0 var(--blue-80),
-    0 1px 4px 0 var(--blue-40),
-    0 0 0 2px var(--blue-95);
+  // Sin bordes ni sombras para evitar doble contenedor
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 
-  height: calc(100vh - 104px);
+  height: calc(100vh - 54px);
 
   &::-webkit-scrollbar {
     width: 3px;

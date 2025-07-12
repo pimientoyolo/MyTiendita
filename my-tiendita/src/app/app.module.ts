@@ -26,6 +26,7 @@ import { RealizarVentaComponent } from './components/realizar-venta/realizar-ven
 import { DetalleVentaModalComponent } from './components/detalle-venta-modal/detalle-venta-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSortModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FormsModule
   ],
   providers: [
     DatePipe

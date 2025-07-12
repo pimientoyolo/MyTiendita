@@ -31,4 +31,18 @@ export class SnackbarService {
     const config = { ...this.defaultConfig, panelClass: ['snackbar-info'] };
     this.snackBar.open(message, action, config);
   }
+
+  vueltos(vuelto: number): void {
+    const copFormatter = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    const formattedVuelto = copFormatter.format(vuelto);
+    const message = `Venta realizada, entregar vueltos de: ${formattedVuelto}`;
+    const config: MatSnackBarConfig = {
+      ...this.defaultConfig,
+      duration: undefined,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: ['snackbar-info']
+    };
+    this.snackBar.open(message, 'Aceptar', config);
+  }
 }
