@@ -3,54 +3,145 @@
     gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; // Permite que las tarjetas crezcan naturalmente
     margin-bottom: 32px;
     min-width: 0; // Evita que se extienda
 }
 
 .balance-card {
     width: 100%;
-    max-width: 300px;
+    max-width: 320px; // Reducido de 350px a 320px
     min-width: 0;
-    padding: 20px;
+    min-height: 320px; // Altura mínima más generosa
+    padding: 24px;
     box-sizing: border-box;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--azure-99, #FDFBFF) 0%, var(--azure-95, #ECF2FF) 100%);
+    border: 1px solid var(--azure-90, #D7E3FF);
+    box-shadow: 
+        0 8px 32px rgba(0, 27, 63, 0.08),
+        0 4px 16px rgba(116, 184, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: visible; // Permite que el contenido se muestre completamente
+    display: flex;
+    flex-direction: column;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--azure-60, #6DA6FF) 0%, var(--azure-70, #8BB8FF) 100%);
+        border-radius: 20px 20px 0 0;
+    }
+    
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 
+            0 12px 40px rgba(0, 27, 63, 0.12),
+            0 8px 24px rgba(116, 184, 255, 0.2);
+    }
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     gap: 16px;
 }
 
 .balance-icon {
-    font-size: 40px;
+    font-size: 48px;
     height: auto;
     width: auto;
+    background: linear-gradient(135deg, var(--azure-60, #6DA6FF) 0%, var(--azure-70, #8BB8FF) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(109, 166, 255, 0.3));
 }
 
 .balance-title {
-    font-size: 25px;
-    font-weight: bold;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--azure-20, #003875);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
 }
 
 .currency-label {
-    font-size: 20px;
+    font-size: 24px; // Reducido de 32px a 24px
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--azure-30, #1B5FC7) 0%, var(--azure-40, #4285F4) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px; // Reducido de -0.8px
+    line-height: 1.2; // Mejorado para mejor ajuste
+    word-break: break-word; // Permite que se ajuste si es muy largo
+    
+    // Estilo para balance negativo
+    &.balance-negativo {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 }
 
 .card-footer {
     display: flex;
     flex-direction: column;
     align-items: start;
-    margin-top: 16px;
+    margin-top: auto;
+    gap: 12px;
+    
+    > div {
+        padding: 8px 12px;
+        background: rgba(116, 184, 255, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(116, 184, 255, 0.2);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--azure-30, #1B5FC7);
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(116, 184, 255, 0.15);
+            transform: translateX(2px);
+        }
+    }
 }
 
 .span-ingresos{
-    color: green;
+    color: #10B981;
+    font-weight: 600;
 }
 
 .span-egresos{
-    color: red;
+    color: #EF4444;
+    font-weight: 600;
+}
+
+.percentaje {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: 16px;
+    
+    // Estilo para porcentaje negativo
+    &.porcentaje-negativo {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 }
 
 //tabla 
@@ -147,6 +238,21 @@ th:nth-child(4), td:nth-child(4) { // Acciones
       background: var(--azure-60, #6DA6FF);
     }
   }
+}
+
+// Tarjeta con balance negativo - borde rojo sutil
+.balance-card.balance-negativo {
+    &::before {
+        background: linear-gradient(90deg, #EF4444 0%, #DC2626 100%);
+    }
+    
+    border-color: rgba(239, 68, 68, 0.2);
+    
+    &:hover {
+        box-shadow: 
+            0 12px 40px rgba(220, 38, 38, 0.12),
+            0 8px 24px rgba(239, 68, 68, 0.2);
+    }
 }
 
 

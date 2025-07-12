@@ -1,19 +1,19 @@
 <div class="contenedor-principal">
 <div class="contenido-scroll">
 <div class="container-balance-cards">
-    <mat-card class="balance-card">
+    <mat-card class="balance-card" [ngClass]="{'balance-negativo': balanceDia?.balance < 0}">
         <div class="card-header">
             <mat-icon color="primary" class="balance-icon">calendar_today</mat-icon>
             <div>
                 <div class="balance-title">Balance diario</div>
-                <div class="currency-label" [ngStyle]="{'color': balanceDia?.balance < 0 ? 'red' : 'green'}">
-                    COP {{balanceDia?.balance}}
+                <div class="currency-label" [ngClass]="{'balance-negativo': balanceDia?.balance < 0}">
+                    COP {{balanceDia?.balance | number:'1.0-2'}}
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div>
-                <span class="percentaje">
+                <span class="percentaje" [ngClass]="{'porcentaje-negativo': balanceDia?.porcentajeMejora < 0}">
                     {{balanceDia?.porcentajeMejora}}%
                 </span>
                 <span>
@@ -25,7 +25,7 @@
                     Ingresos: COP
                 </span>
                 <span class="span-ingresos">
-                    {{balanceDia?.ganancia}}
+                    {{balanceDia?.ganancia | number:'1.0-2'}}
                 </span>
             </div>
             <div>
@@ -33,25 +33,25 @@
                     Egresos: COP
                 </span>
                 <span class="span-egresos">
-                    {{balanceDia?.gasto}}
+                    {{balanceDia?.gasto | number:'1.0-2'}}
                 </span>
             </div>
         </div>
     </mat-card>
 
-    <mat-card class="balance-card">
+    <mat-card class="balance-card" [ngClass]="{'balance-negativo': balanceSemana?.balance < 0}">
         <div class="card-header">
             <mat-icon color="primary" class="balance-icon">date_range</mat-icon>
             <div>
                 <div class="balance-title">Balance semanal</div>
-                <div class="currency-label" [ngStyle]="{'color': balanceSemana?.balance < 0 ? 'red' : 'green'}">
-                    COP {{balanceSemana?.balance}}
+                <div class="currency-label" [ngClass]="{'balance-negativo': balanceSemana?.balance < 0}">
+                    COP {{balanceSemana?.balance | number:'1.0-2'}}
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div>
-                <span class="percentaje">
+                <span class="percentaje" [ngClass]="{'porcentaje-negativo': balanceSemana?.porcentajeMejora < 0}">
                     {{balanceSemana?.porcentajeMejora}}%
                 </span>
                 <span>
@@ -63,7 +63,7 @@
                     Ingresos: COP
                 </span>
                 <span class="span-ingresos">
-                    {{balanceSemana?.ganancia}}
+                    {{balanceSemana?.ganancia | number:'1.0-2'}}
                 </span>
             </div>
             <div>
@@ -71,25 +71,25 @@
                     Egresos: COP
                 </span>
                 <span class="span-egresos">
-                    {{balanceSemana?.gasto}}
+                    {{balanceSemana?.gasto | number:'1.0-2'}}
                 </span>
             </div>
         </div>
     </mat-card>
 
-    <mat-card class="balance-card">
+    <mat-card class="balance-card" [ngClass]="{'balance-negativo': balanceMes?.balance < 0}">
         <div class="card-header">
             <mat-icon color="primary" class="balance-icon">calendar_month</mat-icon>
             <div>
                 <div class="balance-title">Balance mensual</div>
-                <div class="currency-label" [ngStyle]="{'color': balanceMes?.balance < 0 ? 'red' : 'green'}">
-                    COP {{balanceMes?.balance}}
+                <div class="currency-label" [ngClass]="{'balance-negativo': balanceMes?.balance < 0}">
+                    COP {{balanceMes?.balance | number:'1.0-2'}}
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div>
-                <span class="percentaje">
+                <span class="percentaje" [ngClass]="{'porcentaje-negativo': balanceMes?.porcentajeMejora < 0}">
                     {{balanceMes?.porcentajeMejora}}%
                 </span>
                 <span>
@@ -101,7 +101,7 @@
                     Ingresos: COP
                 </span>
                 <span class="span-ingresos">
-                    {{balanceMes?.ganancia}}
+                    {{balanceMes?.ganancia | number:'1.0-2'}}
                 </span>
             </div>
             <div>
@@ -109,7 +109,7 @@
                     Egresos: COP
                 </span>
                 <span class="span-egresos">
-                    {{balanceMes?.gasto}}
+                    {{balanceMes?.gasto | number:'1.0-2'}}
                 </span>
             </div>
         </div>
