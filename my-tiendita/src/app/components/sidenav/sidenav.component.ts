@@ -21,6 +21,7 @@ export class SidenavComponent implements OnInit {
   }
 
   enrutar(ruta: string){
+    console.log(`Navegando a: ${ruta}`);
     this.router.navigate([ruta]);
   }
 }

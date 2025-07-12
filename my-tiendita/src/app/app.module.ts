@@ -22,12 +22,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { DetalleVentaModalComponent } from './components/detalle-venta-modal/detalle-venta-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
-    InicioComponent
+    InicioComponent,
+    RealizarVentaComponent,
+    ModalComponent,
+    DetalleVentaModalComponent
   ],
   imports: [
     BrowserModule,
