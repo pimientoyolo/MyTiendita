@@ -1,15 +1,19 @@
 .container-balance-cards {
     display: flex;
-    gap: 32px;
+    gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     margin-bottom: 32px;
+    min-width: 0; // Evita que se extienda
 }
 
 .balance-card {
-    width: 320px;
+    width: 100%;
+    max-width: 300px;
+    min-width: 0;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .card-header {
@@ -52,26 +56,24 @@
 //tabla 
 .container-tabla {
   width: 100%;
-  overflow-x: auto;
   margin-top: 24px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .mat-elevation-z8 {
   width: 100%;
-  overflow-x: auto;
   border-radius: 8px;
 }
 
 table {
   width: 100%;
-  min-width: 600px; // Ancho mínimo para mantener legibilidad
   table-layout: fixed; // Controla el ancho de las columnas
 }
 
 .mat-mdc-form-field {
   font-size: 14px;
   width: 40%;
-  min-width: 200px;
   margin-bottom: 16px;
 }
 
@@ -84,15 +86,15 @@ th, td {
 
 // Definir anchos específicos para cada columna
 th:nth-child(1), td:nth-child(1) { // Fecha
-  width: 20%;
+  width: 18%;
 }
 
 th:nth-child(2), td:nth-child(2) { // Total
-    width: 20%;
+    width: 17%;
 }
 
 th:nth-child(3), td:nth-child(3) { // Productos
-    width: 50%;
+    width: 55%;
     white-space: nowrap;  
     overflow: hidden;
     text-overflow: ellipsis;
@@ -100,6 +102,51 @@ th:nth-child(3), td:nth-child(3) { // Productos
 
 th:nth-child(4), td:nth-child(4) { // Acciones
   width: 10%;
+}
+
+.contenedor-principal {
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1);
+  padding: 32px 16px 32px 32px; // Aún menos padding a la derecha
+  background: var(--azure-99, #FDFBFF);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  height: calc(100vh - 54px);
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.contenido-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -16px; // Extiende más hacia la derecha
+  padding-right: 16px; // Compensa el margen
+  
+  // Estilos para el scroll personalizado
+  &::-webkit-scrollbar {
+    width: 14px; // Scrollbar un poco más ancho
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--azure-95, #ECF2FF);
+    border-radius: 7px;
+    margin: 0px; // Sin márgenes para máxima proximidad al borde
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--azure-70, #8BB8FF);
+    border-radius: 7px;
+    border: 1px solid var(--azure-90, #D7E3FF); // Borde sutil
+    
+    &:hover {
+      background: var(--azure-60, #6DA6FF);
+    }
+  }
 }
 
 
