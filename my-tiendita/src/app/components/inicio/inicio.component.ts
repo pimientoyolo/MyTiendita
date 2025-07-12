@@ -1,11 +1,12 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { InicioService } from '../../services/inicio.service';
+import { InicioService } from '../../services/inicio/inicio.service';
 import { forkJoin } from 'rxjs';
 import { VentaDto } from '../../dto/venta.dto';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-inicio',
@@ -29,7 +30,8 @@ export class InicioComponent implements OnInit, AfterViewInit {
   constructor(
     private inicioService: InicioService,
     private cdr: ChangeDetectorRef,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
+    private snackbarService: SnackbarService
   ) { }
 
   ngAfterViewInit(): void {
@@ -67,19 +69,29 @@ export class InicioComponent implements OnInit, AfterViewInit {
       dia: this.inicioService.getBalanceDia(),
       semana: this.inicioService.getBalanceSemana(),
       mes: this.inicioService.getBalanceMes()
-    }).subscribe(({ dia, semana, mes }) => {
+    }).subscribe({
+      next: ({ dia, semana, mes }) => {
       this.balanceDia = dia;
       this.balanceSemana = semana;
       this.balanceMes = mes;
       this.cdr.detectChanges();
+      },
+      error: (err) => {
+      this.snackbarService.error('Error al obtener balances',);
+      }
     });
   }
 
   fetchVentas() {
-    this.inicioService.getVentasInicio().subscribe((data) => {
-      this.tablaVentas = data || [];
-      this.origenDatos.data = this.tablaVentas;
-      this.cdr.detectChanges();
+    this.inicioService.getVentasInicio().subscribe({
+      next: (data) => {
+        this.tablaVentas = data || [];
+        this.origenDatos.data = this.tablaVentas;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.snackbarService.error('Error al obtener ventas');
+      }
     });
   }
 
@@ -87,16 +99,11 @@ export class InicioComponent implements OnInit, AfterViewInit {
     const valorFiltro = (event.target as HTMLInputElement).value;
     this.origenDatos.filter = valorFiltro.trim().toLowerCase();
 
-    console.log(this.origenDatos);
-
     if (this.origenDatos.paginator) {
       this.origenDatos.paginator.firstPage();
+
     }
   }
-
-
-
-
 
 
 }

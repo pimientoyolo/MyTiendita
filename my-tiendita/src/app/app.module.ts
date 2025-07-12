@@ -21,6 +21,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { DatePipe } from '@angular/common';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSortModule
+    MatSortModule,
+    MatSnackBarModule
   ],
   providers: [
     DatePipe
