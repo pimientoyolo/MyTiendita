@@ -23,8 +23,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
-import { ModalComponent } from './components/modal/modal.component';
 import { DetalleVentaModalComponent } from './components/detalle-venta-modal/detalle-venta-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,6 @@ import { DetalleVentaModalComponent } from './components/detalle-venta-modal/det
     SidenavComponent,
     InicioComponent,
     RealizarVentaComponent,
-    ModalComponent,
     DetalleVentaModalComponent
   ],
   imports: [
@@ -53,7 +53,9 @@ import { DetalleVentaModalComponent } from './components/detalle-venta-modal/det
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    MatTooltipModule
   ],
   providers: [
     DatePipe

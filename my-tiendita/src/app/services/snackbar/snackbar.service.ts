@@ -11,7 +11,7 @@ export class SnackbarService {
   ) { }
 
   private defaultConfig: MatSnackBarConfig = {
-    duration: 300000,
+    duration: 5000,
     horizontalPosition: 'right',
     verticalPosition: 'top',
     panelClass: ['snackbar']

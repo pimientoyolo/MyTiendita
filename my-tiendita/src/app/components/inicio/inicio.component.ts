@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DetalleVentaModalComponent } from '../detalle-venta-modal/detalle-venta-modal.component';
 
 @Component({
   selector: 'app-inicio',
@@ -31,7 +33,8 @@ export class InicioComponent implements OnInit, AfterViewInit {
     private inicioService: InicioService,
     private cdr: ChangeDetectorRef,
     public datePipe: DatePipe,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dialog: MatDialog
   ) { }
 
   ngAfterViewInit(): void {
@@ -103,6 +106,14 @@ export class InicioComponent implements OnInit, AfterViewInit {
       this.origenDatos.paginator.firstPage();
 
     }
+  }
+
+  verDetalleVenta(venta: VentaDto) {
+    this.dialog.open(DetalleVentaModalComponent, {
+      data: venta,
+      minWidth: '800px',
+      maxWidth: '80vw',
+    });
   }
 
 

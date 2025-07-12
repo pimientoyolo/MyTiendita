@@ -157,8 +157,15 @@
         <!-- Name Column -->
         <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
-        <td mat-cell *matCellDef="let row">
-            agreagar acciones
+        <td mat-cell *matCellDef="let row" class="acciones-cell">
+            <button
+            mat-icon-button
+            aria-label="Ver detalles"
+            (click)="verDetalleVenta(row)"
+            matTooltip="Ver detalles de la venta"
+            > 
+                <mat-icon>visibility</mat-icon> 
+            </button>
         </td>
         </ng-container>
 
