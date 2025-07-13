@@ -33,6 +33,7 @@ import { ProductoModalComponent } from './components/producto-modal/producto-mod
 import { ReactiveFormsModule } from '@angular/forms';
 import { MovimientoProductoModalComponent } from './components/movimiento-producto-modal/movimiento-producto-modal.component';
 import { EliminarProductoModalComponent } from './components/eliminar-producto-modal/eliminar-producto-modal.component';
+import { VentasComponent } from './components/ventas/ventas.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { EliminarProductoModalComponent } from './components/eliminar-producto-m
     ProductosComponent,
     ProductoModalComponent,
     MovimientoProductoModalComponent,
-    EliminarProductoModalComponent
+    EliminarProductoModalComponent,
+    VentasComponent
   ],
   imports: [
     BrowserModule,
