@@ -9,12 +9,21 @@
     <!-- Contenedor de la tabla -->
     <div class="container-tabla">
       
-      <!-- Campo de filtro -->
-      <mat-form-field class="filtro-field">
-        <mat-label>Filtrar productos</mat-label>
-        <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. arroz, aceite..." #input>
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
+      <!-- Barra superior con filtro y botón agregar -->
+      <div class="barra-superior">
+        <mat-form-field class="filtro-field">
+          <mat-label>Filtrar productos</mat-label>
+          <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. arroz, aceite..." #input>
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary" 
+                class="btn-agregar"
+                (click)="agregarProducto()">
+          <mat-icon>add</mat-icon>
+          Agregar Producto
+        </button>
+      </div>
 
       <!-- Tabla de productos -->
       <div class="mat-elevation-z8">

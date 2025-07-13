@@ -82,10 +82,68 @@
 .filtro-field {
   width: 100%;
   max-width: 400px;
-  margin-bottom: 24px;
   
   .mat-mdc-form-field-subscript-wrapper {
     display: none;
+  }
+  
+  // Asegurar que el form field tenga la altura correcta
+  .mat-mdc-form-field-wrapper {
+    height: 48px;
+  }
+}
+
+// Barra superior con filtro y botón
+.barra-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; // Cambiar a flex-start para mejor alineación
+  margin-bottom: 24px;
+  gap: 16px;
+  
+  .btn-agregar {
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-top: 8px; // Alineación con el input
+    
+    // Estilos visuales mejorados
+    border-radius: 12px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 4px 16px rgba(0, 116, 233, 0.25) !important;
+    transition: all 0.3s ease !important;
+    white-space: nowrap;
+    
+    // Colores y gradiente
+    background: linear-gradient(135deg, var(--azure-50, #0074E9), var(--blue-50, #0078E6)) !important;
+    color: var(--azure-100, #FFFFFF) !important;
+    border: none !important;
+    
+    .mat-icon {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+    
+    &:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 24px rgba(0, 116, 233, 0.35) !important;
+      background: linear-gradient(135deg, var(--azure-40, #005CBB), var(--blue-40, #005ECC)) !important;
+    }
+    
+    &:active {
+      transform: translateY(0) !important;
+      box-shadow: 0 4px 16px rgba(0, 116, 233, 0.25) !important;
+    }
+    
+    .mat-mdc-button-ripple {
+      border-radius: 12px;
+    }
   }
 }
 
@@ -245,8 +303,18 @@ mat-paginator {
     border-radius: 0;
   }
   
-  .filtro-field {
-    max-width: 100%;
+  .barra-superior {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    
+    .filtro-field {
+      max-width: 100%;
+    }
+    
+    .btn-agregar {
+      width: 100%;
+    }
   }
   
   table {

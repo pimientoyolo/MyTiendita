@@ -87,4 +87,8 @@ export class ProductosComponent implements OnInit {
   gestionarMovimiento(producto: ProductoDto): void {
     this.snackbarService.info(`Gestionar movimientos para: ${producto.nombre}`);
   }
+
+  agregarProducto(): void {
+    this.snackbarService.info('Agregar nuevo producto');
+  }
 }
