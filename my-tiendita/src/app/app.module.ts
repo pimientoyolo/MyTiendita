@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -28,6 +29,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { ProductosComponent } from './components/productos/productos.component';
+import { ProductoModalComponent } from './components/producto-modal/producto-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { ProductosComponent } from './components/productos/productos.component';
     InicioComponent,
     RealizarVentaComponent,
     DetalleVentaModalComponent,
-    ProductosComponent
+    ProductosComponent,
+    ProductoModalComponent
   ],
   imports: [
     BrowserModule,
@@ -55,11 +59,13 @@ import { ProductosComponent } from './components/productos/productos.component';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatSortModule,
     MatSnackBarModule,
     MatDialogModule,
     MatTooltipModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     DatePipe

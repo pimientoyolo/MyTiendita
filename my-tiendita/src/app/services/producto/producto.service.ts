@@ -15,4 +15,8 @@ export class ProductoService {
     return this.http.get(`${this.apiUrl}/producto/listar`);
   }
 
+  getUnidades() {
+    return this.http.get(`${this.apiUrl}/unidad/listar`);
+  }
+
 }

@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { ProductoDto } from '../../dto/venta.dto';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductoDto, UnidadDto } from '../../dto/venta.dto';
 import { ProductoService } from '../../services/producto/producto.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
+import { ProductoModalComponent, ProductoModalData } from '../producto-modal/producto-modal.component';
 
 @Component({
   selector: 'app-productos',
@@ -16,7 +18,8 @@ export class ProductosComponent implements OnInit {
 
   constructor(
     private productoService: ProductoService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dialog: MatDialog
   ) { }
   
   // Propiedades para la tabla
@@ -27,7 +30,8 @@ export class ProductosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   // Datos de ejemplo (esto normalmente vendría de un servicio)
-  productos: ProductoDto[] = []
+  productos: ProductoDto[] = [];
+  unidades: UnidadDto[] = [];
 
   ngOnInit(): void {
     // Configura el filtro para buscar internamente por 'unidad' además de los demás campos
@@ -41,7 +45,20 @@ export class ProductosComponent implements OnInit {
              data.unidad.nombre.toLowerCase().includes(filter);
     };
     this.cargarDatos();
+    this.cargarUnidades();
   }
+
+  cargarUnidades(): void {
+    this.productoService.getUnidades().subscribe({
+      next: (data) => {
+        this.unidades = data as UnidadDto[];
+      },
+      error: (error) => {
+        this.snackbarService.error('Error al cargar las unidades');
+      }
+    });
+  }
+
 
   ngAfterViewInit(): void {
     this.origenDatos.sort = this.sort;
@@ -72,15 +89,39 @@ export class ProductosComponent implements OnInit {
   }
 
   editarProducto(producto: ProductoDto): void {
-    this.snackbarService.info(`Editar producto: ${producto.nombre}`);
+    const dialogRef = this.dialog.open(ProductoModalComponent, {
+      width: '800px',
+      maxWidth: '90vw',
+      data: {
+        mode: 'edit',
+        producto: producto,
+        unidades: this.unidades
+      } as ProductoModalData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action === 'edit') {
+        console.log('Producto editado:', result.data);
+        this.snackbarService.info(`Producto "${producto.nombre}" editado correctamente`);
+        // TODO: Actualizar la tabla con los nuevos datos
+      }
+    });
   }
 
   verDetalles(producto: ProductoDto): void {
-    this.snackbarService.info(`Ver detalles del producto: ${producto.nombre}`);
-
+    this.dialog.open(ProductoModalComponent, {
+      width: '800px',
+      maxWidth: '90vw',
+      data: {
+        mode: 'view',
+        producto: producto,
+        unidades: this.unidades
+      } as ProductoModalData
+    });
   }
 
   eliminarProducto(producto: ProductoDto): void {
+    // TODO: Implementar confirmación de eliminación
     this.snackbarService.info('Eliminar producto: ' + producto.nombre);
   }
 
@@ -89,6 +130,21 @@ export class ProductosComponent implements OnInit {
   }
 
   agregarProducto(): void {
-    this.snackbarService.info('Agregar nuevo producto');
+    const dialogRef = this.dialog.open(ProductoModalComponent, {
+      width: '800px',
+      maxWidth: '90vw',
+      data: {
+        mode: 'create',
+        unidades: this.unidades
+      } as ProductoModalData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action === 'create') {
+        console.log('Producto creado:', result.data);
+        this.snackbarService.info('Producto creado correctamente');
+        // TODO: Agregar el producto a la tabla
+      }
+    });
   }
 }

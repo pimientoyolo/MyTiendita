@@ -1,0 +1,256 @@
+// Contenedor principal del modal
+.producto-modal-container {
+  max-width: 800px;
+  width: 100%;
+}
+
+// Título del modal
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--azure-20, #001A37);
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--azure-90, #D7E3FF);
+  padding: 16px 32px;
+
+  .title-icon {
+    font-size: 28px;
+    color: var(--azure-50, #0074E9);
+  }
+}
+
+// Contenido del modal
+.modal-content {
+  padding: 24px 32px;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--azure-95, #ECF2FF);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--azure-70, #8BB8FF);
+    border-radius: 4px;
+    
+    &:hover {
+      background: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Formulario
+.producto-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// Filas del formulario
+.form-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+
+  &.full-width {
+    .form-field {
+      width: 100%;
+    }
+  }
+
+  .form-field {
+    flex: 1;
+    
+    // Estilos para campos readonly
+    &.mat-form-field-disabled {
+      .mat-mdc-form-field-wrapper {
+        background-color: var(--azure-98, #F8FAFF);
+      }
+    }
+
+    // Mejoras visuales para los inputs
+    .mat-mdc-form-field-wrapper {
+      border-radius: 8px;
+    }
+
+    .mat-mdc-form-field-outline {
+      border-radius: 8px;
+    }
+
+    // Color del label activo
+    .mat-mdc-form-field-label {
+      color: var(--azure-40, #3976D2);
+    }
+
+    // Errores
+    .mat-mdc-form-field-error {
+      color: #E53935;
+      font-size: 12px;
+    }
+
+    // Prefijos de texto (COP $)
+    .mat-mdc-form-field-text-prefix {
+      color: var(--azure-50, #0074E9);
+      font-weight: 500;
+    }
+
+    // Iconos de sufijo
+    .mat-mdc-form-field-icon-suffix {
+      color: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Select de unidades
+mat-select {
+  .mat-mdc-select-value {
+    color: var(--azure-30, #0B4A99);
+  }
+
+  &.mat-mdc-select-disabled {
+    .mat-mdc-select-value {
+      color: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Textarea
+textarea.mat-mdc-input-element {
+  min-height: 80px;
+  resize: vertical;
+}
+
+// Acciones del modal
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 32px 24px 32px;
+  border-top: 1px solid var(--azure-90, #D7E3FF);
+  margin-top: 16px;
+
+  .btn-cancelar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 20px;
+    height: 40px;
+    border-radius: 8px;
+    color: var(--azure-50, #0074E9);
+    border: 1px solid var(--azure-80, #B8D1FF);
+
+    &:hover {
+      background-color: var(--azure-95, #ECF2FF);
+    }
+
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+
+  .btn-guardar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 24px;
+    height: 40px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 116, 233, 0.25);
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 4px 12px rgba(0, 116, 233, 0.35);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background-color: var(--azure-90, #D7E3FF);
+      color: var(--azure-60, #6DA6FF);
+      box-shadow: none;
+    }
+
+    mat-icon {
+      font-size: 18px;
+    }
+  }
+}
+
+// Estados de validación
+.ng-invalid.ng-touched {
+  .mat-mdc-form-field-outline {
+    border-color: #E53935 !important;
+  }
+}
+
+.ng-valid.ng-touched {
+  .mat-mdc-form-field-outline {
+    border-color: #4CAF50 !important;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .producto-modal-container {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .modal-content {
+    max-height: 60vh;
+    padding: 16px 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+
+    .form-field {
+      width: 100%;
+    }
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+    padding: 16px 20px 20px 20px;
+
+    .btn-cancelar,
+    .btn-guardar {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .modal-title {
+    font-size: 20px;
+    padding: 12px 20px;
+
+    .title-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+// Animaciones
+.producto-form {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
