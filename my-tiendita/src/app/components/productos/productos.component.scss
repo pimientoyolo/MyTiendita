@@ -147,142 +147,308 @@
   }
 }
 
-// Estilos de la tabla
+// Estilos de la tabla mejorados siguiendo los patrones de ventas y realizar-venta
+.mat-elevation-z2 {
+  margin-top: 24px;
+  margin-bottom: 0;
+  max-height: none;
+  overflow: visible;
+  border-radius: 16px;
+  border: 1px solid var(--azure-90, #D7E3FF);
+  box-shadow: 0 4px 16px rgba(0, 26, 55, 0.08);
+  background: white;
+}
+
+// Tabla principal
 table {
   width: 100%;
+  table-layout: fixed;
+  background: white;
+}
+
+// Header de la tabla con gradiente y iconos
+.table-header-row {
+  background: linear-gradient(135deg, var(--azure-95, #ECF2FF) 0%, var(--azure-90, #D7E3FF) 100%);
   
-  th.mat-header-cell {
-    background: linear-gradient(90deg, var(--azure-95, #ECF2FF) 0%, var(--azure-90, #D7E3FF) 100%);
-    color: var(--azure-20, #001A37);
+  th {
     font-weight: 600;
+    color: var(--azure-20, #001A37);
     font-size: 14px;
     border-bottom: 2px solid var(--azure-80, #B8D1FF);
-    text-align: left;
+    padding: 16px 12px;
+    
+    .column-icon {
+      font-size: 18px;
+      margin-right: 8px;
+      vertical-align: middle;
+      color: var(--azure-50, #0074E9);
+    }
+  }
+}
+
+// Filas de datos con hover effects
+.table-data-row {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: var(--azure-98, #F8FAFF);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 26, 55, 0.1);
   }
   
-  td.mat-cell {
+  &:nth-child(even) {
+    background-color: rgba(247, 250, 255, 0.5);
+  }
+  
+  td {
     color: var(--azure-30, #0B4A99);
     font-size: 14px;
     padding: 16px 12px;
     border-bottom: 1px solid var(--azure-90, #D7E3FF);
-  }
-  
-  tr.mat-row:hover {
-    background: var(--azure-95, #ECF2FF);
-    transition: background-color 0.2s ease;
+    vertical-align: middle;
   }
 }
 
-// Columnas específicas - todo alineado a la izquierda
+// Anchos específicos para las columnas - incrementar acciones para evitar apilamiento
 .mat-column-nombre {
-  width: 25%;
-  font-weight: 500;
-  text-align: left;
+  width: 22%;
 }
 
 .mat-column-precioCompra {
-  width: 18%;
-  text-align: left;
+  width: 15%;
 }
 
 .mat-column-precioVenta {
-  width: 18%;
-  text-align: left;
-  font-weight: 500;
+  width: 15%;
 }
 
 .mat-column-cantidad {
-  width: 15%;
-  text-align: left;
+  width: 12%;
 }
 
 .mat-column-unidad {
-  width: 12%;
-  text-align: left;
+  width: 13%;
 }
 
 .mat-column-acciones {
-  width: 220px;
-  min-width: 220px;
-  text-align: left;
+  width: 23%; // Incrementado para asegurar que los botones queden en fila
+  min-width: 220px; // Incrementado para garantizar espacio horizontal
 }
 
-// Estilos para la cantidad
+// Celda de nombre del producto
+.nombre-cell {
+  .producto-nombre {
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    font-size: 15px;
+  }
+}
+
+// Celdas de precios con diseño mejorado
+.precio-compra-cell, .precio-venta-cell {
+  .precio-amount, .precio-venta-amount {
+    font-weight: 600;
+    color: var(--azure-30, #0B4A99);
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: rgba(109, 166, 255, 0.08);
+    display: inline-block;
+  }
+  
+  .precio-venta-amount {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.08) 100%);
+    color: #059669;
+    font-weight: 700;
+  }
+}
+
+// Celda de cantidad con badge mejorado
 .cantidad-cell {
-  text-align: left;
+  text-align: center;
   
   .cantidad-badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 12px;
-    font-weight: 600;
+    background: var(--azure-60, #6DA6FF);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 16px;
     font-size: 13px;
-    background: var(--azure-80, #B8D1FF);
-    color: var(--azure-20, #001A37);
+    font-weight: 700;
+    display: inline-block;
+    min-width: 40px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(109, 166, 255, 0.3);
+    transition: all 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
     
     &.cantidad-baja {
-      background: linear-gradient(135deg, #FFEB3B 0%, #FF9800 100%);
-      color: #D84315;
+      background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%);
+      color: white;
+      animation: pulse 2s infinite;
+      box-shadow: 0 2px 6px rgba(255, 152, 0, 0.4);
     }
   }
 }
 
-// Estilos para la unidad
+@keyframes pulse {
+  0% {
+    box-shadow: 0 2px 6px rgba(255, 152, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.6);
+  }
+  100% {
+    box-shadow: 0 2px 6px rgba(255, 152, 0, 0.4);
+  }
+}
+
+// Celda de unidad mejorada
 .unidad-cell {
-  text-align: left;
+  text-align: center;
   
   .unidad-badge {
     display: inline-block;
-    padding: 4px 8px;
-    border-radius: 8px;
+    padding: 6px 12px;
+    border-radius: 12px;
     font-size: 12px;
-    font-weight: 500;
-    background: var(--azure-90, #D7E3FF);
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--azure-90, #D7E3FF) 0%, var(--azure-85, #C3D4FF) 100%);
     color: var(--azure-30, #0B4A99);
     text-transform: uppercase;
-  }
-}
-
-// Estilos para las acciones
-.acciones-cell {
-  text-align: left;
-  white-space: nowrap;
-  padding: 16px 8px !important;
-  
-  .mat-mdc-icon-button {
-    margin: 0 4px;
-    width: 36px;
-    height: 36px;
-    
-    &[color="primary"] .mat-icon {
-      color: var(--azure-40, #3976D2);
-    }
-    
-    &[color="accent"] .mat-icon {
-      color: var(--azure-60, #6DA6FF);
-    }
-    
-    &.movimiento-btn .mat-icon {
-      color: #4CAF50; // Verde para movimientos
-    }
-    
-    &[color="warn"] .mat-icon {
-      color: #E53935;
-    }
+    letter-spacing: 0.5px;
+    border: 1px solid var(--azure-80, #B8D1FF);
+    transition: all 0.2s ease;
     
     &:hover {
-      transform: scale(1.1);
-      transition: transform 0.2s ease;
+      background: linear-gradient(135deg, var(--azure-85, #C3D4FF) 0%, var(--azure-80, #B8D1FF) 100%);
+      transform: translateY(-1px);
     }
   }
 }
 
-// Fila sin datos
-.mat-row td.mat-cell {
-  text-align: left;
-  color: var(--azure-50, #4D8CFF);
-  font-style: italic;
-  padding: 32px;
+// Celdas de acciones con botones mejorados - forzar disposición horizontal
+.acciones-cell {
+  text-align: center;
+  padding: 12px 6px !important; // Padding horizontal incrementado
+  white-space: nowrap !important; // CRÍTICO: evitar que los botones se apilen
+  overflow: visible !important; // Permitir que los botones se muestren completamente
+  
+  .action-button {
+    margin: 0 2px; // Margen ligeramente incrementado para respirar
+    width: 32px; // Tamaño ligeramente incrementado
+    height: 32px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex !important; // inline-flex en lugar de flex para mantener en línea
+    align-items: center !important; // Centrar verticalmente
+    justify-content: center !important; // Centrar horizontalmente
+    vertical-align: middle !important; // Alineación vertical adicional
+    
+    &:hover {
+      transform: translateY(-2px) scale(1.05);
+    }
+    
+    .mat-icon {
+      font-size: 16px; // Icono adecuado al nuevo tamaño
+      color: white;
+      margin: 0 !important; // Eliminar cualquier margen del icono
+      padding: 0 !important; // Eliminar cualquier padding del icono
+      display: flex !important; // Flex para mejor centrado
+      align-items: center !important;
+      justify-content: center !important;
+      width: 16px !important; // Ancho fijo del icono
+      height: 16px !important; // Alto fijo del icono
+    }
+    
+    // Botón de editar
+    &.edit-button {
+      background: linear-gradient(135deg, var(--azure-50, #0074E9) 0%, var(--azure-60, #6DA6FF) 100%);
+      box-shadow: 0 3px 8px rgba(0, 116, 233, 0.3);
+      
+      &:hover {
+        box-shadow: 0 5px 12px rgba(0, 116, 233, 0.4);
+      }
+    }
+    
+    // Botón de ver detalles
+    &.view-button {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      box-shadow: 0 3px 8px rgba(99, 102, 241, 0.3);
+      
+      &:hover {
+        box-shadow: 0 5px 12px rgba(99, 102, 241, 0.4);
+      }
+    }
+    
+    // Botón de movimiento
+    &.movement-button {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
+      
+      &:hover {
+        box-shadow: 0 5px 12px rgba(16, 185, 129, 0.4);
+      }
+    }
+    
+    // Botón de eliminar
+    &.delete-button {
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      box-shadow: 0 3px 8px rgba(239, 68, 68, 0.3);
+      
+      &:hover {
+        box-shadow: 0 5px 12px rgba(239, 68, 68, 0.4);
+      }
+    }
+  }
+}
+
+// Fila sin datos mejorada
+.no-data-row {
+  .no-data-cell {
+    text-align: center;
+    padding: 40px 20px !important;
+    border-bottom: none;
+    
+    .no-data-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--azure-40, #3976D2);
+      min-height: 120px;
+      
+      .no-data-icon {
+        font-size: 48px;
+        color: var(--azure-60, #6DA6FF);
+        margin-bottom: 8px;
+        opacity: 0.8;
+        animation: fadeInOut 3s ease-in-out infinite;
+      }
+      
+      span {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        line-height: 1.4;
+        color: var(--azure-50, #0074E9);
+      }
+    }
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 // Paginador
@@ -295,7 +461,7 @@ mat-paginator {
   }
 }
 
-// Efectos responsive
+// Efectos responsive mejorados
 @media (max-width: 768px) {
   .container-tabla {
     padding: 16px;
@@ -317,12 +483,81 @@ mat-paginator {
     }
   }
   
+  .mat-elevation-z2 {
+    border-radius: 8px;
+    margin: 0 -16px;
+    overflow-x: auto; // Permitir scroll horizontal si es necesario
+  }
+  
+  // Ajustes de tabla para móvil
   table {
+    table-layout: auto;
     font-size: 12px;
   }
   
+  .table-header-row th {
+    padding: 12px 6px;
+    font-size: 12px;
+    
+    .column-icon {
+      font-size: 16px;
+      margin-right: 4px;
+    }
+  }
+  
+  .table-data-row td {
+    padding: 12px 6px;
+    font-size: 12px;
+  }
+  
+  // Ocultar columnas menos importantes en móvil
   .mat-column-precioCompra,
-  .mat-column-precioVenta {
+  .mat-column-unidad {
     display: none;
+  }
+  
+  // Ajustar acciones para móvil
+  .acciones-cell {
+    padding: 8px 2px !important;
+    
+    .action-button {
+      width: 30px;
+      height: 30px;
+      margin: 0;
+      
+      .mat-icon {
+        font-size: 14px;
+        width: 14px !important;
+        height: 14px !important;
+      }
+    }
+  }
+  
+  // Ajustar badges para móvil
+  .cantidad-badge {
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+  }
+  
+  .unidad-badge {
+    padding: 3px 6px !important;
+    font-size: 10px !important;
+  }
+  
+  // Ajustar fila sin datos
+  .no-data-cell {
+    padding: 24px 12px !important;
+    
+    .no-data-content {
+      min-height: 80px;
+      
+      .no-data-icon {
+        font-size: 36px;
+      }
+      
+      span {
+        font-size: 14px;
+      }
+    }
   }
 }

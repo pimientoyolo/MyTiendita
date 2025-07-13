@@ -26,34 +26,52 @@
       </div>
 
       <!-- Tabla de productos -->
-      <div class="mat-elevation-z8">
+      <div class="mat-elevation-z2">
         <table mat-table [dataSource]="origenDatos" matSort>
 
           <!-- Columna Nombre -->
           <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-            <td mat-cell *matCellDef="let producto"> {{producto.nombre}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="nombre-header"> 
+              <mat-icon class="column-icon">inventory_2</mat-icon>
+              Nombre 
+            </th>
+            <td mat-cell *matCellDef="let producto" class="nombre-cell"> 
+              <span class="producto-nombre">{{producto.nombre}}</span>
+            </td>
           </ng-container>
 
           <!-- Columna Precio Compra -->
           <ng-container matColumnDef="precioCompra">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Compra </th>
-            <td mat-cell *matCellDef="let producto"> 
-              {{ producto.precioCompra | currency:'COP ':'symbol':'1.0-2' }} 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="precio-compra-header"> 
+              <mat-icon class="column-icon">shopping_cart</mat-icon>
+              Precio Compra 
+            </th>
+            <td mat-cell *matCellDef="let producto" class="precio-compra-cell"> 
+              <span class="precio-amount">
+                {{ producto.precioCompra | currency:'COP ':'symbol':'1.0-2' }}
+              </span>
             </td>
           </ng-container>
 
           <!-- Columna Precio Venta -->
           <ng-container matColumnDef="precioVenta">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Venta </th>
-            <td mat-cell *matCellDef="let producto"> 
-              {{ producto.precioVenta | currency:'COP ':'symbol':'1.0-2' }} 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="precio-venta-header"> 
+              <mat-icon class="column-icon">sell</mat-icon>
+              Precio Venta 
+            </th>
+            <td mat-cell *matCellDef="let producto" class="precio-venta-cell"> 
+              <span class="precio-venta-amount">
+                {{ producto.precioVenta | currency:'COP ':'symbol':'1.0-2' }}
+              </span>
             </td>
           </ng-container>
 
           <!-- Columna Cantidad -->
           <ng-container matColumnDef="cantidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="cantidad-header"> 
+              <mat-icon class="column-icon">format_list_numbered</mat-icon>
+              Cantidad 
+            </th>
             <td mat-cell *matCellDef="let producto" class="cantidad-cell">
               <span class="cantidad-badge" [ngClass]="{'cantidad-baja': producto.cantidad < 10}">
                 {{producto.cantidad}}
@@ -63,7 +81,10 @@
 
           <!-- Columna Unidad -->
           <ng-container matColumnDef="unidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Unidad </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="unidad-header"> 
+              <mat-icon class="column-icon">straighten</mat-icon>
+              Unidad 
+            </th>
             <td mat-cell *matCellDef="let producto" class="unidad-cell">
               <span class="unidad-badge">{{producto.unidad?.nombre || 'N/A'}}</span>
             </td>
@@ -71,24 +92,27 @@
 
           <!-- Columna Acciones -->
           <ng-container matColumnDef="acciones">
-            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <th mat-header-cell *matHeaderCellDef class="acciones-header"> 
+              <mat-icon class="column-icon">settings</mat-icon>
+              Acciones 
+            </th>
             <td mat-cell *matCellDef="let producto" class="acciones-cell">
-              <button mat-icon-button color="primary" 
+              <button mat-icon-button class="action-button edit-button" 
                       (click)="editarProducto(producto)"
                       matTooltip="Editar producto">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button color="accent" 
+              <button mat-icon-button class="action-button view-button" 
                       (click)="verDetalles(producto)"
                       matTooltip="Ver detalles">
                 <mat-icon>visibility</mat-icon>
               </button>
-              <button mat-icon-button class="movimiento-btn" 
+              <button mat-icon-button class="action-button movement-button" 
                       (click)="gestionarMovimiento(producto)"
                       matTooltip="Entrada/Salida de productos">
                 <mat-icon>swap_horiz</mat-icon>
               </button>
-              <button mat-icon-button color="warn" 
+              <button mat-icon-button class="action-button delete-button" 
                       (click)="eliminarProducto(producto)"
                       matTooltip="Eliminar producto">
                 <mat-icon>delete</mat-icon>
@@ -97,13 +121,16 @@
           </ng-container>
 
           <!-- Filas de encabezado y datos -->
-          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-          <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+          <tr mat-header-row *matHeaderRowDef="columnas" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas;" class="table-data-row"></tr>
 
           <!-- Fila cuando no hay datos -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="6">
-              No se encontraron productos para "{{input.value}}"
+          <tr class="no-data-row" *matNoDataRow>
+            <td class="no-data-cell" colspan="6">
+              <div class="no-data-content">
+                <mat-icon class="no-data-icon">search_off</mat-icon>
+                <span>No se encontraron productos para "{{input.value}}"</span>
+              </div>
             </td>
           </tr>
         </table>
