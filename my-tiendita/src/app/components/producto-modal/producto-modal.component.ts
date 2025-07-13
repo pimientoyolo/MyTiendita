@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductoDto, UnidadDto } from '../../dto/venta.dto';
 import { ProductoService } from '../../services/producto/producto.service';
@@ -60,8 +60,8 @@ export class ProductoModalComponent implements OnInit {
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       descripcion: [''],
       codigoBarras: ['', [Validators.required]],
-      precioCompra: [0, [Validators.required, Validators.min(0.01)]],
-      precioVenta: [0, [Validators.required, Validators.min(0.01)]],
+      precioCompra: ['0', [Validators.required, this.priceValidator]],
+      precioVenta: ['0', [Validators.required, this.priceValidator]],
       cantidad: [0, [Validators.required, Validators.min(0)]],
       unidadId: ['', [Validators.required]]
     });
@@ -70,6 +70,73 @@ export class ProductoModalComponent implements OnInit {
     if (this.isViewMode) {
       this.productoForm.disable();
     }
+
+    // Configurar formateo automático de precios
+    this.setupPriceFormatting();
+  }
+
+  // Validador personalizado para precios
+  private priceValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null; // Si está vacío, el required se encarga
+    }
+
+    // Remover formato para validar el número
+    const numericValue = control.value.toString().replace(/[,\s]/g, '');
+    const number = parseFloat(numericValue);
+
+    if (isNaN(number) || number <= 0) {
+      return { invalidPrice: true };
+    }
+
+    return null;
+  }
+
+  // Configurar formateo automático de precios
+  private setupPriceFormatting(): void {
+    // Formatear precio de compra
+    this.productoForm.get('precioCompra')?.valueChanges.subscribe(value => {
+      if (value && value !== '' && !this.isViewMode) {
+        const formatted = this.formatPrice(value);
+        if (formatted !== value) {
+          this.productoForm.get('precioCompra')?.setValue(formatted, { emitEvent: false });
+        }
+      }
+    });
+
+    // Formatear precio de venta
+    this.productoForm.get('precioVenta')?.valueChanges.subscribe(value => {
+      if (value && value !== '' && !this.isViewMode) {
+        const formatted = this.formatPrice(value);
+        if (formatted !== value) {
+          this.productoForm.get('precioVenta')?.setValue(formatted, { emitEvent: false });
+        }
+      }
+    });
+  }
+
+  // Formatear precio con separadores de miles sin decimales
+  private formatPrice(value: any): string {
+    if (!value || value === '') return '';
+    
+    // Remover todos los caracteres que no sean números
+    const numericValue = value.toString().replace(/[^\d]/g, '');
+    
+    if (!numericValue || numericValue === '0') return '';
+    
+    // Convertir a número y formatear con separadores de miles
+    const number = parseInt(numericValue, 10);
+    return number.toLocaleString('es-CO', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
+  }
+
+  // Convertir precio formateado a número
+  private parsePrice(formattedPrice: string): number {
+    if (!formattedPrice || formattedPrice === '') return 0;
+    const numericValue = formattedPrice.replace(/[^\d]/g, '');
+    return parseInt(numericValue, 10) || 0;
   }
 
   // Cargar datos del producto para edición/visualización
@@ -80,8 +147,8 @@ export class ProductoModalComponent implements OnInit {
         nombre: producto.nombre,
         descripcion: producto.descripcion,
         codigoBarras: producto.codigoBarras,
-        precioCompra: producto.precioCompra,
-        precioVenta: producto.precioVenta,
+        precioCompra: this.formatPrice(producto.precioCompra.toString()),
+        precioVenta: this.formatPrice(producto.precioVenta.toString()),
         cantidad: producto.cantidad,
         unidadId: producto.unidad.id.toString() // Convertir a string para el select
       });
@@ -134,8 +201,8 @@ export class ProductoModalComponent implements OnInit {
         nombre: formValue.nombre,
         descripcion: formValue.descripcion || '',
         codigoBarras: formValue.codigoBarras,
-        precioCompra: Number(formValue.precioCompra),
-        precioVenta: Number(formValue.precioVenta),
+        precioCompra: this.parsePrice(formValue.precioCompra),
+        precioVenta: this.parsePrice(formValue.precioVenta),
         cantidad: Number(formValue.cantidad),
         unidad: {
           id: Number(formValue.unidadId),

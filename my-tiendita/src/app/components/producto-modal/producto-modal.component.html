@@ -40,7 +40,7 @@
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Precio de compra</mat-label>
           <input matInput 
-                 type="number"
+                 type="text"
                  formControlName="precioCompra"
                  [readonly]="isViewMode"
                  placeholder="0">
@@ -48,15 +48,15 @@
           <mat-error *ngIf="productoForm.get('precioCompra')?.hasError('required')">
             El precio de compra es obligatorio
           </mat-error>
-          <mat-error *ngIf="productoForm.get('precioCompra')?.hasError('min')">
-            El precio debe ser mayor a 0
+          <mat-error *ngIf="productoForm.get('precioCompra')?.hasError('invalidPrice')">
+            Ingrese un precio válido
           </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Precio de venta</mat-label>
           <input matInput 
-                 type="number"
+                 type="text"
                  formControlName="precioVenta"
                  [readonly]="isViewMode"
                  placeholder="0">
@@ -64,8 +64,8 @@
           <mat-error *ngIf="productoForm.get('precioVenta')?.hasError('required')">
             El precio de venta es obligatorio
           </mat-error>
-          <mat-error *ngIf="productoForm.get('precioVenta')?.hasError('min')">
-            El precio debe ser mayor a 0
+          <mat-error *ngIf="productoForm.get('precioVenta')?.hasError('invalidPrice')">
+            Ingrese un precio válido
           </mat-error>
         </mat-form-field>
       </div>
