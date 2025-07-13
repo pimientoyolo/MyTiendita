@@ -1,18 +1,63 @@
+// Contenedor principal y scroll
+.contenedor-principal {
+  box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1);
+  padding: 32px 16px 32px 32px;
+  background: var(--azure-99, #FDFBFF);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  height: calc(100vh - 54px);
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.contenido-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -16px;
+  padding-right: 16px;
+  
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--azure-95, #ECF2FF);
+    border-radius: 7px;
+    margin: 0px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--azure-70, #8BB8FF);
+    border-radius: 7px;
+    border: 1px solid var(--azure-90, #D7E3FF);
+    
+    &:hover {
+      background: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Estilos para las tarjetas de balance
 .container-balance-cards {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-start; // Permite que las tarjetas crezcan naturalmente
+    align-items: flex-start;
     margin-bottom: 32px;
-    min-width: 0; // Evita que se extienda
+    min-width: 0;
 }
 
 .balance-card {
     width: 100%;
-    max-width: 320px; // Reducido de 350px a 320px
+    max-width: 320px;
     min-width: 0;
-    min-height: 320px; // Altura mínima más generosa
+    min-height: 320px;
     padding: 24px;
     box-sizing: border-box;
     border-radius: 20px;
@@ -23,7 +68,7 @@
         0 4px 16px rgba(116, 184, 255, 0.15);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: visible; // Permite que el contenido se muestre completamente
+    overflow: visible;
     display: flex;
     flex-direction: column;
     
@@ -74,17 +119,16 @@
 }
 
 .currency-label {
-    font-size: 24px; // Reducido de 32px a 24px
+    font-size: 24px;
     font-weight: 800;
     background: linear-gradient(135deg, var(--azure-30, #1B5FC7) 0%, var(--azure-40, #4285F4) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: -0.5px; // Reducido de -0.8px
-    line-height: 1.2; // Mejorado para mejor ajuste
-    word-break: break-word; // Permite que se ajuste si es muy largo
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    word-break: break-word;
     
-    // Estilo para balance negativo
     &.balance-negativo {
         background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
         -webkit-background-clip: text;
@@ -135,7 +179,6 @@
     font-weight: 700;
     font-size: 16px;
     
-    // Estilo para porcentaje negativo
     &.porcentaje-negativo {
         background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
         -webkit-background-clip: text;
@@ -144,7 +187,49 @@
     }
 }
 
-//tabla 
+// Tarjeta con balance negativo
+.balance-card.balance-negativo {
+    &::before {
+        background: linear-gradient(90deg, #EF4444 0%, #DC2626 100%);
+    }
+    
+    border-color: rgba(239, 68, 68, 0.2);
+    
+    &:hover {
+        box-shadow: 
+            0 12px 40px rgba(220, 38, 38, 0.12),
+            0 8px 24px rgba(239, 68, 68, 0.2);
+    }
+}
+
+// Título de sección
+.section-title {
+    text-align: center;
+    margin: 40px 0 24px 0;
+    
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--azure-20, #001A37);
+        margin: 0;
+        position: relative;
+        display: inline-block;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--azure-60, #6DA6FF) 0%, var(--azure-70, #8BB8FF) 100%);
+            border-radius: 2px;
+        }
+    }
+}
+
+// Estilos de la tabla
 .container-tabla {
   width: 100%;
   margin-top: 24px;
@@ -159,100 +244,100 @@
 
 table {
   width: 100%;
-  table-layout: fixed; // Controla el ancho de las columnas
+  table-layout: fixed;
 }
 
-.mat-mdc-form-field {
-  font-size: 14px;
-  width: 40%;
-  margin-bottom: 16px;
+// Anchos específicos para las columnas
+.mat-column-fecha {
+  width: 20%;
 }
 
-th, td {
-  padding: 12px 8px;
-  text-align: left;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+.mat-column-valor {
+  width: 15%;
 }
 
-// Definir anchos específicos para cada columna
-th:nth-child(1), td:nth-child(1) { // Fecha
-  width: 18%;
+.mat-column-productos {
+  width: 50%;
 }
 
-th:nth-child(2), td:nth-child(2) { // Total
-    width: 17%;
+.mat-column-acciones {
+  width: 15%;
 }
 
-th:nth-child(3), td:nth-child(3) { // Productos
-    width: 55%;
-    white-space: nowrap;  
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-th:nth-child(4), td:nth-child(4) { // Acciones
-  width: 10%;
-}
-
-.contenedor-principal {
-  border-radius: 16px;
-  box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1);
-  padding: 32px 16px 32px 32px; // Aún menos padding a la derecha
-  background: var(--azure-99, #FDFBFF);
-  border: 1px solid var(--azure-90, #D7E3FF);
-  height: calc(100vh - 54px);
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.contenido-scroll {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-right: -16px; // Extiende más hacia la derecha
-  padding-right: 16px; // Compensa el margen
+// ESTILOS ESPECÍFICOS SOLO PARA LA COLUMNA DE PRODUCTOS
+.productos-cell {
+  vertical-align: top;
+  padding: 16px 12px !important;
   
-  // Estilos para el scroll personalizado
-  &::-webkit-scrollbar {
-    width: 14px; // Scrollbar un poco más ancho
+  .productos-content {
+    max-width: 100%;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
   
-  &::-webkit-scrollbar-track {
+  .producto-item {
+    display: flex;
+    align-items: center;
     background: var(--azure-95, #ECF2FF);
-    border-radius: 7px;
-    margin: 0px; // Sin márgenes para máxima proximidad al borde
+    color: var(--azure-30, #0B4A99);
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--azure-80, #B8D1FF);
+    width: fit-content;
+    
+    .cantidad-badge {
+      background: var(--azure-60, #6DA6FF);
+      color: white;
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 6px;
+      display: inline-block;
+      min-width: 20px;
+      text-align: center;
+    }
+    
+    .producto-nombre {
+      font-weight: 500;
+      color: var(--azure-20, #001A37);
+    }
   }
   
-  &::-webkit-scrollbar-thumb {
-    background: var(--azure-70, #8BB8FF);
-    border-radius: 7px;
-    border: 1px solid var(--azure-90, #D7E3FF); // Borde sutil
-    
-    &:hover {
-      background: var(--azure-60, #6DA6FF);
-    }
+  .mas-productos {
+    display: flex;
+    align-items: center;
+    background: var(--azure-80, #B8D1FF);
+    color: var(--azure-40, #1E5AA8);
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    font-style: italic;
+    width: fit-content;
   }
 }
 
-// Tarjeta con balance negativo - borde rojo sutil
-.balance-card.balance-negativo {
-    &::before {
-        background: linear-gradient(90deg, #EF4444 0%, #DC2626 100%);
-    }
-    
-    border-color: rgba(239, 68, 68, 0.2);
-    
-    &:hover {
-        box-shadow: 
-            0 12px 40px rgba(220, 38, 38, 0.12),
-            0 8px 24px rgba(239, 68, 68, 0.2);
-    }
+// Estilos simples para la columna de acciones (sin tocar el botón)
+.acciones-cell {
+  text-align: center;
+  padding: 16px 8px !important;
+  vertical-align: middle;
+  
+  // Solo agregar color al icono, sin tocar otros estilos
+  .mat-mdc-icon-button .mat-icon {
+    color: #1976d2 !important;
+  }
+}
+
+// Estilos para el campo de filtro
+.container-tabla mat-form-field {
+  width: 300px;
+  margin-bottom: 16px;
 }
 
 
