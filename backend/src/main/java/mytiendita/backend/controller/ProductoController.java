@@ -64,6 +64,14 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.listar());
     }
 
+    @DeleteMapping("/eliminar/{codigo}")
+    public ResponseEntity<Void> eliminarProducto(
+            @PathVariable String codigo
+    ) {
+        productoService.eliminarProducto(codigo);
+        return ResponseEntity.noContent().build();
+    }
+
     //setters
     @Autowired
     public void setProductoService(ProductoService productoService) {

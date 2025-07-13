@@ -31,6 +31,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ProductoModalComponent } from './components/producto-modal/producto-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EliminarProductoModalComponent } from './components/eliminar-producto-modal/eliminar-producto-modal.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     RealizarVentaComponent,
     DetalleVentaModalComponent,
     ProductosComponent,
-    ProductoModalComponent
+    ProductoModalComponent,
+    EliminarProductoModalComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { ProductoDto, UnidadDto } from '../../dto/venta.dto';
 import { ProductoService } from '../../services/producto/producto.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { ProductoModalComponent, ProductoModalData } from '../producto-modal/producto-modal.component';
+import { EliminarProductoModalComponent } from '../eliminar-producto-modal/eliminar-producto-modal.component';
 
 @Component({
   selector: 'app-productos',
@@ -120,7 +121,18 @@ export class ProductosComponent implements OnInit {
   }
 
   eliminarProducto(producto: ProductoDto): void {
-    this.snackbarService.info('Eliminar producto: ' + producto.nombre);
+    const dialogRef = this.dialog.open(EliminarProductoModalComponent, {
+      width: '400px',
+      maxWidth: '90vw',
+      data: producto
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackbarService.exito('Producto eliminado correctamente');
+        this.cargarDatos();
+      }
+    });
   }
 
   gestionarMovimiento(producto: ProductoDto): void {

@@ -28,4 +28,8 @@ export class ProductoService {
     return this.http.put(`${this.apiUrl}/producto/actualizar`, producto);
   }
 
+  eliminarProducto(codigo: string) {
+    return this.http.delete(`${this.apiUrl}/producto/eliminar/${codigo}`);
+  }
+
 }

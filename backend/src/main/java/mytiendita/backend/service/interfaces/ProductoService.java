@@ -18,4 +18,6 @@ public interface ProductoService {
     List<Producto> listarProductosPorIds(List<Long> ids);
 
     List<Producto> listar();
+
+    void eliminarProducto(String codigo);
 }

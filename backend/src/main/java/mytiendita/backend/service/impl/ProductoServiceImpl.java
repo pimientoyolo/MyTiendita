@@ -2,9 +2,11 @@ package mytiendita.backend.service.impl;
 
 import mytiendita.backend.dto.ProductoTableDTO;
 import mytiendita.backend.exception.CustomException;
+import mytiendita.backend.model.DetalleVenta;
 import mytiendita.backend.model.Movimiento;
 import mytiendita.backend.model.Producto;
 import mytiendita.backend.model.TipoMovimiento;
+import mytiendita.backend.repository.DetalleVentaRepository;
 import mytiendita.backend.repository.MovimientoRepository;
 import mytiendita.backend.repository.ProductoRepository;
 import mytiendita.backend.repository.UnidadRepository;
@@ -23,6 +25,7 @@ public class ProductoServiceImpl implements ProductoService {
     private ProductoRepository productoRepository;
     private UnidadRepository unidadRepository;
     private MovimientoRepository movimientoRepository;
+    private DetalleVentaRepository detalleVentaRepository;
 
     @Override
     public List<Producto> listarProductosPorIds(List<Long> ids) {
@@ -183,6 +186,20 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    @Transactional
+    public void eliminarProducto(String codigo) {
+        // Verificar si el producto existe
+        Producto producto = getProductoByCodigo(codigo);
+
+        if(detalleVentaRepository.existsByProductoId(producto.getId())){
+            throw new CustomException("No se puede eliminar el producto porque tiene ventas asociadas");
+        }
+
+        // Eliminar el producto
+        productoRepository.delete(producto);
+    }
+
+    @Override
     public List<Producto> listar() {
         return productoRepository.findAll();
     }
@@ -201,6 +218,11 @@ public class ProductoServiceImpl implements ProductoService {
     @Autowired
     public void setMovimientoRepository(MovimientoRepository movimientoRepository) {
         this.movimientoRepository = movimientoRepository;
+    }
+
+    @Autowired
+    public void setDetalleVentaRepository(DetalleVentaRepository detalleVentaRepository) {
+        this.detalleVentaRepository = detalleVentaRepository;
     }
 
 }

@@ -1,0 +1,40 @@
+<div class="eliminar-modal-container">
+  <!-- Título del modal -->
+  <h2 mat-dialog-title class="modal-title">
+    <mat-icon class="title-icon warning-icon">warning</mat-icon>
+    Eliminar Producto
+  </h2>
+
+  <!-- Contenido del modal -->
+  <mat-dialog-content class="modal-content">
+    <div class="confirmation-message">
+      <p class="question-text">
+        ¿Está seguro de eliminar el producto 
+        <span class="product-name">"{{ data.nombre }}"</span>?
+      </p>
+      <p class="warning-text">
+        Esta acción no se puede deshacer.
+      </p>
+    </div>
+  </mat-dialog-content>
+
+  <!-- Acciones del modal -->
+  <mat-dialog-actions class="modal-actions">
+    <button mat-button 
+            type="button"
+            (click)="onCancel()"
+            class="btn-cancelar">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+
+    <button mat-raised-button 
+            color="warn"
+            type="button"
+            (click)="onConfirm()"
+            class="btn-eliminar">
+      <mat-icon>delete</mat-icon>
+      Eliminar
+    </button>
+  </mat-dialog-actions>
+</div>
