@@ -109,12 +109,17 @@
 
     <!-- Totales y vuelta - siempre al fondo -->
     <div class="seccion-final">
-      <div class="grupo-inputs">
-        <mat-form-field appearance="outline" class="input-informativo">
-          <mat-label>Total</mat-label>
-          <input matInput [value]="total | currency:'COP ':'symbol':'1.0-0'" readonly/>
-        </mat-form-field>
+      <div class="grupo-informacion">
+        <!-- Total como card informativa -->
+        <div class="info-card total-card">
+          <div class="info-header">
+            <mat-icon class="info-icon">receipt</mat-icon>
+            <span class="info-label">Total</span>
+          </div>
+          <div class="info-value">{{ total | currency:'COP ':'symbol':'1.0-0' }}</div>
+        </div>
 
+        <!-- Campo Recibido como input editable -->
         <mat-form-field appearance="outline" class="input-editable">
           <mat-label>Recibido</mat-label>
           <input
@@ -126,15 +131,14 @@
           />
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="input-informativo">
-          <mat-label>Vuelto</mat-label>
-          <input
-            matInput
-            [value]="vuelto | currency:'COP ':'symbol':'1.0-0'"
-            [class]="getVueltoClass()"
-            readonly
-          />
-        </mat-form-field>
+        <!-- Vuelto como card informativa -->
+        <div class="info-card vuelto-card" [class]="getVueltoClass()">
+          <div class="info-header">
+            <mat-icon class="info-icon">account_balance_wallet</mat-icon>
+            <span class="info-label">Vuelto</span>
+          </div>
+          <div class="info-value">{{ vuelto | currency:'COP ':'symbol':'1.0-0' }}</div>
+        </div>
       </div>
       
       <button

@@ -238,73 +238,130 @@ th:nth-child(1), td:nth-child(1) {
   background: var(--azure-99, #FDFBFF); // Mismo fondo que la tarjeta
   flex-shrink: 0; // No se encoge nunca
   
-  .grupo-inputs {
+  .grupo-informacion {
     display: flex;
-    flex-direction: row; // Los inputs van uno al lado del otro
-    gap: 20px; // Espacio aumentado entre inputs
+    flex-direction: row; // Los elementos van uno al lado del otro
+    gap: 20px; // Espacio aumentado entre elementos
     flex: 2; // Ocupa más espacio en relación al botón
-    align-items: flex-end; // Alinea los inputs al final (mismo nivel que el botón)
-    min-width: 480px; // Ancho mínimo para el grupo de inputs
+    align-items: center; // Centrar todos los elementos (cards e input)
+    min-width: 480px; // Ancho mínimo para el grupo de información
     
-    // Estilos para los inputs de la sección final - misma altura que el botón
+    // Estilos para las cards informativas (Total y Vuelto)
+    .info-card {
+      display: flex;
+      flex-direction: column;
+      padding: 8px 20px; // Padding vertical reducido de 16px a 8px
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      min-width: 140px;
+      min-height: 56px; // Altura mínima reducida
+      flex: 1;
+      border: 2px solid transparent;
+      justify-content: center; // Centrar contenido verticalmente
+      
+      .info-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 4px; // Espacio reducido entre header y valor
+        
+        .info-icon {
+          font-size: 1.1rem !important; // Icono ligeramente más pequeño
+          width: 1.1rem !important;
+          height: 1.1rem !important;
+          color: inherit;
+        }
+        
+        .info-label {
+          font-size: 0.8rem; // Label más pequeño
+          font-weight: 600;
+          color: inherit;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+      
+      .info-value {
+        font-size: 1.15rem; // Valor ligeramente más pequeño
+        font-weight: 700;
+        color: inherit;
+        line-height: 1.2;
+      }
+      
+      // Card del Total
+      &.total-card {
+        background: linear-gradient(135deg, var(--azure-95, #ECF2FF) 0%, rgba(33, 150, 243, 0.08) 100%);
+        border-color: var(--azure-80, #B3C5FF);
+        
+        .info-header {
+          color: var(--azure-40, #005CBB);
+        }
+        
+        .info-value {
+          color: var(--azure-30, #00458F);
+        }
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(33, 150, 243, 0.15);
+          border-color: var(--azure-60, #6DA6FF);
+        }
+      }
+      
+      // Card del Vuelto - colores dinámicos según el valor
+      &.vuelto-card {
+        // Vuelto positivo (normal)
+        background: linear-gradient(135deg, rgba(46, 125, 50, 0.08) 0%, rgba(76, 175, 80, 0.06) 100%);
+        border-color: rgba(46, 125, 50, 0.3);
+        
+        .info-header {
+          color: #2E7D32;
+        }
+        
+        .info-value {
+          color: #1B5E20;
+        }
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(46, 125, 50, 0.15);
+          border-color: rgba(46, 125, 50, 0.5);
+        }
+        
+        // Vuelto negativo (debe dinero)
+        &.vuelto-negativo {
+          background: linear-gradient(135deg, rgba(211, 47, 47, 0.08) 0%, rgba(244, 67, 54, 0.06) 100%);
+          border-color: rgba(211, 47, 47, 0.3);
+          
+          .info-header {
+            color: #D32F2F;
+          }
+          
+          .info-value {
+            color: #C62828;
+          }
+          
+          &:hover {
+            border-color: rgba(211, 47, 47, 0.5);
+            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.15);
+          }
+        }
+      }
+    }
+    
+    // Estilos para el input editable (recibido) - mantener igual pero ajustar para el nuevo layout
     .mat-mdc-form-field {
-      height: 56px; // Altura fija igual al botón
+      height: 56px !important; // Misma altura que las cards
       width: 100% !important; // Asegurar que ocupe todo el ancho disponible
       min-width: 160px !important; // Ancho mínimo más grande
       flex: 1 1 auto !important; // Crecer y encogerse según el espacio
       
       &.mat-form-field-appearance-outline {
         .mat-mdc-text-field-wrapper {
-          height: 56px !important; // Misma altura que el botón
+          height: 56px !important; // Misma altura que las cards
           min-height: 56px !important;
           width: 100% !important; // Ocupar todo el ancho del contenedor
-        }
-      }
-      
-      // Estilos para inputs informativos (total y vuelto)
-      &.input-informativo {
-        pointer-events: none; // No se puede interactuar
-        
-        .mat-mdc-text-field-wrapper {
-          background-color: var(--azure-95, #ECF2FF) !important; // Fondo gris claro
-          border-color: var(--azure-80, #B3C5FF) !important; // Borde más sutil
-        }
-        
-        .mat-mdc-form-field-input-control input {
-          color: var(--azure-20, #00325B) !important; // Texto más oscuro pero no negro
-          font-weight: 600 !important; // Peso semi-bold para destacar el valor
-          cursor: default !important; // Cursor por defecto
-          background-color: transparent !important;
-          font-size: 1.2rem !important; // Texto más grande
-          padding: 16px 16px !important; // Padding aumentado para alargar
-        }
-        
-        // Label de los campos informativos
-        .mat-mdc-form-field-label {
-          color: var(--azure-30, #00458F) !important; // Color del label más distintivo
-          font-weight: 500 !important;
-          font-size: 1rem !important; // Label más grande
-        }
-        
-        // Outline menos prominente
-        .mdc-notched-outline {
-          .mdc-notched-outline__leading,
-          .mdc-notched-outline__notch,
-          .mdc-notched-outline__trailing {
-            border-color: var(--azure-80, #B3C5FF) !important;
-            border-width: 1px !important; // Borde más delgado
-          }
-        }
-        
-        // Al hacer hover no cambia
-        &:hover {
-          .mdc-notched-outline {
-            .mdc-notched-outline__leading,
-            .mdc-notched-outline__notch,
-            .mdc-notched-outline__trailing {
-              border-color: var(--azure-80, #B3C5FF) !important;
-            }
-          }
         }
       }
       
@@ -319,15 +376,15 @@ th:nth-child(1), td:nth-child(1) {
           color: var(--azure-10, #001B3F) !important; // Texto negro
           font-weight: 500 !important;
           cursor: text !important;
-          font-size: 1.2rem !important; // Texto más grande
-          padding: 16px 16px !important; // Padding aumentado para alargar
+          font-size: 1.3rem !important; // Texto grande pero proporcionado
+          padding: 16px 16px !important; // Padding balanceado
         }
         
         // Label del campo editable
         .mat-mdc-form-field-label {
           color: var(--azure-40, #005CBB) !important;
           font-weight: 500 !important;
-          font-size: 1rem !important; // Label más grande
+          font-size: 1rem !important; // Label proporcionado
         }
         
         // Borde más prominente al hacer focus
@@ -348,16 +405,16 @@ th:nth-child(1), td:nth-child(1) {
   .boton-finalizar {
     flex-shrink: 0; // No se encoge
     align-self: flex-end; // Se alinea al final (abajo)
-    height: 56px !important; // Altura fija igual a los inputs
-    min-height: 56px !important;
-    padding: 0 32px !important; // Padding horizontal generoso
+    height: 72px !important; // Altura aumentada para igualar con las cards
+    min-height: 72px !important;
+    padding: 0 40px !important; // Padding horizontal más generoso
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     
     // Estilos distintivos para el botón de realizar venta
     border-radius: 16px !important; // Más redondeado que el de agregar
-    font-size: 1rem !important; // Texto más grande
+    font-size: 1.1rem !important; // Texto más grande
     font-weight: 700 !important; // Más bold
     letter-spacing: 0.75px !important; // Más espaciado
     text-transform: uppercase !important;
@@ -438,8 +495,30 @@ th:nth-child(1), td:nth-child(1) {
     flex-direction: column;
     gap: 20px;
     
-    .grupo-inputs {
+    .grupo-informacion {
       flex-direction: column; // En móviles sí van uno debajo del otro
+      min-width: auto;
+      
+      .info-card {
+        min-width: auto;
+        padding: 12px 16px; // Padding reducido en móviles
+        
+        .info-header {
+          .info-icon {
+            font-size: 1rem !important;
+            width: 1rem !important;
+            height: 1rem !important;
+          }
+          
+          .info-label {
+            font-size: 0.75rem;
+          }
+        }
+        
+        .info-value {
+          font-size: 1.1rem;
+        }
+      }
     }
     
     .boton-finalizar {

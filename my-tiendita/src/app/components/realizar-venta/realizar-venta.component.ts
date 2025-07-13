@@ -72,7 +72,7 @@ export class RealizarVentaComponent implements OnInit, AfterViewInit {
 
   // Función para obtener la clase CSS del vuelto según si es negativo
   getVueltoClass(): string {
-    return this.vuelto < 0 ? 'vuelto-negativo' : 'vuelto-positivo';
+    return this.vuelto < 0 ? 'vuelto-negativo' : '';
   }
 
   agregarProducto(codigo: string): void {
