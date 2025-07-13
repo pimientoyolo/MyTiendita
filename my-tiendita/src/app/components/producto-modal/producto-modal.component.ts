@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductoDto, UnidadDto } from '../../dto/venta.dto';
+import { ProductoService } from '../../services/producto/producto.service';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 export interface ProductoModalData {
   mode: 'create' | 'edit' | 'view';
@@ -22,6 +24,8 @@ export class ProductoModalComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
+    private productoService: ProductoService,
+    private snackbarService: SnackbarService,
     public dialogRef: MatDialogRef<ProductoModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ProductoModalData
   ) {
@@ -116,7 +120,7 @@ export class ProductoModalComponent implements OnInit {
 
   // Cancelar/Cerrar modal
   onCancel(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   // Guardar producto
@@ -124,27 +128,33 @@ export class ProductoModalComponent implements OnInit {
     if (this.productoForm.valid) {
       const formValue = this.productoForm.value;
       
-      // Crear objeto producto sin ID para crear/editar
-      const productoData = {
+      // Crear objeto producto del tipo ProductoDto
+      const productoData: ProductoDto = {
+        id: null,
         nombre: formValue.nombre,
         descripcion: formValue.descripcion || '',
         codigoBarras: formValue.codigoBarras,
         precioCompra: Number(formValue.precioCompra),
         precioVenta: Number(formValue.precioVenta),
         cantidad: Number(formValue.cantidad),
-        unidadId: Number(formValue.unidadId) // Convertir de string a number
+        unidad: {
+          id: Number(formValue.unidadId),
+          nombre: '',
+          descripcion: ''
+        }
       };
 
       // Agregar ID si es modo edición
       if (this.isEditMode && this.data.producto) {
-        (productoData as any).id = this.data.producto.id;
+        productoData.id = this.data.producto.id;
+        this.editarProducto(productoData);
       }
 
-      // Retornar datos al componente padre
-      this.dialogRef.close({
-        action: this.isCreateMode ? 'create' : 'edit',
-        data: productoData
-      });
+      if (this.isCreateMode) {
+        this.crearProducto(productoData);
+      }
+
+
     } else {
       // Marcar todos los campos como touched para mostrar errores
       this.markFormGroupTouched();
@@ -160,13 +170,25 @@ export class ProductoModalComponent implements OnInit {
   }
 
   // Métodos para futuras integraciones con servicios
-  private crearProducto(productoData: any): void {
-    // TODO: Implementar llamada al servicio para crear producto
-    console.log('Crear producto:', productoData);
+  private crearProducto(productoData: ProductoDto): void {
+    this.productoService.crearProducto(productoData).subscribe({
+      next: () => {
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        this.snackbarService.error(error.error.message);
+      }
+    });
   }
 
-  private editarProducto(productoData: any): void {
-    // TODO: Implementar llamada al servicio para editar producto
-    console.log('Editar producto:', productoData);
+  private editarProducto(productoData: ProductoDto): void {
+    this.productoService.editarProducto(productoData).subscribe({
+      next: () => {
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        this.snackbarService.error(error.error.message);
+      }
+    });
   }
 }

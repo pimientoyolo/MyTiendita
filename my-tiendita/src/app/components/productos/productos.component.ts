@@ -100,10 +100,9 @@ export class ProductosComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result && result.action === 'edit') {
-        console.log('Producto editado:', result.data);
-        this.snackbarService.info(`Producto "${producto.nombre}" editado correctamente`);
-        // TODO: Actualizar la tabla con los nuevos datos
+      if (result) {
+        this.snackbarService.exito(`Producto actualizado correctamente`);
+        this.cargarDatos();
       }
     });
   }
@@ -121,7 +120,6 @@ export class ProductosComponent implements OnInit {
   }
 
   eliminarProducto(producto: ProductoDto): void {
-    // TODO: Implementar confirmación de eliminación
     this.snackbarService.info('Eliminar producto: ' + producto.nombre);
   }
 
@@ -140,10 +138,9 @@ export class ProductosComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result && result.action === 'create') {
-        console.log('Producto creado:', result.data);
-        this.snackbarService.info('Producto creado correctamente');
-        // TODO: Agregar el producto a la tabla
+      if (result) {
+        this.snackbarService.exito('Producto creado correctamente');
+        this.cargarDatos();
       }
     });
   }

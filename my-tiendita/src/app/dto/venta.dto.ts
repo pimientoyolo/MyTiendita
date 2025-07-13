@@ -5,7 +5,7 @@ export interface UnidadDto {
 }
 
 export interface ProductoDto {
-    id: number;
+    id: number | null;
     nombre: string;
     descripcion: string;
     codigoBarras: string;
