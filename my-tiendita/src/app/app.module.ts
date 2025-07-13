@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -31,6 +31,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ProductoModalComponent } from './components/producto-modal/producto-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MovimientoProductoModalComponent } from './components/movimiento-producto-modal/movimiento-producto-modal.component';
 import { EliminarProductoModalComponent } from './components/eliminar-producto-modal/eliminar-producto-modal.component';
 
 @NgModule({
@@ -42,6 +43,7 @@ import { EliminarProductoModalComponent } from './components/eliminar-producto-m
     DetalleVentaModalComponent,
     ProductosComponent,
     ProductoModalComponent,
+    MovimientoProductoModalComponent,
     EliminarProductoModalComponent
   ],
   imports: [

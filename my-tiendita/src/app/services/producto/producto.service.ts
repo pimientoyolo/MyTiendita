@@ -32,4 +32,13 @@ export class ProductoService {
     return this.http.delete(`${this.apiUrl}/producto/eliminar/${codigo}`);
   }
 
+  movimientoProducto(codigo: string, cantidad: number, idTipoMovimiento: number) {
+    const params = {
+      codigo,
+      cantidad: cantidad.toString(),
+      idTipoMovimiento: idTipoMovimiento.toString()
+    };
+    return this.http.put(`${this.apiUrl}/producto/movimiento`, null, { params });
+  }
+
 }

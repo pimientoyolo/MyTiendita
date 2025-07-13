@@ -20,4 +20,6 @@ public interface ProductoService {
     List<Producto> listar();
 
     void eliminarProducto(String codigo);
+
+    void movimientoProducto(String codigo, Double cantidad, Long idTipoMovimiento);
 }

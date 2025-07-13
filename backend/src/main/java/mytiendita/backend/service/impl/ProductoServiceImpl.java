@@ -204,6 +204,41 @@ public class ProductoServiceImpl implements ProductoService {
         return productoRepository.findAll();
     }
 
+    @Override
+    @Transactional
+    public void movimientoProducto(String codigo, Double cantidad, Long idTipoMovimiento) {
+        // Validar que el producto exista
+        Producto producto = getProductoByCodigo(codigo);
+
+
+        // Validar que la cantidad sea positiva
+        if (cantidad <= 0) {
+            throw new CustomException("La cantidad debe ser mayor a cero");
+        }
+
+        if (Constantes.ID_TIPO_MOVIMIENTO_COMPRA.equals(idTipoMovimiento)) {
+            producto.setCantidad(producto.getCantidad() + cantidad);
+        } else if (Constantes.ID_TIPO_MOVIMIENTO_SALIDA.equals(idTipoMovimiento)){
+            producto.setCantidad(producto.getCantidad() - cantidad);
+            if (producto.getCantidad() < 0) {
+                producto.setCantidad(0.0);
+            }
+        } else {
+            throw new CustomException("Tipo de movimiento no válido");
+        }
+
+        Movimiento movimiento = new Movimiento();
+        movimiento.setTipoMovimiento(TipoMovimiento.builder()
+                .id(idTipoMovimiento)
+                .build());
+        movimiento.setValor(cantidad * producto.getPrecioCompra());
+        movimiento.setFecha(new Date());
+
+        productoRepository.save(producto);
+        movimientoRepository.save(movimiento);
+
+    }
+
     // Setters
     @Autowired
     public void setProductoRepository(ProductoRepository productoRepository) {

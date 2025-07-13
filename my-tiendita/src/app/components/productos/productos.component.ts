@@ -8,6 +8,7 @@ import { ProductoService } from '../../services/producto/producto.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
 import { ProductoModalComponent, ProductoModalData } from '../producto-modal/producto-modal.component';
 import { EliminarProductoModalComponent } from '../eliminar-producto-modal/eliminar-producto-modal.component';
+import { MovimientoProductoModalComponent } from '../movimiento-producto-modal/movimiento-producto-modal.component';
 
 @Component({
   selector: 'app-productos',
@@ -122,7 +123,7 @@ export class ProductosComponent implements OnInit {
 
   eliminarProducto(producto: ProductoDto): void {
     const dialogRef = this.dialog.open(EliminarProductoModalComponent, {
-      width: '400px',
+      width: '500px',
       maxWidth: '90vw',
       data: producto
     });
@@ -136,7 +137,18 @@ export class ProductosComponent implements OnInit {
   }
 
   gestionarMovimiento(producto: ProductoDto): void {
-    this.snackbarService.info(`Gestionar movimientos para: ${producto.nombre}`);
+    const dialogRef = this.dialog.open(MovimientoProductoModalComponent, {
+      width: '600px',
+      maxWidth: '90vw',
+      data: { producto: producto }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.snackbarService.exito('Movimiento registrado correctamente');
+        this.cargarDatos();
+      }
+    });
   }
 
   agregarProducto(): void {

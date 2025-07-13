@@ -50,6 +50,16 @@ public class ProductoController {
         return ResponseEntity.ok(true);
     }
 
+    @PutMapping("/movimiento")
+    public ResponseEntity<Void> movimientoProducto(
+            @RequestParam String codigo,
+            @RequestParam Double cantidad,
+            @RequestParam Long idTipoMovimiento
+    ) {
+        productoService.movimientoProducto(codigo, cantidad, idTipoMovimiento);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/listar/ids")
     public ResponseEntity<List<Producto>> listarProductosPorIds(
             @RequestParam List<Long> ids

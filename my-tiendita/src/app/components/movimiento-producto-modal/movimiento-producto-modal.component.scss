@@ -1,0 +1,262 @@
+// Contenedor principal del modal
+.movimiento-modal-container {
+  max-width: 600px;
+  width: 100%;
+}
+
+// Título del modal
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--azure-20, #001A37);
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--azure-90, #D7E3FF);
+  padding: 16px 32px;
+
+  .title-icon {
+    font-size: 28px;
+    color: var(--azure-50, #0074E9);
+  }
+}
+
+// Contenido del modal
+.modal-content {
+  padding: 32px 32px 24px 32px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+// Espaciador superior
+.top-spacer {
+  height: 16px;
+}
+
+// Información del producto
+.producto-info {
+  background-color: var(--azure-98, #F8FAFF);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+
+  .producto-nombre {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    margin: 0 0 12px 0;
+  }
+
+  .producto-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .detalle-item {
+      font-size: 14px;
+      color: var(--azure-30, #0B4A99);
+
+      strong {
+        color: var(--azure-20, #001A37);
+      }
+    }
+  }
+}
+
+// Formulario
+.movimiento-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+// Filas del formulario
+.form-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+
+  .form-field {
+    flex: 1;
+
+    // Estilos para los sufijos
+    .mat-mdc-form-field-text-suffix {
+      color: var(--azure-50, #0074E9);
+      font-weight: 500;
+    }
+
+    // Mejoras visuales para los inputs
+    .mat-mdc-form-field-wrapper {
+      border-radius: 8px;
+    }
+
+    .mat-mdc-form-field-outline {
+      border-radius: 8px;
+    }
+
+    // Color del label activo
+    .mat-mdc-form-field-label {
+      color: var(--azure-40, #3976D2);
+    }
+
+    // Errores
+    .mat-mdc-form-field-error {
+      color: #E53935;
+      font-size: 12px;
+    }
+  }
+}
+
+// Estilos para los iconos en las opciones del select
+.option-icon {
+  margin-right: 8px;
+  vertical-align: middle;
+  
+  &.entrada {
+    color: #4CAF50; // Verde para entrada
+  }
+  
+  &.salida {
+    color: #FF5722; // Naranja/rojo para salida
+  }
+}
+
+// Select de tipos de movimiento
+mat-select {
+  .mat-mdc-select-value {
+    color: var(--azure-30, #0B4A99);
+    font-weight: 500;
+  }
+}
+
+// Acciones del modal
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 32px 24px 32px;
+  border-top: 1px solid var(--azure-95, #ECF2FF);
+
+  .btn-cancelar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    font-weight: 500;
+    color: var(--azure-50, #0074E9);
+    border: 1px solid var(--azure-80, #B8D1FF);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--azure-95, #ECF2FF);
+      border-color: var(--azure-70, #8BB8FF);
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .btn-guardar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+    background-color: var(--azure-50, #0074E9);
+    color: white;
+    border: 1px solid var(--azure-50, #0074E9);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--azure-40, #3976D2);
+      border-color: var(--azure-40, #3976D2);
+    }
+
+    &:disabled {
+      background-color: #BDBDBD;
+      border-color: #BDBDBD;
+      color: #757575;
+      cursor: not-allowed;
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .movimiento-modal-container {
+    max-width: 95vw;
+  }
+
+  .modal-content {
+    padding: 20px 16px;
+  }
+
+  .producto-info {
+    padding: 16px;
+    
+    .producto-detalles {
+      .detalle-item {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+
+    .form-field {
+      width: 100%;
+    }
+  }
+
+  .modal-actions {
+    padding: 12px 16px 20px 16px;
+    flex-direction: column;
+    gap: 8px;
+
+    .btn-cancelar,
+    .btn-guardar {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .modal-title {
+    font-size: 20px;
+    padding: 12px 16px;
+
+    .title-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+// Animación de entrada
+.movimiento-modal-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
