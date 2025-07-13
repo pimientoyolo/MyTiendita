@@ -24,7 +24,7 @@
 
 // Contenido del modal
 .modal-content {
-  padding: 24px 32px;
+  padding: 24px 32px 24px 32px;
   max-height: 70vh;
   overflow-y: auto;
 
@@ -52,6 +52,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding-top: 24px;
 }
 
 // Filas del formulario
@@ -205,7 +206,7 @@ textarea.mat-mdc-input-element {
 
   .modal-content {
     max-height: 60vh;
-    padding: 16px 20px;
+    padding: 16px 20px 16px 20px;
   }
 
   .form-row {
@@ -242,6 +243,11 @@ textarea.mat-mdc-input-element {
 // Animaciones
 .producto-form {
   animation: fadeIn 0.3s ease-in-out;
+  
+  // Responsive para el padding del formulario
+  @media (max-width: 768px) {
+    padding-top: 16px;
+  }
 }
 
 @keyframes fadeIn {
