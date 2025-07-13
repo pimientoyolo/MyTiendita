@@ -111,8 +111,12 @@ export class InicioComponent implements OnInit, AfterViewInit {
   verDetalleVenta(venta: VentaDto) {
     this.dialog.open(DetalleVentaModalComponent, {
       data: venta,
-      minWidth: '800px',
-      maxWidth: '80vw',
+      minWidth: '950px',
+      maxWidth: '95vw',
+      width: '950px',
+      maxHeight: '90vh',
+      autoFocus: false,
+      panelClass: 'custom-dialog-container'
     });
   }
 
