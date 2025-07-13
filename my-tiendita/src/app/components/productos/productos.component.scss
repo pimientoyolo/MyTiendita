@@ -1,0 +1,260 @@
+// Contenedor principal y scroll (igual que el componente inicio)
+.contenedor-principal {
+  box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1);
+  padding: 32px 16px 32px 32px;
+  background: var(--azure-99, #FDFBFF);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.contenido-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -16px;
+  padding-right: 16px;
+  
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--azure-95, #ECF2FF);
+    border-radius: 7px;
+    margin: 0px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--azure-70, #8BB8FF);
+    border-radius: 7px;
+    border: 1px solid var(--azure-90, #D7E3FF);
+    
+    &:hover {
+      background: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Título de la página
+.section-title {
+  text-align: center;
+  margin: 0 0 32px 0;
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, #3976D2 0%, #6DA6FF 100%);
+      border-radius: 2px;
+    }
+  }
+}
+
+// Contenedor de la tabla
+.container-tabla {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 26, 55, 0.08);
+  border: 1px solid var(--azure-90, #D7E3FF);
+}
+
+// Campo de filtro
+.filtro-field {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 24px;
+  
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+}
+
+// Estilos de la tabla
+table {
+  width: 100%;
+  
+  th.mat-header-cell {
+    background: linear-gradient(90deg, var(--azure-95, #ECF2FF) 0%, var(--azure-90, #D7E3FF) 100%);
+    color: var(--azure-20, #001A37);
+    font-weight: 600;
+    font-size: 14px;
+    border-bottom: 2px solid var(--azure-80, #B8D1FF);
+    text-align: left;
+  }
+  
+  td.mat-cell {
+    color: var(--azure-30, #0B4A99);
+    font-size: 14px;
+    padding: 16px 12px;
+    border-bottom: 1px solid var(--azure-90, #D7E3FF);
+  }
+  
+  tr.mat-row:hover {
+    background: var(--azure-95, #ECF2FF);
+    transition: background-color 0.2s ease;
+  }
+}
+
+// Columnas específicas - todo alineado a la izquierda
+.mat-column-nombre {
+  width: 25%;
+  font-weight: 500;
+  text-align: left;
+}
+
+.mat-column-precioCompra {
+  width: 18%;
+  text-align: left;
+}
+
+.mat-column-precioVenta {
+  width: 18%;
+  text-align: left;
+  font-weight: 500;
+}
+
+.mat-column-cantidad {
+  width: 15%;
+  text-align: left;
+}
+
+.mat-column-unidad {
+  width: 12%;
+  text-align: left;
+}
+
+.mat-column-acciones {
+  width: 220px;
+  min-width: 220px;
+  text-align: left;
+}
+
+// Estilos para la cantidad
+.cantidad-cell {
+  text-align: left;
+  
+  .cantidad-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 13px;
+    background: var(--azure-80, #B8D1FF);
+    color: var(--azure-20, #001A37);
+    
+    &.cantidad-baja {
+      background: linear-gradient(135deg, #FFEB3B 0%, #FF9800 100%);
+      color: #D84315;
+    }
+  }
+}
+
+// Estilos para la unidad
+.unidad-cell {
+  text-align: left;
+  
+  .unidad-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--azure-90, #D7E3FF);
+    color: var(--azure-30, #0B4A99);
+    text-transform: uppercase;
+  }
+}
+
+// Estilos para las acciones
+.acciones-cell {
+  text-align: left;
+  white-space: nowrap;
+  padding: 16px 8px !important;
+  
+  .mat-mdc-icon-button {
+    margin: 0 4px;
+    width: 36px;
+    height: 36px;
+    
+    &[color="primary"] .mat-icon {
+      color: var(--azure-40, #3976D2);
+    }
+    
+    &[color="accent"] .mat-icon {
+      color: var(--azure-60, #6DA6FF);
+    }
+    
+    &.movimiento-btn .mat-icon {
+      color: #4CAF50; // Verde para movimientos
+    }
+    
+    &[color="warn"] .mat-icon {
+      color: #E53935;
+    }
+    
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+  }
+}
+
+// Fila sin datos
+.mat-row td.mat-cell {
+  text-align: left;
+  color: var(--azure-50, #4D8CFF);
+  font-style: italic;
+  padding: 32px;
+}
+
+// Paginador
+mat-paginator {
+  background: transparent;
+  border-top: 1px solid var(--azure-90, #D7E3FF);
+  
+  .mat-mdc-paginator-range-label {
+    color: var(--azure-30, #0B4A99);
+  }
+}
+
+// Efectos responsive
+@media (max-width: 768px) {
+  .container-tabla {
+    padding: 16px;
+    margin: 0 -16px;
+    border-radius: 0;
+  }
+  
+  .filtro-field {
+    max-width: 100%;
+  }
+  
+  table {
+    font-size: 12px;
+  }
+  
+  .mat-column-precioCompra,
+  .mat-column-precioVenta {
+    display: none;
+  }
+}

@@ -1,0 +1,110 @@
+<div class="contenedor-principal">
+  <div class="contenido-scroll">
+    
+    <!-- Título de la página -->
+    <div class="section-title">
+      <h1>Gestión de Productos</h1>
+    </div>
+
+    <!-- Contenedor de la tabla -->
+    <div class="container-tabla">
+      
+      <!-- Campo de filtro -->
+      <mat-form-field class="filtro-field">
+        <mat-label>Filtrar productos</mat-label>
+        <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. arroz, aceite..." #input>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <!-- Tabla de productos -->
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="origenDatos" matSort>
+
+          <!-- Columna Nombre -->
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let producto"> {{producto.nombre}} </td>
+          </ng-container>
+
+          <!-- Columna Precio Compra -->
+          <ng-container matColumnDef="precioCompra">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Compra </th>
+            <td mat-cell *matCellDef="let producto"> 
+              {{ producto.precioCompra | currency:'COP ':'symbol':'1.0-2' }} 
+            </td>
+          </ng-container>
+
+          <!-- Columna Precio Venta -->
+          <ng-container matColumnDef="precioVenta">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio Venta </th>
+            <td mat-cell *matCellDef="let producto"> 
+              {{ producto.precioVenta | currency:'COP ':'symbol':'1.0-2' }} 
+            </td>
+          </ng-container>
+
+          <!-- Columna Cantidad -->
+          <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
+            <td mat-cell *matCellDef="let producto" class="cantidad-cell">
+              <span class="cantidad-badge" [ngClass]="{'cantidad-baja': producto.cantidad < 10}">
+                {{producto.cantidad}}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Columna Unidad -->
+          <ng-container matColumnDef="unidad">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Unidad </th>
+            <td mat-cell *matCellDef="let producto" class="unidad-cell">
+              <span class="unidad-badge">{{producto.unidad?.nombre || 'N/A'}}</span>
+            </td>
+          </ng-container>
+
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let producto" class="acciones-cell">
+              <button mat-icon-button color="primary" 
+                      (click)="editarProducto(producto)"
+                      matTooltip="Editar producto">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" 
+                      (click)="verDetalles(producto)"
+                      matTooltip="Ver detalles">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button class="movimiento-btn" 
+                      (click)="gestionarMovimiento(producto)"
+                      matTooltip="Entrada/Salida de productos">
+                <mat-icon>swap_horiz</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" 
+                      (click)="eliminarProducto(producto)"
+                      matTooltip="Eliminar producto">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Filas de encabezado y datos -->
+          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+
+          <!-- Fila cuando no hay datos -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="6">
+              No se encontraron productos para "{{input.value}}"
+            </td>
+          </tr>
+        </table>
+
+        <!-- Paginador -->
+        <mat-paginator [pageSizeOptions]="[5,10, 25, 50]" 
+                       showFirstLastButtons
+                       aria-label="Seleccionar página de productos">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

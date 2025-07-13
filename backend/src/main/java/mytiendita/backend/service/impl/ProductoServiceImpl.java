@@ -182,6 +182,11 @@ public class ProductoServiceImpl implements ProductoService {
 
     }
 
+    @Override
+    public List<Producto> listar() {
+        return productoRepository.findAll();
+    }
+
     // Setters
     @Autowired
     public void setProductoRepository(ProductoRepository productoRepository) {

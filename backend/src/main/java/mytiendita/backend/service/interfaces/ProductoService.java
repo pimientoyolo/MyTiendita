@@ -16,4 +16,6 @@ public interface ProductoService {
     void entradaProducto(List<ProductoTableDTO> productos);
 
     List<Producto> listarProductosPorIds(List<Long> ids);
+
+    List<Producto> listar();
 }

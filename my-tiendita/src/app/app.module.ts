@@ -27,6 +27,7 @@ import { DetalleVentaModalComponent } from './components/detalle-venta-modal/det
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
+import { ProductosComponent } from './components/productos/productos.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FormsModule } from '@angular/forms';
     SidenavComponent,
     InicioComponent,
     RealizarVentaComponent,
-    DetalleVentaModalComponent
+    DetalleVentaModalComponent,
+    ProductosComponent
   ],
   imports: [
     BrowserModule,

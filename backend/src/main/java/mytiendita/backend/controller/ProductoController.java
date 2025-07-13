@@ -58,6 +58,12 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.listarProductosPorIds(ids));
     }
 
+    @GetMapping("/listar")
+    public ResponseEntity<List<Producto>> listarProductosPorIds() {
+        // Lógica para listar productos por IDs
+        return ResponseEntity.ok(productoService.listar());
+    }
+
     //setters
     @Autowired
     public void setProductoService(ProductoService productoService) {
