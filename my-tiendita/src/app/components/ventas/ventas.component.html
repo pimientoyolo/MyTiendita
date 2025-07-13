@@ -1,27 +1,25 @@
 <div class="contenedor-principal">
   <div class="contenido-scroll">
     
-    <!-- Título principal -->
-    <div class="header-section">
-      <h1 class="page-title">
-        <mat-icon class="title-icon">receipt_long</mat-icon>
-        Gestión de Ventas
-      </h1>
-      <p class="page-subtitle">Administra y visualiza todas las ventas realizadas</p>
+    <!-- Título de la página -->
+    <div class="section-title">
+      <h1>Gestión de Ventas</h1>
     </div>
 
-    <!-- Tabla de ventas -->
+    <!-- Contenedor de la tabla -->
     <div class="container-tabla">
-      <div class="table-header">
-        <h2 class="section-title">Historial de Ventas</h2>
-        <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Buscar ventas</mat-label>
+      
+      <!-- Barra superior solo con filtro -->
+      <div class="barra-superior">
+        <mat-form-field class="filtro-field">
+          <mat-label>Filtrar ventas</mat-label>
           <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. arroz, fecha, valor..." #input>
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </div>
 
-      <div class="mat-elevation-z8 table-container">
+      <!-- Tabla de ventas -->
+      <div class="mat-elevation-z8">
         <table mat-table [dataSource]="origenDatos" matSort>
 
           <!-- Fecha Column -->
@@ -93,20 +91,23 @@
           <tr class="mat-row no-data-row" *matNoDataRow>
             <td class="mat-cell no-data-cell" colspan="4">
               <div class="no-data-content">
-                <mat-icon class="no-data-icon">search_off</mat-icon>
-                <span>No se encontraron ventas para "{{input.value}}"</span>
+                <ng-container *ngIf="input.value && input.value.trim() !== ''; else noSearch">
+                  <span>No se encontraron ventas para "{{input.value}}"</span>
+                </ng-container>
+                <ng-template #noSearch>
+                  <span>No hay ventas registradas</span>
+                </ng-template>
               </div>
             </td>
           </tr>
         </table>
 
         <mat-paginator 
-          [pageSizeOptions]="[10, 25, 50, 100]" 
+          [pageSizeOptions]="[5, 10]" 
           showFirstLastButtons
           aria-label="Seleccionar página">
         </mat-paginator>
       </div>
     </div>
-
   </div>
 </div>

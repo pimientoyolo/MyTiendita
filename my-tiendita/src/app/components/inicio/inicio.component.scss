@@ -229,22 +229,75 @@
     }
 }
 
-// Estilos de la tabla
+// Contenedor de la tabla (igual que ventas)
 .container-tabla {
-  width: 100%;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 26, 55, 0.08);
+  border: 1px solid var(--azure-90, #D7E3FF);
   margin-top: 24px;
-  min-width: 0;
-  overflow: hidden;
 }
 
-.mat-elevation-z8 {
+// Campo de filtro (igual que ventas)
+.filtro-field {
   width: 100%;
-  border-radius: 8px;
+  max-width: 400px;
+  
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+  
+  .mat-mdc-form-field-wrapper {
+    height: 48px;
+  }
 }
 
+// Barra superior solo con filtro
+.barra-superior {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+// Estilos de la tabla (igual que ventas)
 table {
   width: 100%;
   table-layout: fixed;
+  background: white;
+}
+
+// Header de la tabla (igual que ventas)
+.table-header-row {
+  background: linear-gradient(135deg, var(--azure-95, #ECF2FF) 0%, var(--azure-90, #D7E3FF) 100%);
+  
+  th {
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    font-size: 14px;
+    border-bottom: 2px solid var(--azure-80, #B8D1FF);
+    
+    .column-icon {
+      font-size: 18px;
+      margin-right: 8px;
+      vertical-align: middle;
+      color: var(--azure-50, #0074E9);
+    }
+  }
+}
+
+// Filas de datos (igual que ventas)
+.table-data-row {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: var(--azure-98, #F8FAFF);
+  }
+  
+  &:nth-child(even) {
+    background-color: rgba(247, 250, 255, 0.5);
+  }
 }
 
 // Anchos específicos para las columnas
@@ -264,7 +317,20 @@ table {
   width: 15%;
 }
 
-// ESTILOS ESPECÍFICOS SOLO PARA LA COLUMNA DE PRODUCTOS
+// Celda de valor (igual que ventas)
+.valor-cell {
+  .valor-amount {
+    font-weight: 600;
+    color: var(--azure-30, #0B4A99);
+    font-size: 16px;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// Estilos para la columna de productos (igual que ventas)
 .productos-cell {
   vertical-align: top;
   padding: 16px 12px !important;
@@ -274,7 +340,7 @@ table {
     line-height: 1.4;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
   }
   
   .producto-item {
@@ -282,24 +348,31 @@ table {
     align-items: center;
     background: var(--azure-95, #ECF2FF);
     color: var(--azure-30, #0B4A99);
-    padding: 6px 10px;
-    border-radius: 12px;
+    padding: 8px 12px;
+    border-radius: 20px;
     font-size: 13px;
     font-weight: 500;
     border: 1px solid var(--azure-80, #B8D1FF);
     width: fit-content;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: var(--azure-90, #D7E3FF);
+      transform: translateX(2px);
+    }
     
     .cantidad-badge {
       background: var(--azure-60, #6DA6FF);
       color: white;
-      padding: 2px 6px;
-      border-radius: 8px;
+      padding: 4px 8px;
+      border-radius: 12px;
       font-size: 11px;
-      font-weight: 600;
-      margin-right: 6px;
+      font-weight: 700;
+      margin-right: 8px;
       display: inline-block;
-      min-width: 20px;
+      min-width: 24px;
       text-align: center;
+      box-shadow: 0 2px 4px rgba(109, 166, 255, 0.3);
     }
     
     .producto-nombre {
@@ -311,33 +384,112 @@ table {
   .mas-productos {
     display: flex;
     align-items: center;
-    background: var(--azure-80, #B8D1FF);
+    background: linear-gradient(135deg, var(--azure-80, #B8D1FF) 0%, var(--azure-70, #8BB8FF) 100%);
     color: var(--azure-40, #1E5AA8);
-    padding: 6px 10px;
-    border-radius: 12px;
+    padding: 6px 12px;
+    border-radius: 16px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     font-style: italic;
     width: fit-content;
+    border: 1px solid var(--azure-60, #6DA6FF);
   }
 }
 
-// Estilos simples para la columna de acciones (sin tocar el botón)
+// Celda de acciones (igual que ventas)
 .acciones-cell {
   text-align: center;
   padding: 16px 8px !important;
   vertical-align: middle;
   
-  // Solo agregar color al icono, sin tocar otros estilos
-  .mat-mdc-icon-button .mat-icon {
-    color: #1976d2 !important;
+  .action-button {
+    background: linear-gradient(135deg, var(--azure-50, #0074E9) 0%, var(--azure-60, #6DA6FF) 100%);
+    color: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 116, 233, 0.3);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 116, 233, 0.4);
+    }
+    
+    .mat-icon {
+      color: white;
+    }
   }
 }
 
-// Estilos para el campo de filtro
-.container-tabla mat-form-field {
-  width: 300px;
-  margin-bottom: 16px;
+// Sin datos (igual que ventas)
+.no-data-row {
+  .no-data-cell {
+    text-align: center;
+    padding: 40px 20px !important;
+    
+    .no-data-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--azure-40, #3976D2);
+      min-height: 120px;
+      
+      span {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+// Paginador (igual que ventas)
+mat-paginator {
+  background: var(--azure-98, #F8FAFF);
+  border-top: 1px solid var(--azure-90, #D7E3FF);
+  
+  .mat-mdc-paginator-range-label {
+    color: var(--azure-40, #3976D2);
+    font-weight: 500;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .container-tabla {
+    padding: 16px;
+    margin: 0 -16px;
+    border-radius: 0;
+  }
+  
+  .barra-superior {
+    align-items: stretch;
+    
+    .filtro-field {
+      max-width: 100%;
+    }
+  }
+  
+  .mat-column-fecha,
+  .mat-column-valor,
+  .mat-column-productos,
+  .mat-column-acciones {
+    width: auto;
+  }
+  
+  table {
+    table-layout: auto;
+    font-size: 12px;
+  }
+  
+  .productos-cell {
+    .producto-item {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+  }
 }
 
 

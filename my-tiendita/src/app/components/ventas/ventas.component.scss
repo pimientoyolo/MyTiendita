@@ -1,7 +1,7 @@
-// Contenedor principal y scroll
+// Contenedor principal y scroll (igual que productos)
 .contenedor-principal {
   box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1);
-  padding: 32px;
+  padding: 32px 16px 32px 32px;
   background: var(--azure-99, #FDFBFF);
   border: 1px solid var(--azure-90, #D7E3FF);
   height: 100%;
@@ -29,6 +29,7 @@
   &::-webkit-scrollbar-track {
     background: var(--azure-95, #ECF2FF);
     border-radius: 7px;
+    margin: 0px;
   }
   
   &::-webkit-scrollbar-thumb {
@@ -42,80 +43,62 @@
   }
 }
 
-// Header section
-.header-section {
+// Título de la página (igual que productos)
+.section-title {
   text-align: center;
-  margin-bottom: 40px;
-  padding: 24px;
-  background: linear-gradient(135deg, var(--azure-99, #FDFBFF) 0%, var(--azure-95, #ECF2FF) 100%);
-  border-radius: 16px;
-  border: 1px solid var(--azure-90, #D7E3FF);
+  margin: 0 0 32px 0;
   
-  .page-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    font-size: 32px;
-    font-weight: 700;
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
     color: var(--azure-20, #001A37);
-    margin: 0 0 12px 0;
-    
-    .title-icon {
-      font-size: 36px;
-      color: var(--azure-50, #0074E9);
-    }
-  }
-  
-  .page-subtitle {
-    font-size: 16px;
-    color: var(--azure-40, #3976D2);
     margin: 0;
-    font-weight: 500;
+    position: relative;
+    display: inline-block;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, #3976D2 0%, #6DA6FF 100%);
+      border-radius: 2px;
+    }
   }
 }
 
-// Tabla de ventas
+// Contenedor de la tabla (igual que productos)
 .container-tabla {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 26, 55, 0.08);
+  border: 1px solid var(--azure-90, #D7E3FF);
+}
+
+// Campo de filtro (igual que productos)
+.filtro-field {
   width: 100%;
-  min-width: 0;
-  overflow: hidden;
+  max-width: 400px;
   
-  .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    gap: 20px;
-    flex-wrap: wrap;
-    
-    .section-title {
-      font-size: 24px;
-      font-weight: 600;
-      color: var(--azure-20, #001A37);
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .filter-field {
-      min-width: 300px;
-      flex-shrink: 0;
-      
-      .mat-mdc-form-field-wrapper {
-        background-color: white;
-        border-radius: 8px;
-      }
-    }
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
   }
   
-  .table-container {
-    border-radius: 12px;
-    overflow: hidden;
-    background: white;
-    border: 1px solid var(--azure-90, #D7E3FF);
+  .mat-mdc-form-field-wrapper {
+    height: 48px;
   }
+}
+
+// Barra superior solo con filtro
+.barra-superior {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 24px;
 }
 
 // Estilos de la tabla
@@ -287,17 +270,23 @@ table {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      justify-content: center;
+      gap: 16px;
       color: var(--azure-40, #3976D2);
+      min-height: 120px;
       
       .no-data-icon {
-        font-size: 48px;
-        color: var(--azure-70, #8BB8FF);
+        font-size: 36px;
+        color: var(--azure-60, #6DA6FF);
+        margin-bottom: 8px;
+        opacity: 0.8;
       }
       
       span {
         font-size: 16px;
         font-weight: 500;
+        text-align: center;
+        line-height: 1.4;
       }
     }
   }
@@ -320,32 +309,17 @@ mat-paginator {
     padding: 16px;
   }
   
-  .header-section {
+  .container-tabla {
     padding: 16px;
-    
-    .page-title {
-      font-size: 24px;
-      flex-direction: column;
-      gap: 12px;
-      
-      .title-icon {
-        font-size: 28px;
-      }
-    }
-    
-    .page-subtitle {
-      font-size: 14px;
-    }
+    margin: 0 -16px;
+    border-radius: 0;
   }
   
-  .table-header {
-    flex-direction: column;
+  .barra-superior {
     align-items: stretch;
-    gap: 16px;
     
-    .filter-field {
-      min-width: unset;
-      width: 100%;
+    .filtro-field {
+      max-width: 100%;
     }
   }
   
@@ -358,33 +332,13 @@ mat-paginator {
   
   table {
     table-layout: auto;
+    font-size: 12px;
   }
   
   .productos-cell {
     .producto-item {
       font-size: 12px;
       padding: 6px 10px;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .header-section {
-    .page-title {
-      font-size: 20px;
-    }
-  }
-  
-  .productos-content {
-    .producto-item {
-      .cantidad-badge {
-        padding: 2px 6px;
-        font-size: 10px;
-      }
-      
-      .producto-nombre {
-        font-size: 11px;
-      }
     }
   }
 }
