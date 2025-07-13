@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
 import { DetalleVentaModalComponent } from './components/detalle-venta-modal/detalle-venta-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -68,6 +69,7 @@ import { VentasComponent } from './components/ventas/ventas.component';
     MatSelectModule,
     MatSortModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     MatDialogModule,
     MatTooltipModule,
     FormsModule,

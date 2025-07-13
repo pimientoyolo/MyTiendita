@@ -260,7 +260,7 @@ table {
   }
 }
 
-// Sin datos
+// Sin datos y loading
 .no-data-row {
   .no-data-cell {
     text-align: center;
@@ -275,11 +275,17 @@ table {
       color: var(--azure-40, #3976D2);
       min-height: 120px;
       
+      // Spinner de carga
+      mat-spinner {
+        margin-bottom: 8px;
+      }
+      
       .no-data-icon {
         font-size: 36px;
         color: var(--azure-60, #6DA6FF);
         margin-bottom: 8px;
         opacity: 0.8;
+        animation: fadeInOut 3s ease-in-out infinite;
       }
       
       span {
@@ -289,6 +295,15 @@ table {
         line-height: 1.4;
       }
     }
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
   }
 }
 

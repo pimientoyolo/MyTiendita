@@ -11,6 +11,8 @@ import mytiendita.backend.service.interfaces.ProductoService;
 import mytiendita.backend.service.interfaces.VentaService;
 import mytiendita.backend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,6 +98,14 @@ public class VentaServiceImpl implements VentaService {
         //guardamos la venta
         ventaRepository.save(venta);
 
+    }
+
+    @Override
+    public Page<Venta> listarVentasPaginadas(String filter, Pageable pageable) {
+        System.out.println("Filter: " + filter);
+        System.out.println("Pageable: " + pageable);
+        filter = filter.toLowerCase().trim();
+        return ventaRepository.listarVentasPaginadas(filter, pageable);
     }
 
     @Override

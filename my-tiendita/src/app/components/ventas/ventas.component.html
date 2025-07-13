@@ -20,11 +20,11 @@
 
       <!-- Tabla de ventas -->
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="origenDatos" matSort>
+        <table mat-table [dataSource]="origenDatos" matSort (matSortChange)="onSortChange($event)">
 
           <!-- Fecha Column -->
           <ng-container matColumnDef="fecha">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="fecha"> 
               <mat-icon class="column-icon">schedule</mat-icon>
               Fecha 
             </th>
@@ -33,7 +33,7 @@
 
           <!-- Valor Column -->
           <ng-container matColumnDef="valor">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="valor"> 
               <mat-icon class="column-icon">attach_money</mat-icon>
               Total 
             </th>
@@ -44,7 +44,7 @@
 
           <!-- Productos Column -->
           <ng-container matColumnDef="productos">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+            <th mat-header-cell *matHeaderCellDef> 
               <mat-icon class="column-icon">inventory_2</mat-icon>
               Productos 
             </th>
@@ -87,25 +87,38 @@
           <tr mat-header-row *matHeaderRowDef="columnas" class="table-header-row"></tr>
           <tr mat-row *matRowDef="let row; columns: columnas;" class="table-data-row"></tr>
 
-          <!-- Row shown when there is no matching data -->
+          <!-- Row shown when there is no matching data or loading -->
           <tr class="mat-row no-data-row" *matNoDataRow>
             <td class="mat-cell no-data-cell" colspan="4">
               <div class="no-data-content">
-                <ng-container *ngIf="input.value && input.value.trim() !== ''; else noSearch">
-                  <span>No se encontraron ventas para "{{input.value}}"</span>
+                <ng-container *ngIf="isLoading">
+                  <mat-spinner diameter="40"></mat-spinner>
+                  <span>Cargando ventas...</span>
                 </ng-container>
-                <ng-template #noSearch>
-                  <span>No hay ventas registradas</span>
-                </ng-template>
+                <ng-container *ngIf="!isLoading">
+                  <ng-container *ngIf="currentFilter && currentFilter.trim() !== ''; else noSearch">
+                    <mat-icon class="no-data-icon">search_off</mat-icon>
+                    <span>No se encontraron ventas para "{{currentFilter}}"</span>
+                  </ng-container>
+                  <ng-template #noSearch>
+                    <mat-icon class="no-data-icon">receipt_long</mat-icon>
+                    <span>No hay ventas registradas</span>
+                  </ng-template>
+                </ng-container>
               </div>
             </td>
           </tr>
         </table>
 
+        <!-- Paginador configurado para servidor -->
         <mat-paginator 
-          [pageSizeOptions]="[5, 10]" 
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="pageIndex"
+          [pageSizeOptions]="[5, 10]"
+          (page)="onPageChange($event)"
           showFirstLastButtons
-          aria-label="Seleccionar página">
+          aria-label="Seleccionar página de ventas">
         </mat-paginator>
       </div>
     </div>
