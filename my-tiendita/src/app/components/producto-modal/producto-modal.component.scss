@@ -70,10 +70,63 @@
   .form-field {
     flex: 1;
     
-    // Estilos para campos readonly
+    // Estilos para campos readonly/disabled - mejorados para mejor visibilidad
     &.mat-form-field-disabled {
       .mat-mdc-form-field-wrapper {
         background-color: var(--azure-98, #F8FAFF);
+        border: 1px solid var(--azure-90, #D7E3FF);
+      }
+      
+      .mat-mdc-form-field-flex {
+        background-color: var(--azure-98, #F8FAFF);
+      }
+      
+      .mat-mdc-input-element {
+        color: var(--azure-20, #001A37) !important;
+        font-weight: 600 !important;
+        -webkit-text-fill-color: var(--azure-20, #001A37) !important;
+        opacity: 1 !important;
+      }
+      
+      .mat-mdc-select-value {
+        color: var(--azure-20, #001A37) !important;
+        font-weight: 600 !important;
+        opacity: 1 !important;
+      }
+      
+      .mat-mdc-form-field-text-prefix {
+        color: var(--azure-40, #3976D2) !important;
+        font-weight: 600;
+      }
+      
+      // Override para outline disabled
+      .mat-mdc-form-field-outline {
+        opacity: 1 !important;
+        
+        .mat-mdc-form-field-outline-thick {
+          color: var(--azure-80, #B8D1FF) !important;
+          opacity: 1 !important;
+        }
+        
+        .mat-mdc-form-field-outline-start,
+        .mat-mdc-form-field-outline-end,
+        .mat-mdc-form-field-outline-notch {
+          border-color: var(--azure-80, #B8D1FF) !important;
+          opacity: 1 !important;
+        }
+      }
+    }
+    
+    // Labels específicos para campos disabled - forzar visibilidad
+    &.mat-form-field-disabled {
+      .mat-mdc-form-field-label,
+      .mat-mdc-floating-label,
+      .mat-form-field-label,
+      label {
+        color: var(--azure-40, #3976D2) !important;
+        font-weight: 600 !important;
+        opacity: 1 !important;
+        -webkit-text-fill-color: var(--azure-40, #3976D2) !important;
       }
     }
 
@@ -110,23 +163,88 @@
   }
 }
 
-// Select de unidades
+// Select de unidades - mejorado para modo ver
 mat-select {
   .mat-mdc-select-value {
     color: var(--azure-30, #0B4A99);
+    font-weight: 500;
   }
 
   &.mat-mdc-select-disabled {
     .mat-mdc-select-value {
+      color: var(--azure-20, #001A37) !important;
+      font-weight: 600 !important;
+      -webkit-text-fill-color: var(--azure-20, #001A37) !important;
+      opacity: 1 !important;
+    }
+    
+    .mat-mdc-select-arrow {
       color: var(--azure-60, #6DA6FF);
+      opacity: 1 !important;
+    }
+    
+    // Asegurar que el texto del select se vea bien
+    .mat-mdc-select-value-text {
+      color: var(--azure-20, #001A37) !important;
+      font-weight: 600 !important;
+      opacity: 1 !important;
     }
   }
 }
 
-// Textarea
+// Textarea - mejorado para modo ver
 textarea.mat-mdc-input-element {
   min-height: 80px;
   resize: vertical;
+  
+  &:disabled {
+    color: var(--azure-20, #001A37) !important;
+    font-weight: 600 !important;
+    -webkit-text-fill-color: var(--azure-20, #001A37) !important;
+    background-color: var(--azure-98, #F8FAFF) !important;
+    opacity: 1 !important;
+    border: 1px solid var(--azure-90, #D7E3FF) !important;
+  }
+}
+
+// Override global para labels disabled - forzar visibilidad máxima
+.producto-modal-container {
+  .mat-form-field-disabled {
+    .mat-mdc-form-field-label,
+    .mat-mdc-floating-label,
+    .mat-form-field-label,
+    label,
+    .mdc-floating-label {
+      color: var(--azure-40, #3976D2) !important;
+      font-weight: 600 !important;
+      opacity: 1 !important;
+      -webkit-text-fill-color: var(--azure-40, #3976D2) !important;
+    }
+    
+    .mdc-floating-label--float-above {
+      color: var(--azure-40, #3976D2) !important;
+      font-weight: 600 !important;
+      opacity: 1 !important;
+    }
+    
+    // Forzar visibilidad de todos los inputs y selects disabled
+    input:disabled,
+    textarea:disabled,
+    .mat-mdc-select-disabled {
+      color: var(--azure-20, #001A37) !important;
+      font-weight: 600 !important;
+      -webkit-text-fill-color: var(--azure-20, #001A37) !important;
+      opacity: 1 !important;
+    }
+    
+    // Específico para el texto del select
+    .mat-mdc-select-value,
+    .mat-mdc-select-value-text {
+      color: var(--azure-20, #001A37) !important;
+      font-weight: 600 !important;
+      opacity: 1 !important;
+    }
+  }
 }
 
 // Acciones del modal
