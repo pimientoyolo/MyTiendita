@@ -17,7 +17,7 @@ import { OnInit, AfterViewInit } from '@angular/core';
 })
 export class DetalleVentaModalComponent implements OnInit, AfterViewInit {
 
-  columnas: string[] = ['producto', 'valor', 'cantidad', 'precioVenta'];
+  columnas: string[] = ['producto', 'cantidad', 'precioVenta', 'valor'];
   origenDatos: MatTableDataSource<DetalleVentaDto> = new MatTableDataSource<DetalleVentaDto>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -60,8 +60,17 @@ export class DetalleVentaModalComponent implements OnInit, AfterViewInit {
 
     if (this.origenDatos.paginator) {
       this.origenDatos.paginator.firstPage();
-
     }
+  }
+
+  // Método para obtener el total de productos
+  getTotalProductos(): number {
+    return this.data.detalleVentas.reduce((total, detalle) => total + detalle.cantidad, 0);
+  }
+
+  // Método para obtener el total de la venta
+  getTotalVenta(): number {
+    return this.data.valor;
   }
 
 }
