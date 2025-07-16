@@ -83,4 +83,15 @@ export class VentaService {
       params: httpParams
     });
   }
+
+  // Método para crear movimiento
+  crearMovimiento(monto: number, idTipoMovimiento: number): Observable<void> {
+    const params = new HttpParams()
+      .set('monto', monto.toString())
+      .set('idTipoMovimiento', idTipoMovimiento.toString());
+
+    return this.http.post<void>(`${this.apiUrl}/movimiento/ingreso-movimiento`, null, {
+      params: params
+    });
+  }
 }

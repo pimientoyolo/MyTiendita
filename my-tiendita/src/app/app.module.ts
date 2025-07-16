@@ -38,6 +38,7 @@ import { VentasComponent } from './components/ventas/ventas.component';
 import { MovimientosComponent } from './components/movimientos/movimientos.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MovimientoModalComponent } from './components/movimiento-modal/movimiento-modal.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     MovimientoProductoModalComponent,
     EliminarProductoModalComponent,
     VentasComponent,
-    MovimientosComponent
+    MovimientosComponent,
+    MovimientoModalComponent
   ],
   imports: [
     BrowserModule,

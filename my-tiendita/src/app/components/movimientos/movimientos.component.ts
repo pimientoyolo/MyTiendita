@@ -2,10 +2,12 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 import { Subject, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs';
 import { VentaService, PaginatedResponse, PaginationParams } from '../../services/venta/venta.service';
 import { MovimientoDTO, TipoMovimientoDTO } from '../../dto/venta.dto';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
+import { MovimientoModalComponent, MovimientoModalData } from '../movimiento-modal/movimiento-modal.component';
 
 @Component({
   selector: 'app-movimientos',
@@ -24,7 +26,7 @@ export class MovimientosComponent implements OnInit, OnDestroy {
   totalElements = 0;
   pageSize = 5;
   pageIndex = 0;
-  loading = false;
+  loading = true;
 
   // Filtros
   filterValue = '';
@@ -33,7 +35,8 @@ export class MovimientosComponent implements OnInit, OnDestroy {
 
   constructor(
     private ventaService: VentaService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +81,8 @@ export class MovimientosComponent implements OnInit, OnDestroy {
           this.totalElements = response.totalElements;
           this.loading = false;
         },
-        error: (error) => {
+        error: (error: any) => {
+          console.error('Error al cargar movimientos:', error);
           this.snackbarService.error('Error al cargar los movimientos');
           this.loading = false;
         }
@@ -103,7 +107,24 @@ export class MovimientosComponent implements OnInit, OnDestroy {
   }
 
   onAddMovimiento(): void {
-    // Placeholder for future functionality
-    console.log('Add movimiento functionality to be implemented');
+    const dialogData: MovimientoModalData = {
+      mode: 'create'
+    };
+
+    const dialogRef = this.dialog.open(MovimientoModalComponent, {
+      width: '500px',
+      maxWidth: '95vw',
+      disableClose: true,
+      panelClass: 'movimiento-modal-dialog',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Recargar la tabla después de crear un movimiento
+        this.loadMovimientos();
+        this.snackbarService.exito('Movimiento creado exitosamente');
+      }
+    });
   }
 }
