@@ -48,6 +48,12 @@ export class VentasComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // No vinculamos el paginator y sort a origenDatos porque usamos paginación del servidor
+    // Configurar el sort inicial para mostrar primero las ventas más recientes
+    this.sort.active = 'fecha';
+    this.sort.direction = 'desc';
+    this.currentSort = 'fecha';
+    this.currentDirection = 'desc';
+    
     // Configuramos el debounce para el filtro
     this.filterSubject.pipe(
       debounceTime(300), // Esperar 300ms después del último evento
@@ -57,11 +63,14 @@ export class VentasComponent implements OnInit, AfterViewInit {
       this.pageIndex = 0; // Resetear a la primera página
       this.loadVentas();
     });
+    
+    // Cargar ventas con el sort configurado
+    this.loadVentas();
   }
 
   ngOnInit(): void {
     // Ya no necesitamos filterPredicate porque la filtración se hace en el servidor
-    this.loadVentas();
+    // No llamamos loadVentas() aquí, se llamará en ngAfterViewInit después de configurar el sort
   }
 
   loadVentas() {

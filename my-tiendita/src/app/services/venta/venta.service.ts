@@ -48,12 +48,11 @@ export class VentaService {
       .set('page', params.page.toString())
       .set('size', params.size.toString());
 
-    if (params.sort) {
+    // En Spring Boot, el sort debe ser: sort=campo,direccion
+    if (params.sort && params.direction) {
+      httpParams = httpParams.set('sort', `${params.sort},${params.direction}`);
+    } else if (params.sort) {
       httpParams = httpParams.set('sort', params.sort);
-    }
-
-    if (params.direction) {
-      httpParams = httpParams.set('direction', params.direction);
     }
 
     httpParams = httpParams.set('filter', params.filter ? params.filter.trim() : '');
@@ -69,12 +68,11 @@ export class VentaService {
       .set('page', params.page.toString())
       .set('size', params.size.toString());
 
-    if (params.sort) {
+    // En Spring Boot, el sort debe ser: sort=campo,direccion
+    if (params.sort && params.direction) {
+      httpParams = httpParams.set('sort', `${params.sort},${params.direction}`);
+    } else if (params.sort) {
       httpParams = httpParams.set('sort', params.sort);
-    }
-
-    if (params.direction) {
-      httpParams = httpParams.set('direction', params.direction);
     }
 
     httpParams = httpParams.set('filter', params.filter ? params.filter.trim() : '');

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -15,7 +15,7 @@ import { MovimientoModalComponent, MovimientoModalData } from '../movimiento-mod
   templateUrl: './movimientos.component.html',
   styleUrl: './movimientos.component.scss'
 })
-export class MovimientosComponent implements OnInit, OnDestroy {
+export class MovimientosComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = ['fecha', 'valor', 'tipoMovimiento'];
   dataSource = new MatTableDataSource<MovimientoDTO>([]);
   
@@ -40,8 +40,14 @@ export class MovimientosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loadMovimientos();
     this.setupFilter();
+  }
+
+  ngAfterViewInit(): void {
+    // Configurar el sort inicial para mostrar primero los movimientos más recientes
+    this.sort.active = 'fecha';
+    this.sort.direction = 'desc';
+    this.loadMovimientos();
   }
 
   ngOnDestroy(): void {

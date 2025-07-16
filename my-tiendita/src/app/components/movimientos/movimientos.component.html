@@ -34,7 +34,7 @@
 
       <!-- Tabla de movimientos -->
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)" matSortActive="fecha" matSortDirection="desc">
 
           <!-- Fecha Column -->
           <ng-container matColumnDef="fecha">
