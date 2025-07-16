@@ -49,7 +49,20 @@
                 Cantidad 
               </th>
               <td mat-cell *matCellDef="let row" class="cantidad-cell">
-                <span class="cantidad-badge">{{ row.cantidad }}</span>
+                <!-- Si el producto tiene unidad ID = 1, solo mostrar badge -->
+                <span *ngIf="row.producto.unidad.id === 1" class="cantidad-badge">{{ row.cantidad }}</span>
+                
+                <!-- Si el producto tiene unidad diferente a 1, mostrar input editable -->
+                <input
+                  *ngIf="row.producto.unidad.id !== 1"
+                  type="text"
+                  class="cantidad-input-simple"
+                  [value]="row.cantidad"
+                  (input)="actualizarCantidad(row, $event)"
+                  (blur)="validarCantidadMinima(row, $event)"
+                  (keypress)="validarTeclaNumerica($event)"
+                  placeholder="0.00"
+                />
               </td>
             </ng-container>
 
@@ -82,23 +95,33 @@
                 Acciones 
               </th>
               <td mat-cell *matCellDef="let row" class="acciones-cell">
-                <button
-                  mat-icon-button
-                  aria-label="Agregar uno"
-                  (click)="agregarUno(row)"
-                  matTooltip="Agregar uno"
-                  class="action-button"
-                  style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
-                  <mat-icon>add</mat-icon>
-                </button>
-                <button
-                  mat-icon-button
-                  aria-label="Quitar uno"
-                  (click)="quitarUno(row)"
-                  matTooltip="Quitar uno"
-                  class="action-button">
-                  <mat-icon>remove</mat-icon>
-                </button>
+                <!-- Botones para productos con unidad ID = 1 (agregar/quitar uno) -->
+                <ng-container *ngIf="row.producto.unidad.id === 1">
+                  <button
+                    mat-icon-button
+                    aria-label="Agregar uno"
+                    (click)="agregarUno(row)"
+                    matTooltip="Agregar uno"
+                    class="action-button"
+                    style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    aria-label="Quitar uno"
+                    (click)="quitarUno(row)"
+                    matTooltip="Quitar uno"
+                    class="action-button">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                </ng-container>
+                
+                <!-- Solo botón eliminar para productos con unidad diferente a 1 -->
+                <ng-container *ngIf="row.producto.unidad.id !== 1">
+                  <span class="unidad-info">{{ row.producto.unidad.nombre }}</span>
+                </ng-container>
+                
+                <!-- Botón eliminar siempre presente -->
                 <button
                   mat-icon-button
                   aria-label="Eliminar producto"

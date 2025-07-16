@@ -170,6 +170,7 @@ table {
 // Celda de cantidad (igual que ventas)
 .cantidad-cell {
   text-align: center;
+  vertical-align: middle !important;
   
   .cantidad-badge {
     background: var(--azure-60, #6DA6FF);
@@ -182,6 +183,41 @@ table {
     min-width: 32px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(109, 166, 255, 0.3);
+  }
+  
+  // Estilos para el input de cantidad simple (sin Material)
+  .cantidad-input-simple {
+    width: 60px;
+    height: 26px;
+    border: 1px solid var(--azure-80, #B8D1FF);
+    border-radius: 6px;
+    background: var(--azure-95, #ECF2FF);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--azure-30, #00458F);
+    padding: 0 4px;
+    outline: none;
+    transition: all 0.2s ease;
+    
+    &::placeholder {
+      color: var(--azure-50, #0074E9);
+      opacity: 0.4;
+      font-weight: 400;
+      font-size: 11px;
+    }
+    
+    &:hover {
+      border-color: var(--azure-60, #6DA6FF);
+      background: var(--azure-98, #F8FAFF);
+      box-shadow: 0 1px 3px rgba(109, 166, 255, 0.1);
+    }
+    
+    &:focus {
+      border-color: var(--azure-50, #0074E9);
+      background: white;
+      box-shadow: 0 0 0 1px rgba(0, 116, 233, 0.1);
+    }
   }
 }
 
@@ -220,6 +256,29 @@ table {
     .mat-icon {
       color: white;
     }
+  }
+  
+  // Estilos para la información de unidad
+  .unidad-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--azure-95, #ECF2FF);
+    color: var(--azure-30, #00458F);
+    padding: 6px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid var(--azure-80, #B8D1FF);
+    margin: 0 4px;
+    vertical-align: middle;
+    position: relative;
+    top: 20%;
+    transform: translateY(-20%);
+    min-height: 24px;
+    line-height: 1;
   }
 }
 

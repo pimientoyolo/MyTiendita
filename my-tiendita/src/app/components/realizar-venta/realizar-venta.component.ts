@@ -75,6 +75,91 @@ export class RealizarVentaComponent implements OnInit, AfterViewInit {
     return this.vuelto < 0 ? 'vuelto-negativo' : '';
   }
 
+  // Función para validar que solo se escriban números y puntos
+  validarTeclaNumerica(event: KeyboardEvent): void {
+    const char = event.key;
+    const input = event.target as HTMLInputElement;
+    const currentValue = input.value;
+    
+    // Permitir teclas de control (backspace, delete, arrow keys, etc.)
+    if (event.ctrlKey || event.metaKey || 
+        ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(char)) {
+      return;
+    }
+    
+    // Permitir números
+    if (char >= '0' && char <= '9') {
+      return;
+    }
+    
+    // Permitir punto solo si no hay otro punto ya
+    if (char === '.' && !currentValue.includes('.')) {
+      return;
+    }
+    
+    // Bloquear cualquier otra tecla
+    event.preventDefault();
+  }
+
+  // Función para actualizar cantidad en tiempo real mientras se escribe
+  actualizarCantidad(producto: ProductoVentaDTO, event: any): void {
+    const input = event.target;
+    const inputValue = input.value;
+    
+    // Permitir valores temporales mientras escribe (., 1., .5, etc.)
+    // Solo actualizar si es un número válido o está vacío
+    let nuevaCantidad: number;
+    
+    if (inputValue === '' || inputValue === '.') {
+      // Si está vacío o solo punto, usar 0 temporalmente
+      nuevaCantidad = 0;
+    } else {
+      const parsed = parseFloat(inputValue);
+      if (isNaN(parsed) || parsed < 0) {
+        // Si no es válido o negativo, no hacer nada (mantener lo que está)
+        return;
+      }
+      nuevaCantidad = parsed;
+    }
+    
+    // Encontrar el producto en la lista
+    const index = this.productosVenta.findIndex(p => p.producto.id === producto.producto.id);
+    if (index > -1) {
+      // Actualizar cantidad y valor
+      this.productosVenta[index].cantidad = nuevaCantidad;
+      this.productosVenta[index].valor = this.productosVenta[index].producto.precioVenta * nuevaCantidad;
+      
+      // Actualizar la tabla
+      this.origenDatos.data = [...this.productosVenta];
+      this.calcularTotal();
+    }
+  }
+
+  // Función para validar cantidad mínima cuando se pierde el foco
+  validarCantidadMinima(producto: ProductoVentaDTO, event: any): void {
+    const input = event.target;
+    let cantidad = parseFloat(input.value);
+    
+    // Si no es un número válido o es menor o igual a 0, eliminar el producto
+    if (isNaN(cantidad) || cantidad <= 0) {
+      this.quitarProducto(producto);
+      this.snackbarService.error('Cantidad debe ser mayor a 0. Producto eliminado.');
+    } else {
+      // Redondear a 2 decimales para evitar problemas de precisión
+      cantidad = Math.round(cantidad * 100) / 100;
+      input.value = cantidad.toString();
+      
+      // Actualizar si hubo cambio por el redondeo
+      const index = this.productosVenta.findIndex(p => p.producto.id === producto.producto.id);
+      if (index > -1 && this.productosVenta[index].cantidad !== cantidad) {
+        this.productosVenta[index].cantidad = cantidad;
+        this.productosVenta[index].valor = this.productosVenta[index].producto.precioVenta * cantidad;
+        this.origenDatos.data = [...this.productosVenta];
+        this.calcularTotal();
+      }
+    }
+  }
+
   agregarProducto(codigo: string): void {
 
     this.focusCodigoInput();
@@ -166,11 +251,16 @@ export class RealizarVentaComponent implements OnInit, AfterViewInit {
 
     document.addEventListener('click', (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (
-        this.codigoInput &&
-        target !== this.codigoInput.nativeElement &&
-        (!this.montoRecibidoInput || target !== this.montoRecibidoInput.nativeElement)
-      ) {
+      
+      // Verificar si el clic fue en elementos que NO deben activar el auto-focus
+      const isCodigoInput = this.codigoInput && target === this.codigoInput.nativeElement;
+      const isMontoRecibidoInput = this.montoRecibidoInput && target === this.montoRecibidoInput.nativeElement;
+      const isCantidadInput = target.classList.contains('cantidad-input-simple');
+      const isButton = target.closest('button') !== null;
+      const isTableInteraction = target.closest('table') !== null && (isCantidadInput || isButton);
+      
+      // Solo hacer focus al código de barras si NO es una interacción con campos editables o botones
+      if (!isCodigoInput && !isMontoRecibidoInput && !isTableInteraction) {
         this.focusCodigoInput();
       }
     });
@@ -178,6 +268,13 @@ export class RealizarVentaComponent implements OnInit, AfterViewInit {
 
   agregarUno(producto: ProductoVentaDTO): void {
     this.focusCodigoInput();
+    
+    // Solo permitir agregar de uno en uno si la unidad es ID = 1
+    if (producto.producto.unidad.id !== 1) {
+      this.snackbarService.error('Para este producto use el campo de cantidad para modificar la cantidad');
+      return;
+    }
+    
     const index = this.productosVenta.findIndex(p => p.producto.id === producto.producto.id);
     if (index > -1) {
       this.productosVenta[index].cantidad += 1;
@@ -189,6 +286,13 @@ export class RealizarVentaComponent implements OnInit, AfterViewInit {
 
   quitarUno(producto: ProductoVentaDTO): void {
     this.focusCodigoInput();
+    
+    // Solo permitir quitar de uno en uno si la unidad es ID = 1
+    if (producto.producto.unidad.id !== 1) {
+      this.snackbarService.error('Para este producto use el campo de cantidad para modificar la cantidad');
+      return;
+    }
+    
     const index = this.productosVenta.findIndex(p => p.producto.id === producto.producto.id);
     if (index > -1) {
       if (this.productosVenta[index].cantidad > 1) {
