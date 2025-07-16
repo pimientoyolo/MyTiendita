@@ -7,6 +7,9 @@ import mytiendita.backend.mapper.VentaMapper;
 import mytiendita.backend.model.Venta;
 import mytiendita.backend.service.interfaces.VentaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +35,16 @@ public class VentaController {
     public ResponseEntity<List<VentaTableDTO>> listarVentas() {
         List<Venta> ventas = ventaService.listarVentas();
         List<VentaTableDTO> ventasDTO = VentaMapper.INSTANCE.toVentaTableDTOList(ventas);
+        return ResponseEntity.ok(ventasDTO);
+    }
+
+    @GetMapping("/paginadas")
+    public ResponseEntity<Page<VentaTableDTO>> listarVentasPaginadas(
+            @PageableDefault(size = 5) Pageable pageable,
+            @RequestParam("filter") String filter
+    ) {
+        Page<Venta> ventas = ventaService.listarVentasPaginadas(filter, pageable);
+        Page<VentaTableDTO> ventasDTO = VentaMapper.INSTANCE.toVentaTableDTOPage(ventas);
         return ResponseEntity.ok(ventasDTO);
     }
 

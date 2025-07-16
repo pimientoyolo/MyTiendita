@@ -1,0 +1,198 @@
+<mat-card class="pa-4">
+  <!-- Título -->
+  <mat-card-title class="text-2xl font-bold mb-4">
+    Realizar Venta
+  </mat-card-title>
+
+  <mat-card-content>
+    <div class="contenido-principal">
+      <!-- Campo código de barras + botón -->
+      <div class="codigo-barras-section">
+        <div class="flex items-center gap-4 mb-6">
+          <mat-form-field appearance="outline" class="flex-1">
+            <mat-label>Código de barras</mat-label>
+            <input
+              matInput
+              #codigoInput
+              (keyup.enter)="agregarProducto(codigoInput.value)"
+              placeholder="Ingrese o escanee el código"
+            />
+          </mat-form-field>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="agregarProducto(codigoInput.value)"
+          >
+            Agregar Producto
+          </button>
+        </div>
+      </div>
+
+      <!-- Contenedor de tabla con scroll -->
+      <div class="contenedor-tabla">
+        <div class="mat-elevation-z2">
+          <table mat-table [dataSource]="origenDatos">
+
+            <!-- Producto Column -->
+            <ng-container matColumnDef="producto">
+              <th mat-header-cell *matHeaderCellDef> 
+                <mat-icon class="column-icon">inventory_2</mat-icon>
+                Producto 
+              </th>
+              <td mat-cell *matCellDef="let row"> {{ row.producto.nombre }} </td>
+            </ng-container>
+
+            <!-- Cantidad Column -->
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef> 
+                <mat-icon class="column-icon">tag</mat-icon>
+                Cantidad 
+              </th>
+              <td mat-cell *matCellDef="let row" class="cantidad-cell">
+                <!-- Si el producto tiene unidad ID = 1, solo mostrar badge -->
+                <span *ngIf="row.producto.unidad.id === 1" class="cantidad-badge">{{ row.cantidad }}</span>
+                
+                <!-- Si el producto tiene unidad diferente a 1, mostrar input editable -->
+                <input
+                  *ngIf="row.producto.unidad.id !== 1"
+                  type="text"
+                  class="cantidad-input-simple"
+                  [value]="row.cantidad"
+                  (input)="actualizarCantidad(row, $event)"
+                  (blur)="validarCantidadMinima(row, $event)"
+                  (keypress)="validarTeclaNumerica($event)"
+                  placeholder="0.00"
+                />
+              </td>
+            </ng-container>
+
+            <!-- Precio Venta Column -->
+            <ng-container matColumnDef="precioVenta">
+              <th mat-header-cell *matHeaderCellDef> 
+                <mat-icon class="column-icon">sell</mat-icon>
+                Precio Venta 
+              </th>
+              <td mat-cell *matCellDef="let row" class="precio-cell">
+                <span class="precio-amount">{{ row.producto.precioVenta | currency:'COP ':'symbol':'1.0-0' }}</span>
+              </td>
+            </ng-container>
+
+            <!-- Subtotal Column -->
+            <ng-container matColumnDef="valor">
+              <th mat-header-cell *matHeaderCellDef> 
+                <mat-icon class="column-icon">attach_money</mat-icon>
+                Subtotal 
+              </th>
+              <td mat-cell *matCellDef="let row" class="valor-cell">
+                <span class="valor-amount">{{ row.valor | currency:'COP ':'symbol':'1.0-0' }}</span>
+              </td>
+            </ng-container>
+
+            <!-- Acciones Column -->
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef> 
+                <mat-icon class="column-icon">settings</mat-icon>
+                Acciones 
+              </th>
+              <td mat-cell *matCellDef="let row" class="acciones-cell">
+                <!-- Botones para productos con unidad ID = 1 (agregar/quitar uno) -->
+                <ng-container *ngIf="row.producto.unidad.id === 1">
+                  <button
+                    mat-icon-button
+                    aria-label="Agregar uno"
+                    (click)="agregarUno(row)"
+                    matTooltip="Agregar uno"
+                    class="action-button"
+                    style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    aria-label="Quitar uno"
+                    (click)="quitarUno(row)"
+                    matTooltip="Quitar uno"
+                    class="action-button">
+                    <mat-icon>remove</mat-icon>
+                  </button>
+                </ng-container>
+                
+                <!-- Solo botón eliminar para productos con unidad diferente a 1 -->
+                <ng-container *ngIf="row.producto.unidad.id !== 1">
+                  <span class="unidad-info">{{ row.producto.unidad.nombre }}</span>
+                </ng-container>
+                
+                <!-- Botón eliminar siempre presente -->
+                <button
+                  mat-icon-button
+                  aria-label="Eliminar producto"
+                  (click)="quitarProducto(row)"
+                  matTooltip="Eliminar producto"
+                  class="action-button"
+                  style="background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%); box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnas" class="table-header-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas;" class="table-data-row"></tr>
+
+            <!-- Row shown when there is no matching data -->
+            <tr class="mat-row no-data-row" *matNoDataRow>
+              <td class="mat-cell no-data-cell" colspan="5">
+                <div class="no-data-content">
+                  <mat-icon class="no-data-icon">inventory_2</mat-icon>
+                  <span>No se han agregado productos</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Totales y vuelta - siempre al fondo -->
+    <div class="seccion-final">
+      <div class="grupo-informacion">
+        <!-- Total como card informativa -->
+        <div class="info-card total-card">
+          <div class="info-header">
+            <mat-icon class="info-icon">receipt</mat-icon>
+            <span class="info-label">Total</span>
+          </div>
+          <div class="info-value">{{ total | currency:'COP ':'symbol':'1.0-0' }}</div>
+        </div>
+
+        <!-- Campo Recibido como input editable -->
+        <mat-form-field appearance="outline" class="input-editable">
+          <mat-label>Recibido</mat-label>
+          <input
+            matInput
+            #montoRecibidoInput
+            type="text"
+            (input)="formatearInput($event)"
+            placeholder="0"
+          />
+        </mat-form-field>
+
+        <!-- Vuelto como card informativa -->
+        <div class="info-card vuelto-card" [class]="getVueltoClass()">
+          <div class="info-header">
+            <mat-icon class="info-icon">account_balance_wallet</mat-icon>
+            <span class="info-label">Vuelto</span>
+          </div>
+          <div class="info-value">{{ vuelto | currency:'COP ':'symbol':'1.0-0' }}</div>
+        </div>
+      </div>
+      
+      <button
+        mat-raised-button
+        color="accent"
+        class="boton-finalizar"
+        (click)="realizarVenta()"
+      >
+        Realizar Venta
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

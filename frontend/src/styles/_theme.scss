@@ -1,0 +1,76 @@
+/* src/styles/_azure-blue-palette.css */
+
+:root {
+  /* —— Paleta primaria (Azure) —— */
+  --azure-0:   #000000;
+  --azure-10:  #001B3F;
+  --azure-20:  #002F65;
+  --azure-25:  #003A7A;
+  --azure-30:  #00458F;
+  --azure-35:  #0050A5;
+  --azure-40:  #005CBB;
+  --azure-50:  #0074E9;
+  --azure-60:  #438FFF;
+  --azure-70:  #7CABFF;
+  --azure-80:  #ABC7FF;
+  --azure-90:  #D7E3FF;
+  --azure-95:  #ECF0FF;
+  --azure-98:  #F9F9FF;
+  --azure-99:  #FDFBFF;
+  --azure-100: #FFFFFF;
+
+  /* —— Paleta terciaria (Blue) —— */
+  --blue-0:   #000000;
+  --blue-10:  #001E3B;
+  --blue-20:  #003366;
+  --blue-25:  #003D7F;
+  --blue-30:  #004799;
+  --blue-35:  #0052B3;
+  --blue-40:  #005ECC;
+  --blue-50:  #0078E6;
+  --blue-60:  #439AFF;
+  --blue-70:  #7DBCFF;
+  --blue-80:  #B8DDFF;
+  --blue-90:  #E4F4FF;
+  --blue-95:  #F1FAFF;
+  --blue-98:  #FBFEFF;
+  --blue-99:  #FEFEFF;
+  --blue-100: #FFFFFF;
+
+  /* —— Paleta Warn (Rojo) —— */
+  --red-0:   #000000;
+  --red-10:  #B71C1C;  /* red-900 */
+  --red-20:  #C62828;  /* red-800 */
+  --red-25:  #D32F2F;  /* red-700 */
+  --red-30:  #E53935;  /* red-600 */
+  --red-35:  #F44336;  /* red-500 */
+  --red-40:  #EF5350;  /* red-400 */
+  --red-50:  #E57373;  /* red-300 */
+  --red-60:  #EF9A9A;  /* red-200 */
+  --red-70:  #FFCDD2;  /* red-100 */
+  --red-80:  #FFEBEE;  /* red-50  */
+  --red-90:  #FF8A80;  /* red-A100 */
+  --red-95:  #FF5252;  /* red-A200 */
+  --red-98:  #FF1744;  /* red-A400 */
+  --red-99:  #D50000;  /* red-A700 */
+  --red-100: #FFFFFF;
+
+  /* —— Paleta Success (Verde) —— */
+  --green-0:   #000000;
+  --green-10:  #1B5E20;  /* green-900 */
+  --green-20:  #2E7D32;  /* green-800 */
+  --green-25:  #388E3C;  /* green-700 */
+  --green-30:  #43A047;  /* green-600 */
+  --green-35:  #4CAF50;  /* green-500 */
+  --green-40:  #66BB6A;  /* green-400 */
+  --green-50:  #81C784;  /* green-300 */
+  --green-60:  #A5D6A7;  /* green-200 */
+  --green-70:  #C8E6C9;  /* green-100 */
+  --green-80:  #E8F5E9;  /* green-50  */
+  --green-90:  #B9F6CA;  /* green-A100 */
+  --green-95:  #69F0AE;  /* green-A200 */
+  --green-98:  #00E676;  /* green-A400 */
+  --green-99:  #00C853;  /* green-A700 */
+  --green-100: #FFFFFF;
+}
+

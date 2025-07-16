@@ -1,0 +1,91 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { DatePipe } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RealizarVentaComponent } from './components/realizar-venta/realizar-venta.component';
+import { DetalleVentaModalComponent } from './components/detalle-venta-modal/detalle-venta-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
+import { ProductosComponent } from './components/productos/productos.component';
+import { ProductoModalComponent } from './components/producto-modal/producto-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MovimientoProductoModalComponent } from './components/movimiento-producto-modal/movimiento-producto-modal.component';
+import { EliminarProductoModalComponent } from './components/eliminar-producto-modal/eliminar-producto-modal.component';
+import { VentasComponent } from './components/ventas/ventas.component';
+import { MovimientosComponent } from './components/movimientos/movimientos.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MovimientoModalComponent } from './components/movimiento-modal/movimiento-modal.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    SidenavComponent,
+    InicioComponent,
+    RealizarVentaComponent,
+    DetalleVentaModalComponent,
+    ProductosComponent,
+    ProductoModalComponent,
+    MovimientoProductoModalComponent,
+    EliminarProductoModalComponent,
+    VentasComponent,
+    MovimientosComponent,
+    MovimientoModalComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatListModule,
+    MatCardModule,
+    BrowserAnimationsModule,
+    MatDividerModule,
+    RouterModule,
+    HttpClientModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSortModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatTooltipModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatChipsModule
+  ],
+  providers: [
+    DatePipe
+  ],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule { }

@@ -1,0 +1,228 @@
+<div class="contenedor-principal">
+<div class="contenido-scroll">
+<div class="container-balance-cards">
+    <mat-card class="balance-card" [ngClass]="{'balance-negativo': balanceDia?.balance < 0}">
+        <div class="card-header">
+            <mat-icon color="primary" class="balance-icon">calendar_today</mat-icon>
+            <div>
+                <div class="balance-title">Balance diario</div>
+                <div class="currency-label" [ngClass]="{'balance-negativo': balanceDia?.balance < 0}">
+                    COP {{balanceDia?.balance | number:'1.0-2'}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div>
+                <span class="percentaje" [ngClass]="{'porcentaje-negativo': balanceDia?.porcentajeMejora < 0}">
+                    {{balanceDia?.porcentajeMejora}}%
+                </span>
+                <span>
+                    respecto al dia de ayer
+                </span>
+            </div>
+            <div>
+                <span>
+                    Ingresos: COP
+                </span>
+                <span class="span-ingresos">
+                    {{balanceDia?.ganancia | number:'1.0-2'}}
+                </span>
+            </div>
+            <div>
+                <span>
+                    Egresos: COP
+                </span>
+                <span class="span-egresos">
+                    {{balanceDia?.gasto | number:'1.0-2'}}
+                </span>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-card class="balance-card" [ngClass]="{'balance-negativo': balanceSemana?.balance < 0}">
+        <div class="card-header">
+            <mat-icon color="primary" class="balance-icon">date_range</mat-icon>
+            <div>
+                <div class="balance-title">Balance semanal</div>
+                <div class="currency-label" [ngClass]="{'balance-negativo': balanceSemana?.balance < 0}">
+                    COP {{balanceSemana?.balance | number:'1.0-2'}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div>
+                <span class="percentaje" [ngClass]="{'porcentaje-negativo': balanceSemana?.porcentajeMejora < 0}">
+                    {{balanceSemana?.porcentajeMejora}}%
+                </span>
+                <span>
+                    respecto a los 7 dias anteriores
+                </span>
+            </div>
+            <div>
+                <span>
+                    Ingresos: COP
+                </span>
+                <span class="span-ingresos">
+                    {{balanceSemana?.ganancia | number:'1.0-2'}}
+                </span>
+            </div>
+            <div>
+                <span>
+                    Egresos: COP
+                </span>
+                <span class="span-egresos">
+                    {{balanceSemana?.gasto | number:'1.0-2'}}
+                </span>
+            </div>
+        </div>
+    </mat-card>
+
+    <mat-card class="balance-card" [ngClass]="{'balance-negativo': balanceMes?.balance < 0}">
+        <div class="card-header">
+            <mat-icon color="primary" class="balance-icon">calendar_month</mat-icon>
+            <div>
+                <div class="balance-title">Balance mensual</div>
+                <div class="currency-label" [ngClass]="{'balance-negativo': balanceMes?.balance < 0}">
+                    COP {{balanceMes?.balance | number:'1.0-2'}}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div>
+                <span class="percentaje" [ngClass]="{'porcentaje-negativo': balanceMes?.porcentajeMejora < 0}">
+                    {{balanceMes?.porcentajeMejora}}%
+                </span>
+                <span>
+                    respecto al mes anterior
+                </span>
+            </div>
+            <div>
+                <span>
+                    Ingresos: COP
+                </span>
+                <span class="span-ingresos">
+                    {{balanceMes?.ganancia | number:'1.0-2'}}
+                </span>
+            </div>
+            <div>
+                <span>
+                    Egresos: COP
+                </span>
+                <span class="span-egresos">
+                    {{balanceMes?.gasto | number:'1.0-2'}}
+                </span>
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+<div class="section-title">
+    <h2>Últimas ventas</h2>
+</div>
+
+<!-- Contenedor de la tabla -->
+<div class="container-tabla">
+    
+    <!-- Barra superior solo con filtro -->
+    <div class="barra-superior">
+        <mat-form-field class="filtro-field">
+            <mat-label>Filtrar ventas</mat-label>
+            <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. arroz, fecha, valor..." #input>
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
+
+    <!-- Tabla de ventas -->
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="origenDatos" matSort>
+
+            <!-- Fecha Column -->
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+                    <mat-icon class="column-icon">schedule</mat-icon>
+                    Fecha 
+                </th>
+                <td mat-cell *matCellDef="let row"> {{ row.fecha | date:'dd/MM/yyyy h:mm a' }} </td>
+            </ng-container>
+
+            <!-- Valor Column -->
+            <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+                    <mat-icon class="column-icon">attach_money</mat-icon>
+                    Total 
+                </th>
+                <td mat-cell *matCellDef="let row" class="valor-cell"> 
+                    <span class="valor-amount">{{ row.valor | currency:'COP ':'symbol':'1.0-0' }}</span>
+                </td>
+            </ng-container>
+
+            <!-- Productos Column -->
+            <ng-container matColumnDef="productos">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> 
+                    <mat-icon class="column-icon">inventory_2</mat-icon>
+                    Productos 
+                </th>
+                <td mat-cell *matCellDef="let row" class="productos-cell">
+                    <div class="productos-content">
+                        <ng-container *ngFor="let detalle of row.detalleVentas; let i = index">
+                            <ng-container *ngIf="row.detalleVentas.length <= 3 ? i < 3 : i < 2">
+                                <div class="producto-item">
+                                    <span class="cantidad-badge">{{detalle.cantidad}}</span>
+                                    <span class="producto-nombre">{{detalle.producto?.nombre}}</span>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="row.detalleVentas.length > 3">
+                            <div class="mas-productos">+ {{row.detalleVentas.length - 2}} productos más</div>
+                        </ng-container>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Acciones Column -->
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> 
+                    <mat-icon class="column-icon">settings</mat-icon>
+                    Acciones 
+                </th>
+                <td mat-cell *matCellDef="let row" class="acciones-cell">
+                    <button
+                        mat-icon-button
+                        color="primary"
+                        aria-label="Ver detalles"
+                        (click)="verDetalleVenta(row)"
+                        matTooltip="Ver detalles de la venta"
+                        class="action-button">
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnas" class="table-header-row"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnas;" class="table-data-row"></tr>
+
+            <!-- Row shown when there is no matching data -->
+            <tr class="mat-row no-data-row" *matNoDataRow>
+                <td class="mat-cell no-data-cell" colspan="4">
+                    <div class="no-data-content">
+                        <ng-container *ngIf="input.value && input.value.trim() !== ''; else noSearch">
+                            <span>No se encontraron ventas para "{{input.value}}"</span>
+                        </ng-container>
+                        <ng-template #noSearch>
+                            <span>No hay ventas registradas</span>
+                        </ng-template>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <mat-paginator 
+            [pageSizeOptions]="[5, 10]" 
+            showFirstLastButtons
+            aria-label="Seleccionar página">
+        </mat-paginator>
+    </div>
+</div>
+</div>
+</div>
+

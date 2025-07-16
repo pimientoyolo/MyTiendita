@@ -1,0 +1,71 @@
+<div class="movimiento-modal-container">
+  <!-- Título -->
+  <h2 mat-dialog-title class="modal-title">
+    <mat-icon class="title-icon">{{ getTitleIcon() }}</mat-icon>
+    {{ getTitleText() }}
+  </h2>
+
+  <!-- Contenido del modal -->
+  <mat-dialog-content class="modal-content">
+    <form [formGroup]="movimientoForm" class="movimiento-form">
+      
+      <!-- Tipo de Movimiento -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field full-width">
+          <mat-label>Tipo de movimiento</mat-label>
+          <mat-select formControlName="tipoMovimientoId">
+            <mat-option *ngFor="let tipo of tiposMovimiento" [value]="tipo.id">
+              {{ tipo.nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="movimientoForm.get('tipoMovimientoId')?.hasError('required')">
+            Debe seleccionar un tipo de movimiento
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Descripción del tipo seleccionado -->
+      <div class="tipo-info" *ngIf="getTipoDescripcion()">
+        <mat-icon>info</mat-icon>
+        <span>{{ getTipoDescripcion() }}</span>
+      </div>
+
+      <!-- Monto -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field full-width">
+          <mat-label>Monto (COP)</mat-label>
+          <input matInput 
+                 type="text"
+                 formControlName="monto"
+                 placeholder="Ej. 50.000">
+          <mat-icon matSuffix>attach_money</mat-icon>
+          <mat-error *ngIf="movimientoForm.get('monto')?.touched && movimientoForm.get('monto')?.invalid">
+            {{ getMontoErrorMessage() }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+
+  <!-- Acciones -->
+  <mat-dialog-actions class="modal-actions">
+    <button mat-button 
+            (click)="onCancelar()"
+            [disabled]="loading"
+            class="cancel-button">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+    
+    <button mat-raised-button 
+            color="primary"
+            (click)="onGuardar()"
+            [disabled]="!isFormValid()"
+            class="save-button">
+      <mat-icon *ngIf="!loading">save</mat-icon>
+      <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+      {{ loading ? 'Guardando...' : 'Guardar' }}
+    </button>
+  </mat-dialog-actions>
+</div>

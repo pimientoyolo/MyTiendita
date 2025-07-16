@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@use 'styles/_theme';
+@use '@angular/material' as mat;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.snackbar-success{
+    .mdc-snackbar__surface {
+        background-color: #43a047 !important; /* Mejor verde: tono más profundo y moderno */
+    }
+}
+
+.snackbar-error{
+    .mdc-snackbar__surface {
+        background-color: #e53935 !important; /* Mejor rojo: tono más profundo y moderno */
+    }
+}
+
+.snackbar-info{
+    .mdc-snackbar__surface {
+        background-color: #1e88e5 !important; /* Mejor azul: tono más profundo y moderno */
+    }
+}
+
+:root {
+  @include mat.snack-bar-overrides((
+    supporting-text-size: 24px,
+    supporting-text-color: #fff,
+    supporting-text-line-height: 1.2,
+    ));
+}
+

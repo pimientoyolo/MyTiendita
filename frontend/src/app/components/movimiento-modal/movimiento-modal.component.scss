@@ -1,0 +1,167 @@
+.movimiento-modal-container {
+  max-width: 500px;
+  width: 100%;
+  
+  .modal-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 24px 24px 16px 24px;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    border-bottom: 1px solid var(--azure-90, #D7E3FF);
+    
+    .title-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+      color: var(--azure-50, #0074E9);
+    }
+  }
+
+  .modal-content {
+    padding: 24px;
+    max-height: 60vh;
+    overflow-y: auto;
+
+    .movimiento-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .form-row {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+
+        .form-field {
+          flex: 1;
+          
+          &.full-width {
+            width: 100%;
+          }
+
+          .mat-mdc-form-field-subscript-wrapper {
+            display: none;
+          }
+        }
+      }
+
+      // Información del tipo seleccionado
+      .tipo-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: var(--azure-95, #ECF2FF);
+        border: 1px solid var(--azure-80, #B8D1FF);
+        border-radius: 8px;
+        font-size: 14px;
+        color: var(--azure-30, #003566);
+
+        mat-icon {
+          font-size: 18px;
+          width: 18px;
+          height: 18px;
+          color: var(--azure-50, #0074E9);
+        }
+      }
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px 24px 24px;
+    border-top: 1px solid var(--azure-90, #D7E3FF);
+
+    .cancel-button {
+      color: var(--azure-40, #004A7A);
+      
+      &:hover {
+        background: var(--azure-95, #ECF2FF);
+      }
+
+      mat-icon {
+        margin-right: 8px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .save-button {
+      background: var(--azure-50, #0074E9);
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0, 116, 233, 0.3);
+      
+      &:hover:not(:disabled) {
+        background: var(--azure-40, #004A7A);
+        box-shadow: 0 4px 8px rgba(0, 116, 233, 0.4);
+      }
+
+      &:disabled {
+        background: #ccc;
+        color: #666;
+        box-shadow: none;
+      }
+
+      mat-icon,
+      mat-spinner {
+        margin-right: 8px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+// Responsive para pantallas pequeñas
+@media (max-width: 600px) {
+  .movimiento-modal-container {
+    max-width: 95vw;
+    
+    .modal-title {
+      padding: 16px 16px 12px 16px;
+      font-size: 18px;
+    }
+
+    .modal-content {
+      padding: 16px;
+      
+      .movimiento-form {
+        gap: 16px;
+        
+        .form-row {
+          flex-direction: column;
+          gap: 12px;
+        }
+      }
+    }
+
+    .modal-actions {
+      padding: 12px 16px 16px 16px;
+      flex-direction: column-reverse;
+      
+      .cancel-button,
+      .save-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// Estilos globales para el diálogo
+::ng-deep .movimiento-modal-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+}

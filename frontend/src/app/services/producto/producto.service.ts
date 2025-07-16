@@ -1,39 +1,44 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Producto, ProductoTable } from '../../models/producto';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environment';
+import { ProductoDto } from '../../dto/venta.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
 
-  private apiUrl = `${environment.apiUrl}/producto`;
+  private apiUrl = environment.apiUrl;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
-  getByCodigoBarras(codigoBarras: string): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/codigo/${codigoBarras}`);
+  getProductos() {
+    return this.http.get(`${this.apiUrl}/producto/listar`);
   }
 
-  create(producto: Partial<Producto>): Observable<Producto> {
-    return this.http.post<Producto>(`${this.apiUrl}/crear`, producto);
+  getUnidades() {
+    return this.http.get(`${this.apiUrl}/unidad/listar`);
   }
 
-  actualizar(producto: Partial<Producto>): Observable<Producto> {
-    return this.http.put<Producto>(`${this.apiUrl}/actualizar`, producto);
+  crearProducto(producto: ProductoDto) {
+    return this.http.post(`${this.apiUrl}/producto/crear`, producto);
   }
 
-  entradaProductos(productos: ProductoTable[]): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/entrada`, productos);
+  editarProducto(producto: ProductoDto) {
+    return this.http.put(`${this.apiUrl}/producto/actualizar`, producto);
   }
 
-  listarProductosPorIds(ids: number[]): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.apiUrl}/listar/ids`, {
-      params: { ids: ids.join(',') }
-    });
+  eliminarProducto(codigo: string) {
+    return this.http.delete(`${this.apiUrl}/producto/eliminar/${codigo}`);
   }
+
+  movimientoProducto(codigo: string, cantidad: number, idTipoMovimiento: number) {
+    const params = {
+      codigo,
+      cantidad: cantidad.toString(),
+      idTipoMovimiento: idTipoMovimiento.toString()
+    };
+    return this.http.put(`${this.apiUrl}/producto/movimiento`, null, { params });
+  }
+
 }

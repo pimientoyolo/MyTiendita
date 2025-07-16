@@ -1,0 +1,171 @@
+// Contenedor principal del modal
+.eliminar-modal-container {
+  max-width: 500px;
+  width: 100%;
+}
+
+// Título del modal
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--azure-20, #001A37);
+  margin-bottom: 0;
+  border-bottom: 2px solid var(--azure-90, #D7E3FF);
+  padding: 16px 32px;
+
+  .title-icon {
+    font-size: 28px;
+    
+    &.warning-icon {
+      color: #FF6B35; // Color naranja/rojo para advertencia
+    }
+  }
+}
+
+// Contenido del modal
+.modal-content {
+  padding: 24px 32px;
+
+  .confirmation-message {
+    text-align: center;
+    
+    .question-text {
+      font-size: 18px;
+      color: var(--azure-20, #001A37);
+      margin-bottom: 16px;
+      line-height: 1.5;
+
+      .product-name {
+        font-weight: 700;
+        color: var(--azure-30, #0B4A99);
+      }
+    }
+
+    .warning-text {
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+      margin: 0;
+    }
+  }
+}
+
+// Acciones del modal
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 32px 24px 32px;
+  border-top: 1px solid var(--azure-95, #ECF2FF);
+
+  .btn-cancelar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    font-weight: 500;
+    color: var(--azure-50, #0074E9);
+    border: 1px solid var(--azure-80, #B8D1FF);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--azure-95, #ECF2FF);
+      border-color: var(--azure-70, #8BB8FF);
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .btn-eliminar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    font-weight: 600;
+    background-color: #E53935; // Rojo para eliminar
+    color: white;
+    border: 1px solid #E53935;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #C62828; // Rojo más oscuro en hover
+      border-color: #C62828;
+    }
+
+    &:disabled {
+      background-color: #BDBDBD;
+      border-color: #BDBDBD;
+      color: #757575;
+      cursor: not-allowed;
+    }
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .eliminar-modal-container {
+    max-width: 90vw;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    padding: 12px 20px;
+
+    .title-icon {
+      font-size: 24px;
+    }
+  }
+
+  .modal-content {
+    padding: 20px;
+
+    .confirmation-message {
+      .question-text {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .modal-actions {
+    padding: 12px 20px 20px 20px;
+    flex-direction: column;
+    gap: 8px;
+
+    .btn-cancelar,
+    .btn-eliminar {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// Animación de entrada
+.eliminar-modal-container {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,140 @@
+<div class="producto-modal-container">
+  <!-- Título dinámico -->
+  <h2 mat-dialog-title class="modal-title">
+    <mat-icon class="title-icon">{{ getTitleIcon() }}</mat-icon>
+    {{ getTitleText() }}
+  </h2>
+
+  <!-- Contenido del modal -->
+  <mat-dialog-content class="modal-content">
+    <form [formGroup]="productoForm" class="producto-form">
+      
+      <!-- Fila 1: Nombre y Código de Barras -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nombre del producto</mat-label>
+          <input matInput 
+                 formControlName="nombre"
+                 [readonly]="isViewMode"
+                 placeholder="Ej. Arroz Diana 500g">
+          <mat-error *ngIf="productoForm.get('nombre')?.hasError('required')">
+            El nombre es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Código de barras</mat-label>
+          <input matInput 
+                 formControlName="codigoBarras"
+                 [readonly]="isViewMode || isEditMode"
+                 placeholder="Ej. 7702508495002">
+          <mat-icon matSuffix *ngIf="!isViewMode && !isEditMode">qr_code_scanner</mat-icon>
+          <mat-error *ngIf="productoForm.get('codigoBarras')?.hasError('required')">
+            El código de barras es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Fila 2: Precios -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Precio de compra</mat-label>
+          <input matInput 
+                 type="text"
+                 formControlName="precioCompra"
+                 [readonly]="isViewMode"
+                 placeholder="0">
+          <span matTextPrefix>COP $&nbsp;</span>
+          <mat-error *ngIf="productoForm.get('precioCompra')?.hasError('required')">
+            El precio de compra es obligatorio
+          </mat-error>
+          <mat-error *ngIf="productoForm.get('precioCompra')?.hasError('invalidPrice')">
+            Ingrese un precio válido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Precio de venta</mat-label>
+          <input matInput 
+                 type="text"
+                 formControlName="precioVenta"
+                 [readonly]="isViewMode"
+                 placeholder="0">
+          <span matTextPrefix>COP $&nbsp;</span>
+          <mat-error *ngIf="productoForm.get('precioVenta')?.hasError('required')">
+            El precio de venta es obligatorio
+          </mat-error>
+          <mat-error *ngIf="productoForm.get('precioVenta')?.hasError('invalidPrice')">
+            Ingrese un precio válido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Fila 3: Cantidad y Unidad -->
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Cantidad</mat-label>
+          <input matInput 
+                 type="number"
+                 formControlName="cantidad"
+                 [readonly]="isViewMode || isEditMode"
+                 placeholder="0">
+          <mat-error *ngIf="productoForm.get('cantidad')?.hasError('required')">
+            La cantidad es obligatoria
+          </mat-error>
+          <mat-error *ngIf="productoForm.get('cantidad')?.hasError('min')">
+            La cantidad debe ser mayor o igual a 0
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Unidad</mat-label>
+          <mat-select formControlName="unidadId" [disabled]="isViewMode">
+            <mat-option *ngFor="let unidad of unidades" value="{{unidad.id}}">
+              {{ unidad.nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="productoForm.get('unidadId')?.hasError('required')">
+            La unidad es obligatoria
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-row full-width">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Descripción (opcional)</mat-label>
+          <textarea matInput 
+                    formControlName="descripcion"
+                    [readonly]="isViewMode"
+                    placeholder="Descripción adicional del producto..."
+                    rows="3">
+          </textarea>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+
+  <!-- Acciones del modal -->
+  <mat-dialog-actions class="modal-actions">
+    <button mat-button 
+            type="button"
+            (click)="onCancel()"
+            class="btn-cancelar">
+      <mat-icon>close</mat-icon>
+      {{ isViewMode ? 'Cerrar' : 'Cancelar' }}
+    </button>
+
+    <button mat-raised-button 
+            *ngIf="!isViewMode"
+            color="primary"
+            type="button"
+            [disabled]="productoForm.invalid"
+            (click)="onSave()"
+            class="btn-guardar">
+      <mat-icon>{{ isCreateMode ? 'add' : 'save' }}</mat-icon>
+      {{ isCreateMode ? 'Crear Producto' : 'Guardar Cambios' }}
+    </button>
+  </mat-dialog-actions>
+</div>

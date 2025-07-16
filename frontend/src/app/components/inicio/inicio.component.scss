@@ -1,0 +1,499 @@
+// Contenedor principal y scroll
+.contenedor-principal {
+  box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1);
+  padding: 32px 16px 32px 32px;
+  background: var(--azure-99, #FDFBFF);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.contenido-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -16px;
+  padding-right: 16px;
+  
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--azure-95, #ECF2FF);
+    border-radius: 7px;
+    margin: 0px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--azure-70, #8BB8FF);
+    border-radius: 7px;
+    border: 1px solid var(--azure-90, #D7E3FF);
+    
+    &:hover {
+      background: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Estilos para las tarjetas de balance
+.container-balance-cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    min-width: 0;
+}
+
+.balance-card {
+    width: 100%;
+    max-width: 320px;
+    min-width: 0;
+    min-height: 320px;
+    padding: 24px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--azure-99, #FDFBFF) 0%, var(--azure-95, #ECF2FF) 100%);
+    border: 1px solid var(--azure-90, #D7E3FF);
+    box-shadow: 
+        0 8px 32px rgba(0, 27, 63, 0.08),
+        0 4px 16px rgba(116, 184, 255, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--azure-60, #6DA6FF) 0%, var(--azure-70, #8BB8FF) 100%);
+        border-radius: 20px 20px 0 0;
+    }
+    
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 
+            0 12px 40px rgba(0, 27, 63, 0.12),
+            0 8px 24px rgba(116, 184, 255, 0.2);
+    }
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+.balance-icon {
+    font-size: 48px;
+    height: auto;
+    width: auto;
+    background: linear-gradient(135deg, var(--azure-60, #6DA6FF) 0%, var(--azure-70, #8BB8FF) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 4px rgba(109, 166, 255, 0.3));
+}
+
+.balance-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--azure-20, #003875);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.currency-label {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--azure-30, #1B5FC7) 0%, var(--azure-40, #4285F4) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    word-break: break-word;
+    
+    &.balance-negativo {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
+.card-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-top: auto;
+    gap: 12px;
+    
+    > div {
+        padding: 8px 12px;
+        background: rgba(116, 184, 255, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(116, 184, 255, 0.2);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--azure-30, #1B5FC7);
+        transition: all 0.2s ease;
+        
+        &:hover {
+            background: rgba(116, 184, 255, 0.15);
+            transform: translateX(2px);
+        }
+    }
+}
+
+.span-ingresos{
+    color: #10B981;
+    font-weight: 600;
+}
+
+.span-egresos{
+    color: #EF4444;
+    font-weight: 600;
+}
+
+.percentaje {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    font-size: 16px;
+    
+    &.porcentaje-negativo {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
+// Tarjeta con balance negativo
+.balance-card.balance-negativo {
+    &::before {
+        background: linear-gradient(90deg, #EF4444 0%, #DC2626 100%);
+    }
+    
+    border-color: rgba(239, 68, 68, 0.2);
+    
+    &:hover {
+        box-shadow: 
+            0 12px 40px rgba(220, 38, 38, 0.12),
+            0 8px 24px rgba(239, 68, 68, 0.2);
+    }
+}
+
+// Título de sección
+.section-title {
+    text-align: center;
+    margin: 40px 0 24px 0;
+    
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--azure-20, #001A37);
+        margin: 0;
+        position: relative;
+        display: inline-block;
+        
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--azure-60, #6DA6FF) 0%, var(--azure-70, #8BB8FF) 100%);
+            border-radius: 2px;
+        }
+    }
+}
+
+// Contenedor de la tabla (igual que ventas)
+.container-tabla {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 26, 55, 0.08);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  margin-top: 24px;
+}
+
+// Campo de filtro (igual que ventas)
+.filtro-field {
+  width: 100%;
+  max-width: 400px;
+  
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+  
+  .mat-mdc-form-field-wrapper {
+    height: 48px;
+  }
+}
+
+// Barra superior solo con filtro
+.barra-superior {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+// Estilos de la tabla (igual que ventas)
+table {
+  width: 100%;
+  table-layout: fixed;
+  background: white;
+}
+
+// Header de la tabla (igual que ventas)
+.table-header-row {
+  background: linear-gradient(135deg, var(--azure-95, #ECF2FF) 0%, var(--azure-90, #D7E3FF) 100%);
+  
+  th {
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    font-size: 14px;
+    border-bottom: 2px solid var(--azure-80, #B8D1FF);
+    
+    .column-icon {
+      font-size: 18px;
+      margin-right: 8px;
+      vertical-align: middle;
+      color: var(--azure-50, #0074E9);
+    }
+  }
+}
+
+// Filas de datos (igual que ventas)
+.table-data-row {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: var(--azure-98, #F8FAFF);
+  }
+  
+  &:nth-child(even) {
+    background-color: rgba(247, 250, 255, 0.5);
+  }
+}
+
+// Anchos específicos para las columnas
+.mat-column-fecha {
+  width: 20%;
+}
+
+.mat-column-valor {
+  width: 15%;
+}
+
+.mat-column-productos {
+  width: 50%;
+}
+
+.mat-column-acciones {
+  width: 15%;
+}
+
+// Celda de valor (igual que ventas)
+.valor-cell {
+  .valor-amount {
+    font-weight: 600;
+    color: var(--azure-30, #0B4A99);
+    font-size: 16px;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+// Estilos para la columna de productos (igual que ventas)
+.productos-cell {
+  vertical-align: top;
+  padding: 16px 12px !important;
+  
+  .productos-content {
+    max-width: 100%;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .producto-item {
+    display: flex;
+    align-items: center;
+    background: var(--azure-95, #ECF2FF);
+    color: var(--azure-30, #0B4A99);
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--azure-80, #B8D1FF);
+    width: fit-content;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: var(--azure-90, #D7E3FF);
+      transform: translateX(2px);
+    }
+    
+    .cantidad-badge {
+      background: var(--azure-60, #6DA6FF);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 8px;
+      display: inline-block;
+      min-width: 24px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(109, 166, 255, 0.3);
+    }
+    
+    .producto-nombre {
+      font-weight: 500;
+      color: var(--azure-20, #001A37);
+    }
+  }
+  
+  .mas-productos {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--azure-80, #B8D1FF) 0%, var(--azure-70, #8BB8FF) 100%);
+    color: var(--azure-40, #1E5AA8);
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    font-style: italic;
+    width: fit-content;
+    border: 1px solid var(--azure-60, #6DA6FF);
+  }
+}
+
+// Celda de acciones (igual que ventas)
+.acciones-cell {
+  text-align: center;
+  padding: 16px 8px !important;
+  vertical-align: middle;
+  
+  .action-button {
+    background: linear-gradient(135deg, var(--azure-50, #0074E9) 0%, var(--azure-60, #6DA6FF) 100%);
+    color: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 116, 233, 0.3);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 116, 233, 0.4);
+    }
+    
+    .mat-icon {
+      color: white;
+    }
+  }
+}
+
+// Sin datos (igual que ventas)
+.no-data-row {
+  .no-data-cell {
+    text-align: center;
+    padding: 40px 20px !important;
+    
+    .no-data-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--azure-40, #3976D2);
+      min-height: 120px;
+      
+      span {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+// Paginador (igual que ventas)
+mat-paginator {
+  background: var(--azure-98, #F8FAFF);
+  border-top: 1px solid var(--azure-90, #D7E3FF);
+  
+  .mat-mdc-paginator-range-label {
+    color: var(--azure-40, #3976D2);
+    font-weight: 500;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .container-tabla {
+    padding: 16px;
+    margin: 0 -16px;
+    border-radius: 0;
+  }
+  
+  .barra-superior {
+    align-items: stretch;
+    
+    .filtro-field {
+      max-width: 100%;
+    }
+  }
+  
+  .mat-column-fecha,
+  .mat-column-valor,
+  .mat-column-productos,
+  .mat-column-acciones {
+    width: auto;
+  }
+  
+  table {
+    table-layout: auto;
+    font-size: 12px;
+  }
+  
+  .productos-cell {
+    .producto-item {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+  }
+}
+
+
+
+
+
+

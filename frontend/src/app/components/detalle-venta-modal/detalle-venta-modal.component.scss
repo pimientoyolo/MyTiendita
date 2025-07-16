@@ -1,0 +1,480 @@
+/* Variables CSS para consistencia con el tema Azure */
+:root {
+  --azure-30: #005a9f;
+  --azure-40: #106ebe;
+  --azure-50: #0078d4;
+  --azure-60: #2196F3;
+  --azure-70: #1976D2;
+  --azure-80: #1565C0;
+  --azure-90: #0D47A1;
+  --azure-95: #002440;
+  --azure-99: #001318;
+}
+
+/* Scroll personalizado para el modal */
+::ng-deep .custom-dialog-container ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::ng-deep .custom-dialog-container ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+::ng-deep .custom-dialog-container ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--azure-50) 0%, var(--azure-60) 100%);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .custom-dialog-container ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--azure-60) 0%, var(--azure-70) 100%);
+  transform: scale(1.1);
+}
+
+::ng-deep .custom-dialog-container ::-webkit-scrollbar-corner {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Configuración global del modal */
+::ng-deep .custom-dialog-container .mat-mdc-dialog-container {
+  max-width: 95vw !important;
+  width: 950px !important;
+  max-height: 90vh !important;
+  height: auto !important;
+  overflow: auto !important;
+  padding: 0 !important;
+  display: block !important;
+  scroll-behavior: smooth !important;
+}
+
+::ng-deep .custom-dialog-container .mat-mdc-dialog-content {
+  overflow: visible !important;
+  max-height: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  scroll-behavior: smooth !important;
+}
+
+::ng-deep .custom-dialog-container .mat-mdc-dialog-surface {
+  overflow: auto !important;
+  max-height: 90vh !important;
+  scroll-behavior: smooth !important;
+}
+
+/* Header del modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  color: #333;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.header-icon {
+  display: none; /* Ocultamos el icono */
+}
+
+.modal-title {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  color: #333 !important;
+}
+
+.fecha-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--azure-50);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+}
+
+.fecha-icon {
+  font-size: 1rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  color: white;
+}
+
+.fecha-text {
+  font-weight: 500;
+  color: white;
+}
+
+/* Contenido del modal */
+.modal-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+}
+
+/* Contenedor del filtro */
+.filtro-container {
+  padding: 0.75rem 1.5rem;
+  background: #f8f9fa;
+}
+
+.filtro-field {
+  width: 100% !important;
+  max-width: 400px;
+  
+  .mat-mdc-form-field-flex {
+    background: white;
+    border-radius: 8px;
+  }
+  
+  .mat-mdc-form-field-outline {
+    color: var(--azure-50) !important;
+  }
+  
+  .mat-mdc-form-field-focus-overlay {
+    background: rgba(0, 120, 212, 0.05) !important;
+  }
+}
+
+/* Wrapper de la tabla */
+.table-wrapper {
+  padding: 0 1.5rem 1rem 1.5rem;
+  background: #f8f9fa;
+}
+
+/* Tabla personalizada */
+.custom-table {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Contenedor de la tabla con scroll */
+.mat-elevation-z4 {
+  width: 100%;
+  
+  /* Scroll personalizado para la tabla */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--azure-50) 0%, var(--azure-60) 100%);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--azure-60) 0%, var(--azure-70) 100%);
+  }
+}
+
+/* Headers de la tabla */
+.table-header-row {
+  background: linear-gradient(135deg, #f8fafb 0%, #e9ecef 100%);
+  border-bottom: 2px solid var(--azure-60);
+}
+
+.header-cell {
+  padding: 1rem 1rem !important;
+  font-weight: 700 !important;
+  color: var(--azure-70) !important;
+  font-size: 0.9rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 2px solid var(--azure-60) !important;
+}
+
+.header-cell .header-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.column-icon {
+  font-size: 1.1rem !important;
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+  color: var(--azure-60);
+}
+
+/* Filas de datos */
+.table-data-row {
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.table-data-row:hover {
+  background: linear-gradient(135deg, rgba(16, 110, 190, 0.03) 0%, rgba(0, 120, 212, 0.03) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.table-data-row:last-child {
+  border-bottom: none;
+}
+
+/* Celdas de la tabla */
+.table-cell {
+  padding: 1rem 1rem !important;
+  color: #333 !important;
+  font-size: 0.875rem !important;
+  vertical-align: middle !important;
+  border-bottom: 1px solid #e9ecef !important;
+}
+
+/* Celda de producto */
+.producto-cell {
+  width: 45%;
+}
+
+.producto-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-nombre {
+  font-weight: 600;
+  color: var(--azure-70);
+  font-size: 0.9rem;
+}
+
+/* Celda de cantidad */
+.cantidad-cell {
+  width: 15%;
+  text-align: center;
+}
+
+.quantity-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2rem;
+  background: linear-gradient(135deg, var(--azure-60) 0%, var(--azure-70) 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0 0.75rem;
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+}
+
+/* Celda de precio */
+.precio-cell {
+  width: 20%;
+}
+
+.precio-amount {
+  font-weight: 500;
+  color: #2E7D32;
+  background: rgba(46, 125, 50, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+/* Celda de subtotal */
+.subtotal-cell {
+  width: 20%;
+  background: rgba(33, 150, 243, 0.03) !important;
+}
+
+.subtotal-amount {
+  font-weight: 700;
+  color: var(--azure-70);
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(25, 118, 210, 0.15) 100%);
+  padding: 0.375rem 0.75rem;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* Estado sin datos */
+.no-data-row {
+  background: #f8f9fa !important;
+}
+
+.no-data-cell {
+  padding: 3rem 1.5rem !important;
+  text-align: center !important;
+  border: none !important;
+}
+
+.no-data-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.no-data-icon {
+  font-size: 3rem !important;
+  width: 3rem !important;
+  height: 3rem !important;
+  color: #adb5bd;
+  opacity: 0.7;
+}
+
+.no-data-text {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+/* Paginador personalizado */
+.custom-paginator {
+  background: #f8f9fa !important;
+  border-top: 1px solid #dee2e6;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Acciones del modal */
+.modal-actions {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 1rem 1.5rem !important;
+  background: #f8f9fa;
+  border-radius: 0 0 4px 4px;
+  border-top: 1px solid #dee2e6;
+}
+
+.total-info {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.total-productos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6c757d;
+  font-size: 0.875rem;
+  
+  mat-icon {
+    font-size: 1.1rem !important;
+    width: 1.1rem !important;
+    height: 1.1rem !important;
+  }
+}
+
+.total-venta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.total-label {
+  font-weight: 500;
+  color: var(--azure-70);
+  font-size: 0.9rem;
+}
+
+.total-value {
+  font-weight: 700;
+  color: var(--azure-70);
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(25, 118, 210, 0.15) 100%);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.close-button {
+  background: linear-gradient(135deg, var(--azure-60) 0%, var(--azure-70) 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+  }
+  
+  mat-icon {
+    margin-right: 0.5rem;
+    font-size: 1.1rem !important;
+    width: 1.1rem !important;
+    height: 1.1rem !important;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  /* Scroll más delgado en móviles */
+  ::ng-deep .custom-dialog-container ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .modal-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .modal-title {
+    font-size: 1.125rem !important;
+  }
+  
+  .header-cell,
+  .table-cell {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .total-info {
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Scroll aún más delgado en pantallas muy pequeñas */
+  ::ng-deep .custom-dialog-container ::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+  }
+  
+  .header-cell .header-content .column-icon {
+    display: none;
+  }
+  
+  .header-cell,
+  .table-cell {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .quantity-badge {
+    min-width: 2rem;
+    height: 1.5rem;
+    font-size: 0.75rem;
+  }
+}

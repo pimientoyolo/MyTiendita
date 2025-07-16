@@ -50,12 +50,36 @@ public class ProductoController {
         return ResponseEntity.ok(true);
     }
 
+    @PutMapping("/movimiento")
+    public ResponseEntity<Void> movimientoProducto(
+            @RequestParam String codigo,
+            @RequestParam Double cantidad,
+            @RequestParam Long idTipoMovimiento
+    ) {
+        productoService.movimientoProducto(codigo, cantidad, idTipoMovimiento);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/listar/ids")
     public ResponseEntity<List<Producto>> listarProductosPorIds(
             @RequestParam List<Long> ids
     ) {
         // Lógica para listar productos por IDs
         return ResponseEntity.ok(productoService.listarProductosPorIds(ids));
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Producto>> listarProductosPorIds() {
+        // Lógica para listar productos por IDs
+        return ResponseEntity.ok(productoService.listar());
+    }
+
+    @DeleteMapping("/eliminar/{codigo}")
+    public ResponseEntity<Void> eliminarProducto(
+            @PathVariable String codigo
+    ) {
+        productoService.eliminarProducto(codigo);
+        return ResponseEntity.noContent().build();
     }
 
     //setters

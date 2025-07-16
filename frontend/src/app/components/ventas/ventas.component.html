@@ -1,0 +1,126 @@
+<div class="contenedor-principal">
+  <div class="contenido-scroll">
+    
+    <!-- Título de la página -->
+    <div class="section-title">
+      <h1>Gestión de Ventas</h1>
+    </div>
+
+    <!-- Contenedor de la tabla -->
+    <div class="container-tabla">
+      
+      <!-- Barra superior solo con filtro -->
+      <div class="barra-superior">
+        <mat-form-field class="filtro-field">
+          <mat-label>Filtrar ventas</mat-label>
+          <input matInput (keyup)="aplicarFiltro($event)" placeholder="Ej. arroz, fecha, valor..." #input>
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <!-- Tabla de ventas -->
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="origenDatos" matSort (matSortChange)="onSortChange($event)" matSortActive="fecha" matSortDirection="desc">
+
+          <!-- Fecha Column -->
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="fecha"> 
+              <mat-icon class="column-icon">schedule</mat-icon>
+              Fecha 
+            </th>
+            <td mat-cell *matCellDef="let row"> {{ row.fecha | date:'dd/MM/yyyy h:mm a' }} </td>
+          </ng-container>
+
+          <!-- Valor Column -->
+          <ng-container matColumnDef="valor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="valor"> 
+              <mat-icon class="column-icon">attach_money</mat-icon>
+              Total 
+            </th>
+            <td mat-cell *matCellDef="let row" class="valor-cell"> 
+              <span class="valor-amount">{{ row.valor | currency:'COP ':'symbol':'1.0-0' }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Productos Column -->
+          <ng-container matColumnDef="productos">
+            <th mat-header-cell *matHeaderCellDef> 
+              <mat-icon class="column-icon">inventory_2</mat-icon>
+              Productos 
+            </th>
+            <td mat-cell *matCellDef="let row" class="productos-cell">
+              <div class="productos-content">
+                <ng-container *ngFor="let detalle of row.detalleVentas; let i = index">
+                  <ng-container *ngIf="row.detalleVentas.length <= 3 ? i < 3 : i < 2">
+                    <div class="producto-item">
+                      <span class="cantidad-badge">{{detalle.cantidad}}</span>
+                      <span class="producto-nombre">{{detalle.producto?.nombre}}</span>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="row.detalleVentas.length > 3">
+                  <div class="mas-productos">+ {{row.detalleVentas.length - 2}} productos más</div>
+                </ng-container>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Acciones Column -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> 
+              <mat-icon class="column-icon">settings</mat-icon>
+              Acciones 
+            </th>
+            <td mat-cell *matCellDef="let row" class="acciones-cell">
+              <button
+                mat-icon-button
+                color="primary"
+                aria-label="Ver detalles"
+                (click)="verDetalleVenta(row)"
+                matTooltip="Ver detalles de la venta"
+                class="action-button">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnas" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas;" class="table-data-row"></tr>
+
+          <!-- Row shown when there is no matching data or loading -->
+          <tr class="mat-row no-data-row" *matNoDataRow>
+            <td class="mat-cell no-data-cell" colspan="4">
+              <div class="no-data-content">
+                <ng-container *ngIf="isLoading">
+                  <mat-spinner diameter="40"></mat-spinner>
+                  <span>Cargando ventas...</span>
+                </ng-container>
+                <ng-container *ngIf="!isLoading">
+                  <ng-container *ngIf="currentFilter && currentFilter.trim() !== ''; else noSearch">
+                    <mat-icon class="no-data-icon">search_off</mat-icon>
+                    <span>No se encontraron ventas para "{{currentFilter}}"</span>
+                  </ng-container>
+                  <ng-template #noSearch>
+                    <mat-icon class="no-data-icon">receipt_long</mat-icon>
+                    <span>No hay ventas registradas</span>
+                  </ng-template>
+                </ng-container>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Paginador configurado para servidor -->
+        <mat-paginator 
+          [length]="totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="pageIndex"
+          [pageSizeOptions]="[5, 10]"
+          (page)="onPageChange($event)"
+          showFirstLastButtons
+          aria-label="Seleccionar página de ventas">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

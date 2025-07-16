@@ -6,8 +6,8 @@ import mytiendita.backend.model.DetalleVenta;
 import mytiendita.backend.model.Venta;
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -20,6 +20,10 @@ public interface VentaMapper {
 
   @InheritConfiguration(name = "toVentaTableDTO")
   List<VentaTableDTO> toVentaTableDTOList(List<Venta> ventas);
+
+  default Page<VentaTableDTO> toVentaTableDTOPage(Page<Venta> ventas) {
+      return ventas.map(this::toVentaTableDTO);
+  }
 
   DetalleVentaTableDTO toDetalleVentaTableDTO(DetalleVenta detalleVenta);
 }

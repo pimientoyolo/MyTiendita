@@ -1,0 +1,102 @@
+<div class="contenedor-principal">
+  <div class="contenido-scroll">
+    
+    <!-- Título de la página -->
+    <div class="section-title">
+      <h1>Gestión de Movimientos</h1>
+    </div>
+
+    <!-- Contenedor de la tabla -->
+    <div class="container-tabla">
+      
+      <!-- Barra superior con filtro y botón -->
+      <div class="barra-superior">
+        <mat-form-field class="filtro-field">
+          <mat-label>Filtrar movimientos</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ej. fecha, valor, tipo..." [value]="filterValue">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        
+        <button mat-raised-button 
+                color="primary" 
+                class="add-button"
+                (click)="onAddMovimiento()">
+          <mat-icon>add</mat-icon>
+          Nuevo Movimiento
+        </button>
+      </div>
+
+      <!-- Loading Overlay -->
+      <div class="loading-overlay" *ngIf="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+        <span>Cargando movimientos...</span>
+      </div>
+
+      <!-- Tabla de movimientos -->
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)" matSortActive="fecha" matSortDirection="desc">
+
+          <!-- Fecha Column -->
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="fecha"> 
+              <mat-icon class="column-icon">schedule</mat-icon>
+              Fecha 
+            </th>
+            <td mat-cell *matCellDef="let row"> {{ row.fecha | date:'dd/MM/yyyy h:mm a' }} </td>
+          </ng-container>
+
+          <!-- Valor Column -->
+          <ng-container matColumnDef="valor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="valor"> 
+              <mat-icon class="column-icon">attach_money</mat-icon>
+              Valor 
+            </th>
+            <td mat-cell *matCellDef="let row" class="valor-cell"> 
+              <span class="valor-amount" 
+                    [class.valor-positivo]="row.tipoMovimiento.id === 1 || row.tipoMovimiento.id === 4" 
+                    [class.valor-negativo]="row.tipoMovimiento.id === 2 || row.tipoMovimiento.id === 3">
+                {{ row.valor | currency:'COP ':'symbol':'1.0-0' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Tipo Movimiento Column -->
+          <ng-container matColumnDef="tipoMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="tipoMovimiento.nombre"> 
+              <mat-icon class="column-icon">category</mat-icon>
+              Tipo Movimiento 
+            </th>
+            <td mat-cell *matCellDef="let row" class="tipo-cell">
+              <span class="tipo-movimiento" 
+                    [class.tipo-ingreso]="row.tipoMovimiento.id === 1 || row.tipoMovimiento.id === 4" 
+                    [class.tipo-egreso]="row.tipoMovimiento.id === 2 || row.tipoMovimiento.id === 3">
+                {{ row.tipoMovimiento.nombre }}
+              </span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-data-row"></tr>
+        </table>
+
+        <!-- No Data Message -->
+        <div class="no-data-message" *ngIf="!loading && dataSource.data.length === 0">
+          <mat-icon>inbox</mat-icon>
+          <h3>No hay movimientos</h3>
+          <p>No se encontraron movimientos que coincidan con los criterios de búsqueda.</p>
+        </div>
+      </div>
+
+      <!-- Paginator -->
+      <mat-paginator 
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        [showFirstLastButtons]="true"
+        (page)="onPageChange($event)"
+        class="custom-paginator">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<mat-sidenav-container
+    class="sidenav-container">
+    <mat-sidenav #sidenav disableClose opened mode="side" class="sidenav">
+
+        <div class="sidenav-menus">
+
+            <h2 matLine class="side-title">MyTiendita</h2>
+            
+            <!-- INICIO -->
+            <div class="divider">
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button-home" (click)="enrutar('/inicio')">
+                            <mat-icon>home</mat-icon>
+                            Inicio
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+            <!-- Ventas -->
+            <div class="divider">
+
+                <h3 matLine class="side-text">Ventas</h3>
+
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button" (click)="enrutar('/realizar-venta')">
+                            <mat-icon>shopping_cart_checkout</mat-icon>
+                            Realizar venta
+                        </button>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button" (click)="enrutar('/ventas')">
+                            <mat-icon>receipt_long</mat-icon>
+                            Ventas
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+            <!-- Finanzas -->
+            <div class="divider">
+
+                <h3 matLine class="side-text">Finanzas</h3>
+
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button" (click)="enrutar('/movimientos')">
+                            <mat-icon>receipt</mat-icon>
+                            Movimientos
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+
+            <!-- Inventario -->
+            <div class="divider">
+
+                <h3 matLine class="side-text">Inventario</h3>
+
+                <mat-list>
+                    <mat-list-item>
+                        <button mat-fab extended class="sidenav-button" (click)="enrutar('/productos')">
+                            <mat-icon>add_box</mat-icon>
+                            Productos
+                        </button>
+                    </mat-list-item>
+
+                </mat-list>
+            </div>
+
+        </div>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content class="sidenav-content">
+        <div class="container-content">
+            <ng-content></ng-content>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

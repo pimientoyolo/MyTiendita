@@ -1,0 +1,261 @@
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ProductoDto, UnidadDto } from '../../dto/venta.dto';
+import { ProductoService } from '../../services/producto/producto.service';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
+
+export interface ProductoModalData {
+  mode: 'create' | 'edit' | 'view';
+  producto?: ProductoDto;
+  unidades: UnidadDto[];
+}
+
+@Component({
+  selector: 'app-producto-modal',
+  standalone: false,
+  templateUrl: './producto-modal.component.html',
+  styleUrl: './producto-modal.component.scss'
+})
+export class ProductoModalComponent implements OnInit {
+
+  productoForm!: FormGroup;
+  unidades: UnidadDto[] = [];
+  
+  constructor(
+    private fb: FormBuilder,
+    private productoService: ProductoService,
+    private snackbarService: SnackbarService,
+    public dialogRef: MatDialogRef<ProductoModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ProductoModalData
+  ) {
+    this.unidades = data.unidades || [];
+    this.initForm();
+  }
+
+  ngOnInit(): void {
+    if (this.data.producto && (this.isEditMode || this.isViewMode)) {
+      this.loadProductoData();
+    } else if (this.isCreateMode) {
+      this.preseleccionarPrimeraUnidad();
+    }
+  }
+
+  // Getters para modos
+  get isCreateMode(): boolean {
+    return this.data.mode === 'create';
+  }
+
+  get isEditMode(): boolean {
+    return this.data.mode === 'edit';
+  }
+
+  get isViewMode(): boolean {
+    return this.data.mode === 'view';
+  }
+
+  // Inicializar formulario
+  private initForm(): void {
+    this.productoForm = this.fb.group({
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      descripcion: [''],
+      codigoBarras: ['', [Validators.required]],
+      precioCompra: ['0', [Validators.required, this.priceValidator]],
+      precioVenta: ['0', [Validators.required, this.priceValidator]],
+      cantidad: [0, [Validators.required, Validators.min(0)]],
+      unidadId: ['', [Validators.required]]
+    });
+
+    // Si es modo view, deshabilitar todo el formulario
+    if (this.isViewMode) {
+      this.productoForm.disable();
+    }
+
+    // Configurar formateo automático de precios
+    this.setupPriceFormatting();
+  }
+
+  // Validador personalizado para precios
+  private priceValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null; // Si está vacío, el required se encarga
+    }
+
+    // Remover formato para validar el número
+    const numericValue = control.value.toString().replace(/[,\s]/g, '');
+    const number = parseFloat(numericValue);
+
+    if (isNaN(number) || number <= 0) {
+      return { invalidPrice: true };
+    }
+
+    return null;
+  }
+
+  // Configurar formateo automático de precios
+  private setupPriceFormatting(): void {
+    // Formatear precio de compra
+    this.productoForm.get('precioCompra')?.valueChanges.subscribe(value => {
+      if (value && value !== '' && !this.isViewMode) {
+        const formatted = this.formatPrice(value);
+        if (formatted !== value) {
+          this.productoForm.get('precioCompra')?.setValue(formatted, { emitEvent: false });
+        }
+      }
+    });
+
+    // Formatear precio de venta
+    this.productoForm.get('precioVenta')?.valueChanges.subscribe(value => {
+      if (value && value !== '' && !this.isViewMode) {
+        const formatted = this.formatPrice(value);
+        if (formatted !== value) {
+          this.productoForm.get('precioVenta')?.setValue(formatted, { emitEvent: false });
+        }
+      }
+    });
+  }
+
+  // Formatear precio con separadores de miles sin decimales
+  private formatPrice(value: any): string {
+    if (!value || value === '') return '';
+    
+    // Remover todos los caracteres que no sean números
+    const numericValue = value.toString().replace(/[^\d]/g, '');
+    
+    if (!numericValue || numericValue === '0') return '';
+    
+    // Convertir a número y formatear con separadores de miles
+    const number = parseInt(numericValue, 10);
+    return number.toLocaleString('es-CO', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
+  }
+
+  // Convertir precio formateado a número
+  private parsePrice(formattedPrice: string): number {
+    if (!formattedPrice || formattedPrice === '') return 0;
+    const numericValue = formattedPrice.replace(/[^\d]/g, '');
+    return parseInt(numericValue, 10) || 0;
+  }
+
+  // Cargar datos del producto para edición/visualización
+  private loadProductoData(): void {
+    if (this.data.producto) {
+      const producto = this.data.producto;
+      this.productoForm.patchValue({
+        nombre: producto.nombre,
+        descripcion: producto.descripcion,
+        codigoBarras: producto.codigoBarras,
+        precioCompra: this.formatPrice(producto.precioCompra.toString()),
+        precioVenta: this.formatPrice(producto.precioVenta.toString()),
+        cantidad: producto.cantidad,
+        unidadId: producto.unidad.id.toString() // Convertir a string para el select
+      });
+    }
+  }
+
+  // Preseleccionar la primera unidad en modo crear
+  private preseleccionarPrimeraUnidad(): void {
+    if (this.unidades && this.unidades.length > 0) {
+      const primeraUnidad = this.unidades[0];
+      this.productoForm.patchValue({
+        unidadId: primeraUnidad.id.toString()
+      });
+    }
+  }
+
+  // Obtener título del modal
+  getTitleText(): string {
+    switch (this.data.mode) {
+      case 'create': return 'Crear Nuevo Producto';
+      case 'edit': return 'Editar Producto';
+      case 'view': return 'Detalle del Producto';
+      default: return 'Producto';
+    }
+  }
+
+  // Obtener icono del título
+  getTitleIcon(): string {
+    switch (this.data.mode) {
+      case 'create': return 'add_box';
+      case 'edit': return 'edit';
+      case 'view': return 'visibility';
+      default: return 'inventory_2';
+    }
+  }
+
+  // Cancelar/Cerrar modal
+  onCancel(): void {
+    this.dialogRef.close(false);
+  }
+
+  // Guardar producto
+  onSave(): void {
+    if (this.productoForm.valid) {
+      const formValue = this.productoForm.value;
+      
+      // Crear objeto producto del tipo ProductoDto
+      const productoData: ProductoDto = {
+        id: null,
+        nombre: formValue.nombre,
+        descripcion: formValue.descripcion || '',
+        codigoBarras: formValue.codigoBarras,
+        precioCompra: this.parsePrice(formValue.precioCompra),
+        precioVenta: this.parsePrice(formValue.precioVenta),
+        cantidad: Number(formValue.cantidad),
+        unidad: {
+          id: Number(formValue.unidadId),
+          nombre: '',
+          descripcion: ''
+        }
+      };
+
+      // Agregar ID si es modo edición
+      if (this.isEditMode && this.data.producto) {
+        productoData.id = this.data.producto.id;
+        this.editarProducto(productoData);
+      }
+
+      if (this.isCreateMode) {
+        this.crearProducto(productoData);
+      }
+
+
+    } else {
+      // Marcar todos los campos como touched para mostrar errores
+      this.markFormGroupTouched();
+    }
+  }
+
+  // Marcar todos los campos como touched
+  private markFormGroupTouched(): void {
+    Object.keys(this.productoForm.controls).forEach(key => {
+      const control = this.productoForm.get(key);
+      control?.markAsTouched();
+    });
+  }
+
+  // Métodos para futuras integraciones con servicios
+  private crearProducto(productoData: ProductoDto): void {
+    this.productoService.crearProducto(productoData).subscribe({
+      next: () => {
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        this.snackbarService.error(error.error.message);
+      }
+    });
+  }
+
+  private editarProducto(productoData: ProductoDto): void {
+    this.productoService.editarProducto(productoData).subscribe({
+      next: () => {
+        this.dialogRef.close(true);
+      },
+      error: (error) => {
+        this.snackbarService.error(error.error.message);
+      }
+    });
+  }
+}
