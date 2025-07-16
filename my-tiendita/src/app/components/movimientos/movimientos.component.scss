@@ -1,0 +1,347 @@
+// Contenedor principal y scroll (igual que ventas)
+.contenedor-principal {
+  box-shadow: 0 6px 24px rgba(0, 27, 63, 0.1);
+  padding: 32px 16px 32px 32px;
+  background: var(--azure-99, #FDFBFF);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 12px;
+}
+
+.contenido-scroll {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-right: -16px;
+  padding-right: 16px;
+  
+  &::-webkit-scrollbar {
+    width: 14px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--azure-95, #ECF2FF);
+    border-radius: 7px;
+    margin: 0px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--azure-70, #8BB8FF);
+    border-radius: 7px;
+    border: 1px solid var(--azure-90, #D7E3FF);
+    
+    &:hover {
+      background: var(--azure-60, #6DA6FF);
+    }
+  }
+}
+
+// Título de la página (igual que ventas)
+.section-title {
+  text-align: center;
+  margin: 0 0 32px 0;
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, #3976D2 0%, #6DA6FF 100%);
+      border-radius: 2px;
+    }
+  }
+}
+
+// Contenedor de la tabla (igual que ventas)
+.container-tabla {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 26, 55, 0.08);
+  border: 1px solid var(--azure-90, #D7E3FF);
+  position: relative;
+}
+
+// Campo de filtro (igual que ventas)
+.filtro-field {
+  width: 100%;
+  max-width: 400px;
+  
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+  
+  .mat-mdc-form-field-wrapper {
+    height: 48px;
+  }
+}
+
+// Barra superior con filtro y botón
+.barra-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .add-button {
+    height: 48px;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(63, 81, 181, 0.2);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(63, 81, 181, 0.3);
+    }
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Loading overlay
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 10;
+  border-radius: 16px;
+
+  span {
+    font-weight: 500;
+    color: #666;
+  }
+}
+
+// Estilos de la tabla
+table {
+  width: 100%;
+  table-layout: fixed;
+  background: white;
+}
+
+// Header de la tabla
+.table-header-row {
+  background: linear-gradient(135deg, var(--azure-95, #ECF2FF) 0%, var(--azure-90, #D7E3FF) 100%);
+  
+  th {
+    font-weight: 600;
+    color: var(--azure-20, #001A37);
+    font-size: 14px;
+    border-bottom: 2px solid var(--azure-80, #B8D1FF);
+    
+    .column-icon {
+      font-size: 18px;
+      margin-right: 8px;
+      vertical-align: middle;
+      color: var(--azure-50, #0074E9);
+    }
+  }
+}
+
+// Filas de datos
+.table-data-row {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: var(--azure-98, #F8FAFF);
+  }
+  
+  &:nth-child(even) {
+    background-color: rgba(247, 250, 255, 0.5);
+  }
+}
+
+// Anchos específicos para las columnas
+.mat-column-fecha {
+  width: 30%;
+}
+
+.mat-column-valor {
+  width: 25%;
+}
+
+.mat-column-tipoMovimiento {
+  width: 45%;
+}
+
+// Estilos específicos para las celdas
+.valor-cell {
+  .valor-amount {
+    font-weight: 600;
+    font-size: 15px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-block;
+
+    // Verde: Venta (ID: 1) y Entrada (ID: 4)
+    &.valor-positivo {
+      color: #27ae60;
+      background: rgba(39, 174, 96, 0.1);
+    }
+
+    // Rojo: Compra (ID: 2) y Salida (ID: 3)
+    &.valor-negativo {
+      color: #e74c3c;
+      background: rgba(231, 76, 60, 0.1);
+    }
+  }
+}
+
+.tipo-cell {
+  .tipo-movimiento {
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 14px;
+
+    // Verde: Venta (ID: 1) y Entrada (ID: 4)
+    &.tipo-ingreso {
+      color: #27ae60;
+      background: rgba(39, 174, 96, 0.1);
+      border: 1px solid rgba(39, 174, 96, 0.2);
+    }
+
+    // Rojo: Compra (ID: 2) y Salida (ID: 3)
+    &.tipo-egreso {
+      color: #e74c3c;
+      background: rgba(231, 76, 60, 0.1);
+      border: 1px solid rgba(231, 76, 60, 0.2);
+    }
+  }
+}
+
+// No data message
+.no-data-message {
+  text-align: center;
+  padding: 48px 24px;
+  color: #666;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    color: #ddd;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-weight: 500;
+    color: #777;
+  }
+
+  p {
+    margin: 0;
+    color: #999;
+  }
+}
+
+// Paginator personalizado
+.custom-paginator {
+  border-top: 1px solid var(--azure-90, #D7E3FF);
+  background: var(--azure-98, #F8FAFF);
+  margin: 24px -24px -24px -24px;
+  padding: 16px 24px;
+  border-radius: 0 0 16px 16px;
+  
+  .mat-mdc-paginator-range-label {
+    font-weight: 500;
+    color: var(--azure-20, #001A37);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .contenedor-principal {
+    padding: 16px;
+  }
+
+  .barra-superior {
+    flex-direction: column;
+    align-items: stretch;
+
+    .filtro-field {
+      max-width: none;
+    }
+
+    .add-button {
+      width: 100%;
+      margin-top: 12px;
+    }
+  }
+
+  .container-tabla {
+    padding: 16px;
+  }
+
+  .mat-column-fecha {
+    width: 35%;
+  }
+
+  .mat-column-valor {
+    width: 30%;
+  }
+
+  .mat-column-tipoMovimiento {
+    width: 35%;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-title h1 {
+    font-size: 24px;
+  }
+
+  .container-tabla {
+    padding: 12px;
+  }
+
+  .table-header-row th,
+  .table-data-row td {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .valor-cell .valor-amount {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+
+  .tipo-cell .tipo-movimiento {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}

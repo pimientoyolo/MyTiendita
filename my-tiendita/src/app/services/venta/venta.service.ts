@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ProductoVentaDTO, VentaDto } from '../../dto/venta.dto';
+import { ProductoVentaDTO, VentaDto, MovimientoDTO } from '../../dto/venta.dto';
 import { Observable } from 'rxjs';
 
 // Interfaz para manejar la respuesta paginada del servidor
@@ -59,6 +59,27 @@ export class VentaService {
     httpParams = httpParams.set('filter', params.filter ? params.filter.trim() : '');
 
     return this.http.get<PaginatedResponse<VentaDto>>(`${this.apiUrl}/venta/paginadas`, {
+      params: httpParams
+    });
+  }
+
+  // Método para obtener movimientos paginados
+  getMovimientosPaginados(params: PaginationParams): Observable<PaginatedResponse<MovimientoDTO>> {
+    let httpParams = new HttpParams()
+      .set('page', params.page.toString())
+      .set('size', params.size.toString());
+
+    if (params.sort) {
+      httpParams = httpParams.set('sort', params.sort);
+    }
+
+    if (params.direction) {
+      httpParams = httpParams.set('direction', params.direction);
+    }
+
+    httpParams = httpParams.set('filter', params.filter ? params.filter.trim() : '');
+
+    return this.http.get<PaginatedResponse<MovimientoDTO>>(`${this.apiUrl}/movimiento/paginadas`, {
       params: httpParams
     });
   }

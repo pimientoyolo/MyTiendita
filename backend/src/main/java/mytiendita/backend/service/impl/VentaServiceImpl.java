@@ -102,8 +102,6 @@ public class VentaServiceImpl implements VentaService {
 
     @Override
     public Page<Venta> listarVentasPaginadas(String filter, Pageable pageable) {
-        System.out.println("Filter: " + filter);
-        System.out.println("Pageable: " + pageable);
         filter = filter.toLowerCase().trim();
         return ventaRepository.listarVentasPaginadas(filter, pageable);
     }

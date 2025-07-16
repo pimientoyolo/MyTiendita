@@ -34,3 +34,16 @@ export interface ProductoVentaDTO{
     cantidad: number;
     valor: number;
 }
+
+export interface MovimientoDTO {
+    id: number;
+    tipoMovimiento: TipoMovimientoDTO;
+    valor: number;
+    fecha: string;
+}
+
+export interface TipoMovimientoDTO {
+    id: number;
+    nombre: string;
+    descripcion: string;
+}

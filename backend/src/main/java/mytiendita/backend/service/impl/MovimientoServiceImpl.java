@@ -9,6 +9,8 @@ import mytiendita.backend.repository.TipoMovimientoRepository;
 import mytiendita.backend.service.interfaces.MovimientoService;
 import mytiendita.backend.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -171,6 +173,12 @@ public class MovimientoServiceImpl implements MovimientoService {
         movimiento.setTipoMovimiento(tipoMovimiento);
         movimiento.setFecha(new Date());
         movimientoRepository.save(movimiento);
+    }
+
+    @Override
+    public Page<Movimiento> listarMovimientosPaginados(String filter, Pageable pageable) {
+        filter = filter.toLowerCase().trim();
+        return movimientoRepository.findByFilter(filter, pageable);
     }
 
 

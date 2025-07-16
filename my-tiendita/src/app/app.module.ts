@@ -35,6 +35,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MovimientoProductoModalComponent } from './components/movimiento-producto-modal/movimiento-producto-modal.component';
 import { EliminarProductoModalComponent } from './components/eliminar-producto-modal/eliminar-producto-modal.component';
 import { VentasComponent } from './components/ventas/ventas.component';
+import { MovimientosComponent } from './components/movimientos/movimientos.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,8 @@ import { VentasComponent } from './components/ventas/ventas.component';
     ProductoModalComponent,
     MovimientoProductoModalComponent,
     EliminarProductoModalComponent,
-    VentasComponent
+    VentasComponent,
+    MovimientosComponent
   ],
   imports: [
     BrowserModule,
@@ -73,11 +77,13 @@ import { VentasComponent } from './components/ventas/ventas.component';
     MatDialogModule,
     MatTooltipModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatChipsModule
   ],
   providers: [
     DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
